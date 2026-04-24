@@ -1,0 +1,21 @@
+{
+  "tagline": "Urban Sustainability · Environmental Justice · Data Science",
+  "main_heading": "The Urban Planet Lab",
+  "description": "We are an interdisciplinary research group studying the intersections of urban systems, climate change, and environmental justice. Our work combines spatial analysis, remote sensing, and community-engaged methods to address pressing challenges in cities worldwide.",
+  "hero_image": "",
+  "hero_image_alt": "The Urban Planet Lab",
+  "cards": [
+    {
+      "title": "Climate Resilience",
+      "description": "Investigating how cities can adapt to and mitigate the impacts of climate change through data-driven policy and design."
+    },
+    {
+      "title": "Environmental Justice",
+      "description": "Examining unequal distributions of environmental burdens and benefits across urban communities."
+    },
+    {
+      "title": "Urban Data Science",
+      "description": "Developing new methods and tools for analyzing complex urban systems using large-scale spatial and temporal datasets."
+    }
+  ]
+}

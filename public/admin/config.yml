@@ -1,0 +1,314 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Decap CMS Configuration — The Urban Planet Lab
+#
+# SETUP REQUIRED (two values to fill in before this works):
+#   1. Replace GITHUB_USERNAME with your actual GitHub username
+#   2. Replace NETLIFY_OAUTH_PROXY_URL with the URL of your Netlify OAuth proxy
+#      (see OAUTH_SETUP.md at the root of this repo for step-by-step instructions)
+# ─────────────────────────────────────────────────────────────────────────────
+
+backend:
+  name: github
+  repo: treeaspen/The-Urban-Planet-Lab  # 请确认这是你正确的 GitHub 用户名和仓库名
+  branch: main
+  base_url: https://harmonious-squirrel-c33043.netlify.app
+
+# Images are stored in public/uploads/ and referenced as /uploads/...
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: "en"
+
+collections:
+
+  # ── Singleton Pages ─────────────────────────────────────────────────────────
+  - name: "pages"
+    label: "Pages"
+    files:
+
+      - name: "home"
+        label: "🏠 Home Page"
+        file: "content/pages/home.json"
+        fields:
+          - label: "Tagline (above main heading)"
+            name: "tagline"
+            widget: "string"
+            hint: "Short tagline shown above the title, e.g. 'Urban Sustainability · Environmental Justice'"
+          - label: "Main Heading"
+            name: "main_heading"
+            widget: "string"
+            hint: "The large title displayed on the homepage"
+          - label: "Description Paragraph"
+            name: "description"
+            widget: "text"
+            hint: "Main intro paragraph shown below the hero image"
+          - label: "Hero Image"
+            name: "hero_image"
+            widget: "image"
+            required: false
+            hint: "Banner image at the top of the homepage (recommended: 1600×900px)"
+          - label: "Hero Image Alt Text"
+            name: "hero_image_alt"
+            widget: "string"
+            required: false
+            hint: "Accessibility description of the hero image (required if image is set)"
+          - label: "Feature Cards"
+            name: "cards"
+            widget: "list"
+            hint: "Up to 3 highlight cards shown below the description paragraph"
+            add_to_top: false
+            fields:
+              - { label: "Card Title", name: "title", widget: "string" }
+              - { label: "Card Description", name: "description", widget: "text" }
+
+      - name: "research"
+        label: "🔬 Research Page"
+        file: "content/pages/research.json"
+        fields:
+          - label: "Main Heading"
+            name: "main_heading"
+            widget: "string"
+          - label: "Intro Description"
+            name: "description"
+            widget: "text"
+            hint: "Paragraph inside the top banner panel"
+          - label: "Hero Image"
+            name: "hero_image"
+            widget: "image"
+            required: false
+            hint: "Optional banner image (recommended: 1600×900px)"
+          - label: "Hero Image Alt Text"
+            name: "hero_image_alt"
+            widget: "string"
+            required: false
+          - label: "Research Directions Section Title"
+            name: "section_title"
+            widget: "string"
+            hint: "Heading above the research directions list, e.g. 'Research Directions'"
+          - label: "Research Directions Section Description"
+            name: "section_description"
+            widget: "text"
+            hint: "Short paragraph introducing the list of research directions"
+          - label: "Closing Statement"
+            name: "closing_statement"
+            widget: "text"
+            required: false
+            hint: "Optional quote or statement shown at the bottom of the page"
+
+  # ── Research Directions ─────────────────────────────────────────────────────
+  - name: "research_directions"
+    label: "🔬 Research Directions"
+    folder: "content/research-directions"
+    create: true
+    slug: "{{fields.index}}-{{title}}"
+    summary: "{{fields.index}}. {{fields.title}}"
+    fields:
+      - label: "Display Order"
+        name: "index"
+        widget: "number"
+        value_type: "int"
+        min: 1
+        hint: "Determines the display order (1 = first). Each direction should have a unique number."
+      - label: "Direction Title"
+        name: "title"
+        widget: "string"
+        hint: "Short, memorable name for this research direction"
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        hint: "One to two paragraphs explaining what this direction covers and why it matters"
+
+  # ── People ──────────────────────────────────────────────────────────────────
+  - name: "people"
+    label: "👥 People"
+    folder: "content/people"
+    create: true
+    slug: "{{fields.category}}-{{fields.name | slugify}}"
+    summary: "{{fields.name}} — {{fields.role}} ({{fields.category}})"
+    fields:
+      - label: "Full Name"
+        name: "name"
+        widget: "string"
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        hint: "Which group this person belongs to"
+        options:
+          - { label: "Faculty", value: "faculty" }
+          - { label: "PhD Student", value: "phd" }
+          - { label: "Master Student", value: "master" }
+          - { label: "Alumni", value: "alumni" }
+      - label: "Role / Title"
+        name: "role"
+        widget: "string"
+        hint: "e.g. 'Associate Professor', 'PhD Candidate', 'MS Student', 'PhD 2023 → Postdoc at MIT'"
+      - label: "Photo"
+        name: "photo"
+        widget: "image"
+        required: false
+        hint: "Headshot (recommended: square, at least 400×400px)"
+      - label: "Short Bio"
+        name: "bio"
+        widget: "text"
+        required: false
+        hint: "1–3 sentences about research interests or background"
+      - label: "Email"
+        name: "email"
+        widget: "string"
+        required: false
+      - label: "Personal Website URL"
+        name: "website"
+        widget: "string"
+        required: false
+        hint: "Full URL including https://"
+      - label: "Google Scholar URL"
+        name: "scholar"
+        widget: "string"
+        required: false
+        hint: "Full URL to Google Scholar profile"
+      - label: "Twitter / X Handle"
+        name: "twitter"
+        widget: "string"
+        required: false
+        hint: "Handle without the @ symbol, e.g. 'urbanplanetlab'"
+      - label: "Display Order (within category)"
+        name: "sort_order"
+        widget: "number"
+        value_type: "int"
+        default: 99
+        hint: "Lower numbers appear first within each category group"
+
+  # ── Publications ────────────────────────────────────────────────────────────
+  - name: "publications"
+    label: "📄 Publications"
+    folder: "content/publications"
+    create: true
+    slug: "{{fields.year}}-{{title}}"
+    summary: "{{fields.year}} — {{fields.title}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Authors"
+        name: "authors"
+        widget: "string"
+        hint: "e.g. 'Doe, J., Smith, A., & Lee, C.'"
+      - label: "Journal / Venue"
+        name: "venue"
+        widget: "string"
+        hint: "Full journal name, conference name, or book title"
+      - label: "Year"
+        name: "year"
+        widget: "number"
+        value_type: "int"
+        min: 1990
+      - label: "Volume / Issue / Pages"
+        name: "details"
+        widget: "string"
+        required: false
+        hint: "e.g. '12(3), 145–168' or 'Article 104721'"
+      - label: "Publication Type"
+        name: "pub_type"
+        widget: "select"
+        required: false
+        options:
+          - { label: "Journal Article", value: "journal" }
+          - { label: "Conference Paper", value: "conference" }
+          - { label: "Book Chapter", value: "book_chapter" }
+          - { label: "Report / Working Paper", value: "report" }
+      - label: "DOI / Link"
+        name: "doi_url"
+        widget: "string"
+        required: false
+        hint: "Full URL, e.g. https://doi.org/10.1038/..."
+      - label: "PDF Download URL"
+        name: "pdf_url"
+        widget: "string"
+        required: false
+        hint: "Direct link to an open-access PDF if available"
+      - label: "Abstract"
+        name: "abstract"
+        widget: "text"
+        required: false
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "Keywords for this paper, e.g. 'climate, urban heat, equity'"
+
+  # ── News ────────────────────────────────────────────────────────────────────
+  - name: "news"
+    label: "📰 News"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{fields.date}} — {{fields.title}}"
+    fields:
+      - label: "Headline"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        hint: "Publication date of this news item"
+      - label: "Summary"
+        name: "summary"
+        widget: "text"
+        hint: "2–4 sentence summary shown on the news card"
+      - label: "Cover Image"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        hint: "Optional image shown on the news card (recommended: 16:9 ratio)"
+      - label: "Cover Image Alt Text"
+        name: "cover_image_alt"
+        widget: "string"
+        required: false
+      - label: "External Link"
+        name: "link"
+        widget: "string"
+        required: false
+        hint: "Optional URL — clicking the card will open this link in a new tab"
+      - label: "Featured (pin to top)"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        hint: "Featured items appear before regular items regardless of date"
+
+  # ── Teaching / Courses ──────────────────────────────────────────────────────
+  - name: "courses"
+    label: "🎓 Teaching"
+    folder: "content/courses"
+    create: true
+    slug: "{{fields.sort_order}}-{{fields.code | slugify}}"
+    summary: "{{fields.code}} — {{fields.name}} ({{fields.semester}})"
+    fields:
+      - label: "Course Code"
+        name: "code"
+        widget: "string"
+        hint: "e.g. URPL 6210"
+      - label: "Course Name"
+        name: "name"
+        widget: "string"
+      - label: "Semester / Term"
+        name: "semester"
+        widget: "string"
+        hint: "e.g. Fall 2024, Spring 2025"
+      - label: "Course Description"
+        name: "description"
+        widget: "text"
+        hint: "2–4 sentences describing the course content and learning objectives"
+      - label: "Syllabus URL"
+        name: "syllabus_url"
+        widget: "string"
+        required: false
+        hint: "Link to the syllabus PDF or page (Google Drive, course website, etc.)"
+      - label: "Display Order"
+        name: "sort_order"
+        widget: "number"
+        value_type: "int"
+        default: 99
+        hint: "Lower numbers appear first on the Teaching page"

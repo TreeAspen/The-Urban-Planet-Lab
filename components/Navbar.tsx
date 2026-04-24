@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const navigationItems = [
     { href: "/research", label: "Research" },
@@ -28,22 +29,43 @@ function NavLink({
 }) {
     const isActive = currentPath === href;
 
+    if (mobile) {
+        return (
+            <Link
+                href={href}
+                onClick={onClick}
+                aria-current={isActive ? "page" : undefined}
+                className={[
+                    "block rounded-xl px-4 py-3 text-sm tracking-wide transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/10",
+                    isActive
+                        ? "text-black dark:text-white"
+                        : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white",
+                ].join(" ")}
+            >
+                {children}
+            </Link>
+        );
+    }
+
     return (
         <Link
             href={href}
             onClick={onClick}
             aria-current={isActive ? "page" : undefined}
             className={[
-                "text-sm tracking-wide transition-colors duration-200",
-                mobile
-                    ? "block rounded-xl px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10"
-                    : "",
+                "relative text-sm tracking-wide transition-colors duration-200",
                 isActive
                     ? "text-black dark:text-white"
                     : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white",
             ].join(" ")}
         >
             {children}
+            <span
+                className={[
+                    "absolute -bottom-1 left-0 h-px bg-black dark:bg-white transition-all duration-300",
+                    isActive ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-70",
+                ].join(" ")}
+            />
         </Link>
     );
 }
@@ -64,7 +86,12 @@ function MenuButton({
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white/70 text-black transition-colors duration-200 hover:bg-white dark:border-white/15 dark:bg-black/70 dark:text-white dark:hover:bg-black/85 md:hidden"
         >
-            {open ? <CloseIcon /> : <MenuIcon />}
+            <motion.div
+                animate={{ rotate: open ? 45 : 0 }}
+                transition={{ duration: 0.2 }}
+            >
+                {open ? <CloseIcon /> : <MenuIcon />}
+            </motion.div>
         </button>
     );
 }
@@ -135,7 +162,12 @@ export default function Navbar() {
     return (
         <header>
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                <div className="mt-4 rounded-[1.75rem] border border-black/10 bg-white/60 backdrop-blur-xl dark:border-white/15 dark:bg-black/60 sm:mt-6">
+                <motion.div
+                    className="mt-4 rounded-[1.75rem] border border-black/10 bg-white/60 backdrop-blur-xl dark:border-white/15 dark:bg-black/60 sm:mt-6"
+                    initial={{ opacity: 0, y: -16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
                     <nav className="px-4 py-4 sm:px-6">
                         <div className="flex items-center justify-between gap-3">
                             <Link
@@ -179,28 +211,43 @@ export default function Navbar() {
                             </div>
                         </div>
 
-                        {mobileMenuOpen ? (
-                            <div
-                                id="mobile-navigation"
-                                className="mt-4 border-t border-black/10 pt-4 dark:border-white/10 md:hidden"
-                            >
-                                <div className="grid gap-2">
-                                    {navigationItems.map((item) => (
-                                        <NavLink
-                                            key={item.href}
-                                            href={item.href}
-                                            currentPath={pathname}
-                                            onClick={() => setMobileMenuOpen(false)}
-                                            mobile
-                                        >
-                                            {item.label}
-                                        </NavLink>
-                                    ))}
-                                </div>
-                            </div>
-                        ) : null}
+                        <AnimatePresence>
+                            {mobileMenuOpen ? (
+                                <motion.div
+                                    id="mobile-navigation"
+                                    key="mobile-nav"
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                    className="overflow-hidden md:hidden"
+                                >
+                                    <div className="mt-4 border-t border-black/10 pt-4 dark:border-white/10">
+                                        <div className="grid gap-1">
+                                            {navigationItems.map((item, i) => (
+                                                <motion.div
+                                                    key={item.href}
+                                                    initial={{ opacity: 0, x: -12 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: i * 0.05, duration: 0.2 }}
+                                                >
+                                                    <NavLink
+                                                        href={item.href}
+                                                        currentPath={pathname}
+                                                        onClick={() => setMobileMenuOpen(false)}
+                                                        mobile
+                                                    >
+                                                        {item.label}
+                                                    </NavLink>
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : null}
+                        </AnimatePresence>
                     </nav>
-                </div>
+                </motion.div>
             </div>
         </header>
     );
