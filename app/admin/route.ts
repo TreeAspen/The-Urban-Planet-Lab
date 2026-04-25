@@ -1,6 +1,8 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
+export const dynamic = "force-static";
+
 export async function GET() {
     const html = readFileSync(
         join(process.cwd(), "public", "admin", "index.html"),
