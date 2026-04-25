@@ -11,7 +11,8 @@ backend:
   name: github
   repo: treeaspen/The-Urban-Planet-Lab  # 请确认这是你正确的 GitHub 用户名和仓库名
   branch: main
-  base_url: https://harmonious-squirrel-c33043.netlify.app
+  base_url: https://the-urban-planet-lab-git-main-treeaspens-projects.vercel.app
+  auth_endpoint: api/auth
 
 # Images are stored in public/uploads/ and referenced as /uploads/...
 media_folder: "public/uploads"
