@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getPageContent, getCollection, type ResearchContent, type ResearchDirection } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
+import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "Research — The Urban Planet Lab",
@@ -171,6 +172,8 @@ export default function ResearchPage() {
                     </section>
                 </AnimateIn>
             ) : null}
+
+            <ContinueExploring from="research" />
         </div>
     );
 }

@@ -313,3 +313,52 @@ collections:
         value_type: "int"
         default: 99
         hint: "Lower numbers appear first on the Teaching page"
+
+  # ── Meaningful Places ───────────────────────────────────────────────────────
+  - name: "places"
+    label: "📍 Meaningful Places"
+    folder: "content/places"
+    create: true
+    slug: "{{fields.member_name | slugify}}-{{fields.place_name | slugify}}"
+    summary: "{{fields.member_name}} — {{fields.place_name}} ({{fields.year}})"
+    fields:
+      - label: "Your Name"
+        name: "member_name"
+        widget: "string"
+        hint: "The lab member this place belongs to (e.g. 'Dr. Jane Doe')"
+      - label: "Place Name"
+        name: "place_name"
+        widget: "string"
+        hint: "Short name of the place, e.g. 'Washington Square Park'"
+      - label: "Location Label"
+        name: "location_label"
+        widget: "string"
+        required: false
+        hint: "City and country, e.g. 'New York, USA'"
+      - label: "Latitude"
+        name: "lat"
+        widget: "number"
+        value_type: "float"
+        step: 0.0001
+        hint: "Decimal degrees. Tip: in Google Maps, right-click the spot → click the coordinates to copy. The first number is the latitude."
+      - label: "Longitude"
+        name: "lng"
+        widget: "number"
+        value_type: "float"
+        step: 0.0001
+        hint: "Decimal degrees. The second number from Google Maps."
+      - label: "Year"
+        name: "year"
+        widget: "number"
+        value_type: "int"
+        required: false
+        hint: "When this place became meaningful to you"
+      - label: "Why it matters"
+        name: "story"
+        widget: "text"
+        hint: "1–3 sentences on why this place is meaningful to you and your work"
+      - label: "Photo"
+        name: "photo"
+        widget: "image"
+        required: false
+        hint: "Optional photo of the place"

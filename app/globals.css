@@ -86,3 +86,31 @@ body {
     background: var(--background);
     color: var(--foreground);
 }
+
+/* ── Leaflet customizations ───────────────────────────────────────── */
+.leaflet-container {
+    font-family: inherit;
+    background: #ffffff !important;
+}
+.leaflet-container a.leaflet-popup-close-button { display: none; }
+.leaflet-popup-content-wrapper {
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 18px 60px rgba(15, 23, 42, 0.18);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+.leaflet-popup-content { margin: 0; }
+.leaflet-popup-tip {
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+}
+.leaflet-control-attribution {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(6px);
+    font-size: 10px !important;
+    border-radius: 6px;
+    padding: 2px 6px !important;
+}
+.upl-pin {
+    position: relative;
+    cursor: pointer;
+}

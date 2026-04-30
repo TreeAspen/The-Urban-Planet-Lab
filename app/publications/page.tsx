@@ -1,5 +1,6 @@
 import { getCollection, type Publication } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
+import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "Publications — The Urban Planet Lab",
@@ -143,6 +144,8 @@ export default function PublicationsPage() {
                     </AnimateIn>
                 )}
             </section>
+
+            <ContinueExploring from="publications" />
         </div>
     );
 }

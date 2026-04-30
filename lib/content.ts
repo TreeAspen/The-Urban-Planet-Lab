@@ -98,3 +98,15 @@ export type Course = {
     sort_order: number;
     slug: string;
 };
+
+export type Place = {
+    member_name: string;
+    place_name: string;
+    location_label: string;
+    lat: number;
+    lng: number;
+    year: number;
+    story: string;
+    photo: string;
+    slug: string;
+};

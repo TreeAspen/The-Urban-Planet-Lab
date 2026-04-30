@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getCollection, type NewsItem } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
+import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "News — The Urban Planet Lab",
@@ -107,6 +108,8 @@ export default function NewsPage() {
                     </AnimateIn>
                 )}
             </section>
+
+            <ContinueExploring from="news" />
         </div>
     );
 }

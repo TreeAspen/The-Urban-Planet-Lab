@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { getPageContent, type HomeContent } from "@/lib/content";
+import { getCollection, getPageContent, type HomeContent, type Place } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
+import { ContinueExploring } from "@/components/ContinueExploring";
+import MeaningfulMapClient from "@/components/MeaningfulMapClient";
 
 export const metadata = {
     title: "The Urban Planet Lab",
@@ -8,6 +10,7 @@ export const metadata = {
 
 export default function Home() {
     const content = getPageContent<HomeContent>("home");
+    const places = getCollection<Place>("places").sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
 
     return (
         <div className="relative">
@@ -88,6 +91,34 @@ export default function Home() {
                     </StaggerContainer>
                 </section>
             ) : null}
+
+            <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
+                <AnimateIn>
+                    <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+                        <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-black/55 dark:text-white/55">
+                                Where we&apos;ve been shaped
+                            </p>
+                            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
+                                Places that mean something to us
+                            </h2>
+                            <p className="mt-3 max-w-2xl text-base leading-relaxed text-black/70 dark:text-white/65">
+                                Every member has a place that changed how they think about cities. Click a pin
+                                to read why — or add your own from the{" "}
+                                <a href="/admin" className="underline underline-offset-4 hover:text-black dark:hover:text-white">
+                                    admin
+                                </a>
+                                .
+                            </p>
+                        </div>
+                    </div>
+                </AnimateIn>
+                <AnimateIn delay={0.1} y={16}>
+                    <MeaningfulMapClient places={places} />
+                </AnimateIn>
+            </section>
+
+            <ContinueExploring from="home" />
         </div>
     );
 }
