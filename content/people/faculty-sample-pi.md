@@ -1,10 +1,11 @@
 ---
-name: "Principal Investigator Name"
-role: "Associate Professor"
-category: "faculty"
-photo: ""
-bio: "Placeholder biography. Replace with the faculty member's actual biography describing their research interests, background, and expertise."
-email: "pi@nyu.edu"
+name: Anamika Shreevastava
+category: faculty
+role: Assistant Professor
+photo: /uploads/anamika.jpg
+bio: Placeholder biography. Replace with the faculty member's actual biography
+  describing their research interests, background, and expertise.
+email: pi@nyu.edu
 website: ""
 scholar: ""
 twitter: ""
