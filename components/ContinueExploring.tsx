@@ -1,5 +1,14 @@
 import Link from "next/link";
 import { AnimateIn } from "./AnimateIn";
+import { getSiteSettings, type SectionKey } from "@/lib/content";
+
+const HREF_TO_SECTION: Record<string, SectionKey> = {
+    "/research": "research",
+    "/publications": "publications",
+    "/people": "people",
+    "/news": "news",
+    "/teaching": "teaching",
+};
 
 type Suggestion = {
     label: string;
@@ -132,7 +141,11 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
 };
 
 export function ContinueExploring({ from }: { from: keyof typeof PAGE_MAP }) {
-    const items = PAGE_MAP[from] ?? [];
+    const { sections } = getSiteSettings();
+    const items = (PAGE_MAP[from] ?? []).filter((item) => {
+        const key = HREF_TO_SECTION[item.href];
+        return key ? sections[key] !== false : true;
+    });
     if (items.length === 0) return null;
 
     return (

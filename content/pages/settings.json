@@ -1,0 +1,11 @@
+{
+  "background": "mesh",
+  "sections": {
+    "research": true,
+    "publications": true,
+    "people": true,
+    "news": false,
+    "teaching": true,
+    "home_places": true
+  }
+}

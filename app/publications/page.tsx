@@ -1,4 +1,5 @@
-import { getCollection, type Publication } from "@/lib/content";
+import { notFound } from "next/navigation";
+import { getCollection, getSiteSettings, type Publication } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -87,6 +88,8 @@ function PublicationEntry({ pub }: { pub: Publication }) {
 }
 
 export default function PublicationsPage() {
+    if (getSiteSettings().sections.publications === false) notFound();
+
     const publications = getCollection<Publication>("publications").sort(
         (a, b) => b.year - a.year
     );

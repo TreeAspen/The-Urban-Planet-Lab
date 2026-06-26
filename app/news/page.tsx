@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { getCollection, type NewsItem } from "@/lib/content";
+import { notFound } from "next/navigation";
+import { getCollection, getSiteSettings, type NewsItem } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -72,6 +73,8 @@ function NewsCard({ item }: { item: NewsItem }) {
 }
 
 export default function NewsPage() {
+    if (getSiteSettings().sections.news === false) notFound();
+
     const allNews = getCollection<NewsItem>("news").sort((a, b) => {
         if (a.featured && !b.featured) return -1;
         if (!a.featured && b.featured) return 1;

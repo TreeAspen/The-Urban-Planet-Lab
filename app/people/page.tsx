@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { getCollection, type Person } from "@/lib/content";
+import { notFound } from "next/navigation";
+import { getCollection, getSiteSettings, type Person } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -135,6 +136,8 @@ function AlumniRow({ person }: { person: Person }) {
 }
 
 export default function PeoplePage() {
+    if (getSiteSettings().sections.people === false) notFound();
+
     const allPeople = getCollection<Person>("people").sort(
         (a, b) => (a.sort_order ?? 99) - (b.sort_order ?? 99)
     );

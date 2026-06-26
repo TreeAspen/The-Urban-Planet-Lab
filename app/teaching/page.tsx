@@ -1,4 +1,5 @@
-import { getCollection, type Course } from "@/lib/content";
+import { notFound } from "next/navigation";
+import { getCollection, getSiteSettings, type Course } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -43,6 +44,8 @@ function CourseCard({ course }: { course: Course }) {
 }
 
 export default function TeachingPage() {
+    if (getSiteSettings().sections.teaching === false) notFound();
+
     const courses = getCollection<Course>("courses").sort(
         (a, b) => (a.sort_order ?? 99) - (b.sort_order ?? 99)
     );

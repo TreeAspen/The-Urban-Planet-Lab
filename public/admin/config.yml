@@ -27,6 +27,34 @@ collections:
     label: "Pages"
     files:
 
+      - name: "settings"
+        label: "⚙️ Site Settings"
+        file: "content/pages/settings.json"
+        fields:
+          - label: "Background Style"
+            name: "background"
+            widget: "select"
+            default: "mesh"
+            hint: "Decorative background shown behind every page."
+            options:
+              - { label: "Mesh — colourful soft gradients (modern)", value: "mesh" }
+              - { label: "Aurora — slow drifting blobs", value: "aurora" }
+              - { label: "Dots — subtle dotted texture", value: "dots" }
+              - { label: "Grid — minimal blueprint lines", value: "grid" }
+              - { label: "Glow — single clean centre glow", value: "glow" }
+              - { label: "Plain — smooth gradient, no texture", value: "plain" }
+          - label: "Visible Sections"
+            name: "sections"
+            widget: "object"
+            hint: "Turn entire sections on/off. A hidden section disappears from the navigation, cross-page links, and its own page becomes unavailable."
+            fields:
+              - { label: "Research", name: "research", widget: "boolean", default: true }
+              - { label: "Publications", name: "publications", widget: "boolean", default: true }
+              - { label: "People", name: "people", widget: "boolean", default: true }
+              - { label: "News", name: "news", widget: "boolean", default: true }
+              - { label: "Teaching", name: "teaching", widget: "boolean", default: true }
+              - { label: "Home page — Meaningful Places map", name: "home_places", widget: "boolean", default: true }
+
       - name: "home"
         label: "🏠 Home Page"
         file: "content/pages/home.json"

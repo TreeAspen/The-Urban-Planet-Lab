@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { getPageContent, getCollection, type ResearchContent, type ResearchDirection } from "@/lib/content";
+import { notFound } from "next/navigation";
+import { getPageContent, getCollection, getSiteSettings, type ResearchContent, type ResearchDirection } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -85,6 +86,8 @@ function DirectionPanel({
 }
 
 export default function ResearchPage() {
+    if (getSiteSettings().sections.research === false) notFound();
+
     const content = getPageContent<ResearchContent>("research");
     const directions = getCollection<ResearchDirection>("research-directions")
         .sort((a, b) => a.index - b.index);
@@ -100,7 +103,7 @@ export default function ResearchPage() {
 
                         <div className="relative mx-auto max-w-4xl">
                             {content.main_heading ? (
-                                <h1 className="text-balance text-4xl font-semibold tracking-tight text-black dark:text-white sm:text-5xl lg:text-[4.4rem] lg:leading-[0.9]">
+                                <h1 className="text-balance text-4xl font-semibold tracking-tight text-black dark:text-white sm:text-5xl lg:text-6xl">
                                     {content.main_heading}
                                 </h1>
                             ) : null}

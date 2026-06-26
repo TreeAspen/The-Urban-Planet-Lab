@@ -5,13 +5,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
+import type { SectionKey } from "@/lib/content";
 
-const navigationItems = [
-    { href: "/research", label: "Research" },
-    { href: "/publications", label: "Publications" },
-    { href: "/people", label: "People" },
-    { href: "/news", label: "News" },
-    { href: "/teaching", label: "Teaching" },
+const navigationItems: { href: string; label: string; key: SectionKey }[] = [
+    { href: "/research", label: "Research", key: "research" },
+    { href: "/publications", label: "Publications", key: "publications" },
+    { href: "/people", label: "People", key: "people" },
+    { href: "/news", label: "News", key: "news" },
+    { href: "/teaching", label: "Teaching", key: "teaching" },
 ];
 
 function NavLink({
@@ -128,9 +130,14 @@ function CloseIcon() {
     );
 }
 
-export default function Navbar() {
+export default function Navbar({
+    sections,
+}: {
+    sections: Record<SectionKey, boolean>;
+}) {
     const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const visibleItems = navigationItems.filter((item) => sections[item.key] !== false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -192,7 +199,7 @@ export default function Navbar() {
                             </Link>
 
                             <div className="hidden items-center gap-7 md:flex">
-                                {navigationItems.map((item) => (
+                                {visibleItems.map((item) => (
                                     <NavLink
                                         key={item.href}
                                         href={item.href}
@@ -201,9 +208,11 @@ export default function Navbar() {
                                         {item.label}
                                     </NavLink>
                                 ))}
+                                <ThemeToggle />
                             </div>
 
-                            <div className="flex items-center md:hidden">
+                            <div className="flex items-center gap-2 md:hidden">
+                                <ThemeToggle />
                                 <MenuButton
                                     open={mobileMenuOpen}
                                     onClick={() => setMobileMenuOpen((current) => !current)}
@@ -224,7 +233,7 @@ export default function Navbar() {
                                 >
                                     <div className="mt-4 border-t border-black/10 pt-4 dark:border-white/10">
                                         <div className="grid gap-1">
-                                            {navigationItems.map((item, i) => (
+                                            {visibleItems.map((item, i) => (
                                                 <motion.div
                                                     key={item.href}
                                                     initial={{ opacity: 0, x: -12 }}
