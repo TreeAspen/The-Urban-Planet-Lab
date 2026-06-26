@@ -19,6 +19,7 @@ export default function SiteBackground({
 }
 
 const VARIANTS: Record<BackgroundVariant, () => ReactElement> = {
+    urbanheat: UrbanHeatBackground,
     mesh: MeshBackground,
     aurora: AuroraBackground,
     dots: DotsBackground,
@@ -42,7 +43,49 @@ function EdgeFades() {
     );
 }
 
-/* ── Mesh: layered colour fields, soft and modern (default) ─────────────────── */
+/* ── Urban Heat: signature day/night thermal identity (default) ─────────────────
+   Day  — a warm city baking under the sun: amber sky dome, orange heat plumes,
+          a cool teal "cooling corridor", over faint isotherm contour rings.
+   Night — a thermal-infrared satellite view: deep blue base with glowing red /
+          orange urban heat-island hotspots and ember-coloured isotherms.        */
+function UrbanHeatBackground() {
+    return (
+        <>
+            <div className="absolute inset-0 bg-[#f8f3e9] dark:bg-[#070d18]" />
+
+            {/* Sky dome — warm sun glow by day, cool night sky by dark */}
+            <div className="absolute inset-0 bg-[radial-gradient(95%_62%_at_50%_-10%,rgba(255,209,128,0.6),rgba(255,236,196,0.2)_42%,transparent_74%)] dark:bg-[radial-gradient(95%_62%_at_50%_-12%,rgba(28,58,94,0.65),rgba(12,28,48,0.3)_45%,transparent_74%)]" />
+
+            {/* Heat plumes / urban heat-island hotspots */}
+            <div className="animate-aurora-1 absolute left-[5%] top-[10%] h-[48vh] w-[46vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(244,114,22,0.20),transparent_67%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.32),transparent_64%)]" />
+            <div className="animate-aurora-2 absolute right-[3%] top-[24%] h-[44vh] w-[42vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.22),transparent_67%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.30),transparent_64%)]" />
+            <div className="animate-aurora-3 absolute bottom-[4%] left-[26%] h-[46vh] w-[50vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.16),transparent_67%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.24),transparent_64%)]" />
+
+            {/* Cool counterpoint — vegetation / water cooling */}
+            <div className="animate-aurora-2 absolute bottom-[10%] right-[8%] h-[38vh] w-[36vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.13),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.18),transparent_70%)]" style={{ animationDelay: "5s" }} />
+
+            {/* Thermal isotherm contour rings */}
+            <div
+                className="absolute inset-0 opacity-50 dark:hidden"
+                style={{
+                    backgroundImage:
+                        "repeating-radial-gradient(circle at 22% 18%, transparent 0 40px, rgba(234,88,12,0.06) 40px 41px, transparent 41px 82px), repeating-radial-gradient(circle at 82% 70%, transparent 0 46px, rgba(220,38,38,0.05) 46px 47px, transparent 47px 94px)",
+                }}
+            />
+            <div
+                className="absolute inset-0 hidden opacity-60 dark:block"
+                style={{
+                    backgroundImage:
+                        "repeating-radial-gradient(circle at 22% 18%, transparent 0 40px, rgba(251,146,60,0.09) 40px 41px, transparent 41px 82px), repeating-radial-gradient(circle at 82% 70%, transparent 0 46px, rgba(239,68,68,0.08) 46px 47px, transparent 47px 94px)",
+                }}
+            />
+
+            <EdgeFades />
+        </>
+    );
+}
+
+/* ── Mesh: layered colour fields, soft and modern ───────────────────────────── */
 function MeshBackground() {
     return (
         <>

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Tailwind v4: drive the `dark:` variant from the `.dark` class that
+   next-themes toggles, instead of the OS prefers-color-scheme media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 html,
 body {
     overscroll-behavior: none;
@@ -90,7 +94,10 @@ body {
 /* ── Leaflet customizations ───────────────────────────────────────── */
 .leaflet-container {
     font-family: inherit;
-    background: #ffffff !important;
+    background: #eef1f4 !important;
+}
+.dark .leaflet-container {
+    background: #0b1622 !important;
 }
 .leaflet-container a.leaflet-popup-close-button { display: none; }
 .leaflet-popup-content-wrapper {

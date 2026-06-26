@@ -34,9 +34,10 @@ collections:
           - label: "Background Style"
             name: "background"
             widget: "select"
-            default: "mesh"
-            hint: "Decorative background shown behind every page."
+            default: "urbanheat"
+            hint: "Decorative background shown behind every page. 'Urban Heat' gives a thermal day/night identity."
             options:
+              - { label: "Urban Heat — thermal day / night (signature)", value: "urbanheat" }
               - { label: "Mesh — colourful soft gradients (modern)", value: "mesh" }
               - { label: "Aurora — slow drifting blobs", value: "aurora" }
               - { label: "Dots — subtle dotted texture", value: "dots" }

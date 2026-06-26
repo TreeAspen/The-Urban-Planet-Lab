@@ -12,6 +12,7 @@ export function getPageContent<T>(page: string): T {
 // ── Site-wide settings (background + section visibility) ───────────────────────
 
 export type BackgroundVariant =
+    | "urbanheat"
     | "aurora"
     | "mesh"
     | "dots"
@@ -33,7 +34,7 @@ export type SiteSettings = {
 };
 
 const DEFAULT_SETTINGS: SiteSettings = {
-    background: "mesh",
+    background: "urbanheat",
     sections: {
         research: true,
         publications: true,

@@ -4,30 +4,34 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useTheme } from "next-themes";
 import type { Place } from "@/lib/content";
 
 type MeaningfulMapProps = {
     places: Place[];
 };
 
-// Custom dot marker (no default leaflet image)
+// CARTO basemaps — swapped with the active theme so the map matches day/night.
+const TILES = {
+    light: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+    dark: "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+};
+
+// Glowing "heat-island" marker — on-theme and legible on both basemaps.
 function makeIcon(active: boolean) {
     const size = active ? 22 : 14;
-    const inner = active ? 8 : 6;
+    const ring = active ? 5 : 3;
+    const glow = active ? 18 : 10;
     return L.divIcon({
         className: "upl-pin",
         html: `<span style="
             display:block;width:${size}px;height:${size}px;border-radius:9999px;
-            background:radial-gradient(circle at 30% 30%, #1f2937 0%, #111827 70%);
-            box-shadow: 0 0 0 4px rgba(17,24,39,${active ? 0.18 : 0.1}),
-                        0 6px 18px rgba(15,23,42,${active ? 0.35 : 0.18});
+            background:radial-gradient(circle at 50% 38%, #fde68a 0%, #fb923c 46%, #ef4444 100%);
+            box-shadow: 0 0 0 ${ring}px rgba(249,115,22,${active ? 0.26 : 0.16}),
+                        0 0 ${glow}px ${active ? 5 : 3}px rgba(239,68,68,${active ? 0.55 : 0.4}),
+                        0 4px 12px rgba(0,0,0,0.28);
             transition: all 200ms ease;
-        ">
-          <span style="
-            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-            width:${inner}px;height:${inner}px;border-radius:9999px;background:#fff;
-          "></span>
-        </span>`,
+        "></span>`,
         iconSize: [size, size],
         iconAnchor: [size / 2, size / 2],
     });
@@ -48,6 +52,8 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
     const [activeSlug, setActiveSlug] = useState<string | null>(null);
     const [flyTarget, setFlyTarget] = useState<[number, number] | null>(null);
     const markerRefs = useRef<Record<string, L.Marker | null>>({});
+    const { resolvedTheme } = useTheme();
+    const isDark = resolvedTheme === "dark";
 
     useEffect(() => {
         setMounted(true);
@@ -68,7 +74,7 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
 
     return (
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-black/10 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.08)] dark:border-white/15 dark:bg-white/95">
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-black/10 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.08)] dark:border-white/15 dark:bg-[#0b1622] dark:shadow-[0_18px_60px_rgba(0,0,0,0.4)]">
                 <div className="aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10]">
                     <MapContainer
                         center={center}
@@ -78,11 +84,12 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
                         scrollWheelZoom={false}
                         worldCopyJump
                         zoomControl={false}
-                        style={{ width: "100%", height: "100%", background: "#ffffff" }}
+                        style={{ width: "100%", height: "100%", background: isDark ? "#0b1622" : "#eef1f4" }}
                     >
                         <TileLayer
+                            key={isDark ? "dark" : "light"}
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                            url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
+                            url={isDark ? TILES.dark : TILES.light}
                             subdomains="abcd"
                         />
                         <FlyTo target={flyTarget} />
