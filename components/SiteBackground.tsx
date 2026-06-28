@@ -94,16 +94,56 @@ function UrbanHeatBackground() {
             <div className="absolute inset-x-0 top-0 h-44 bg-[linear-gradient(180deg,rgba(243,241,234,0.85),transparent)] dark:bg-[linear-gradient(180deg,rgba(5,8,15,0.92),transparent)]" />
 
             {/* City skyline + heat haze rising from it */}
-            <div className="absolute inset-x-0 bottom-0 h-[26vh] sm:h-[30vh]">
-                <div className="animate-heat-haze absolute inset-x-0 bottom-0 h-full bg-[linear-gradient(0deg,rgba(251,146,60,0.26),rgba(251,191,36,0.07)_46%,transparent_82%)] blur-2xl dark:bg-[linear-gradient(0deg,rgba(239,68,68,0.32),rgba(249,115,22,0.1)_46%,transparent_82%)]" />
+            <div className="absolute inset-x-0 bottom-0 h-[36vh] sm:h-[42vh]">
+                {/* Rising heat haze (clearly visible) */}
+                <div className="animate-heat-haze absolute inset-x-0 bottom-0 h-full bg-[linear-gradient(0deg,rgba(249,115,22,0.5),rgba(251,146,60,0.24)_34%,rgba(251,191,36,0.08)_58%,transparent_84%)] blur-[44px] dark:bg-[linear-gradient(0deg,rgba(239,68,68,0.55),rgba(249,115,22,0.26)_34%,rgba(245,158,11,0.1)_58%,transparent_84%)]" />
+                {/* Glowing rim right at the rooftops */}
+                <div className="absolute inset-x-0 bottom-[42%] h-px bg-[linear-gradient(90deg,transparent,rgba(249,115,22,0.5),rgba(239,68,68,0.4),transparent)] blur-[2px] dark:bg-[linear-gradient(90deg,transparent,rgba(248,113,113,0.6),rgba(249,115,22,0.5),transparent)]" />
+
+                {/* Far skyline layer (lighter, shorter, depth) */}
                 <svg
                     aria-hidden="true"
-                    viewBox="0 0 1440 320"
+                    viewBox="0 0 1440 400"
                     preserveAspectRatio="none"
-                    className="absolute inset-x-0 bottom-0 h-full w-full fill-slate-900/[0.09] dark:fill-[#01040a]/85"
+                    className="absolute inset-x-0 bottom-0 h-[82%] w-full fill-[#1e293b1f] dark:fill-[#0a1422c2]"
                 >
-                    <path d="M0,320 L0,250 L40,250 L40,210 L95,210 L95,250 L130,250 L130,170 L175,170 L175,140 L205,140 L205,170 L250,170 L250,235 L300,235 L300,120 L335,120 L335,95 L360,95 L360,120 L405,120 L405,200 L455,200 L455,160 L510,160 L510,225 L560,225 L560,110 L600,110 L600,80 L625,80 L625,110 L670,110 L670,185 L720,185 L720,150 L775,150 L775,240 L820,240 L820,130 L865,130 L865,175 L915,175 L915,205 L965,205 L965,100 L1000,100 L1000,75 L1025,75 L1025,100 L1070,100 L1070,165 L1120,165 L1120,220 L1170,220 L1170,140 L1220,140 L1220,190 L1275,190 L1275,235 L1325,235 L1325,160 L1380,160 L1380,250 L1440,250 L1440,320 Z" />
+                    <path d="M0,400 L0,330 L70,330 L70,300 L120,300 L120,338 L165,338 L165,288 L210,288 L210,322 L270,322 L270,296 L330,296 L330,330 L395,330 L395,300 L455,300 L455,334 L520,334 L520,304 L585,304 L585,330 L650,330 L650,298 L715,298 L715,332 L785,332 L785,306 L855,306 L855,330 L925,330 L925,300 L995,300 L995,334 L1065,334 L1065,302 L1135,302 L1135,330 L1205,330 L1205,300 L1275,300 L1275,336 L1350,336 L1350,308 L1440,308 L1440,400 Z" />
                 </svg>
+
+                {/* Near skyline layer (darker, taller, detailed setbacks + spires) */}
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 1440 400"
+                    preserveAspectRatio="none"
+                    className="absolute inset-x-0 bottom-0 h-full w-full fill-[#1e293b30] dark:fill-[#010409f2]"
+                >
+                    <path d="M0,400 L0,312 L66,312 L66,282 L112,282 L112,330 L150,330 L150,232 L176,232 L176,210 L206,210 L206,232 L232,232 L232,300 L272,300 L272,262 L332,262 L332,300 L362,300 L362,182 L382,182 L382,150 L412,150 L412,182 L432,182 L432,252 L472,252 L472,300 L522,300 L522,222 L562,222 L562,300 L602,300 L602,142 L617,142 L617,110 L647,110 L647,142 L662,142 L662,240 L702,240 L702,290 L762,290 L762,202 L802,202 L802,262 L842,262 L842,162 L862,162 L862,130 L892,130 L892,162 L912,162 L912,252 L952,252 L952,300 L1002,300 L1002,212 L1042,212 L1042,300 L1082,300 L1082,172 L1102,172 L1102,150 L1132,150 L1132,172 L1152,172 L1152,262 L1202,262 L1202,300 L1257,300 L1257,232 L1302,232 L1302,300 L1342,300 L1342,252 L1402,252 L1402,290 L1440,290 L1440,400 Z" />
+                    {/* antenna spires */}
+                    <g className="stroke-[#1e293b80] dark:stroke-[#e2e8f099]" strokeWidth="2" vectorEffect="non-scaling-stroke">
+                        <line x1="397" y1="150" x2="397" y2="86" />
+                        <line x1="632" y1="110" x2="632" y2="40" />
+                        <line x1="877" y1="130" x2="877" y2="72" />
+                    </g>
+                </svg>
+
+                {/* Antenna beacon lights (pulsing) */}
+                <span className="animate-pulse-glow absolute left-[27.6%] bottom-[78%] h-1.5 w-1.5 rounded-full bg-red-500/80 dark:bg-red-400" />
+                <span className="animate-pulse-glow absolute left-[43.9%] bottom-[90%] h-1.5 w-1.5 rounded-full bg-red-500/80 dark:bg-red-400" style={{ animationDelay: "1s" }} />
+                <span className="animate-pulse-glow absolute left-[60.9%] bottom-[82%] h-1.5 w-1.5 rounded-full bg-red-500/80 dark:bg-red-400" style={{ animationDelay: "2s" }} />
+
+                {/* Lit windows (warm glints, stronger at night) */}
+                {[
+                    ["10%", "16%"], ["13%", "30%"], ["26%", "24%"], ["29%", "40%"],
+                    ["38%", "30%"], ["43%", "52%"], ["50%", "22%"], ["57%", "44%"],
+                    ["63%", "32%"], ["71%", "20%"], ["79%", "36%"], ["86%", "26%"],
+                    ["92%", "18%"],
+                ].map(([left, bottom], i) => (
+                    <span
+                        key={i}
+                        className="absolute h-[3px] w-[3px] rounded-[1px] bg-amber-400/35 dark:bg-amber-300/80"
+                        style={{ left, bottom }}
+                    />
+                ))}
             </div>
         </>
     );
