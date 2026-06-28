@@ -82,6 +82,18 @@ body {
 }
 .animate-thermal-sweep { animation: thermal-sweep 16s linear infinite; }
 
+/* Organic morphing heat blobs (liquid drift + shape morph) */
+@keyframes blob-morph-a {
+    0%, 100% { border-radius: 42% 58% 64% 36% / 46% 40% 60% 54%; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    50%      { border-radius: 62% 38% 40% 60% / 58% 56% 44% 42%; transform: translate3d(3vw, 2vh, 0) rotate(12deg) scale(1.08); }
+}
+@keyframes blob-morph-b {
+    0%, 100% { border-radius: 56% 44% 38% 62% / 52% 48% 52% 48%; transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    50%      { border-radius: 38% 62% 60% 40% / 60% 42% 58% 40%; transform: translate3d(-3vw, 3vh, 0) rotate(-10deg) scale(1.06); }
+}
+.animate-blob-a { animation: blob-morph-a 17s ease-in-out infinite; will-change: transform, border-radius; }
+.animate-blob-b { animation: blob-morph-b 21s ease-in-out infinite; will-change: transform, border-radius; }
+
 * {
     -ms-overflow-style: none;
     scrollbar-width: none;

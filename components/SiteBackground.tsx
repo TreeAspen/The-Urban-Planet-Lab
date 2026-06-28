@@ -49,6 +49,10 @@ function EdgeFades() {
    Night — a thermal-infrared satellite view: deep blue base with glowing red /
           orange urban heat-island hotspots and ember-coloured isotherms.        */
 function UrbanHeatBackground() {
+    // Angled downtown grid — short blocks inside the ring road
+    const gridV = [720, 775, 830, 885, 940, 995, 1050];
+    const gridH = [400, 455, 510, 565, 620, 675];
+
     return (
         <>
             <div className="absolute inset-0 bg-[#f8f3e9] dark:bg-[#05080f]" />
@@ -56,61 +60,80 @@ function UrbanHeatBackground() {
             {/* Sky dome — warm sun glow by day, cool night sky by dark */}
             <div className="absolute inset-0 bg-[radial-gradient(95%_62%_at_50%_-10%,rgba(255,209,128,0.62),rgba(255,236,196,0.2)_42%,transparent_74%)] dark:bg-[radial-gradient(95%_62%_at_50%_-12%,rgba(30,64,104,0.7),rgba(10,24,44,0.32)_45%,transparent_74%)]" />
 
-            {/* Cartographic street-grid texture (map underlay) — blocks + avenues */}
+            {/* Real road-network map: river, arteries, ring road, angled downtown grid */}
             <div
-                className="absolute inset-0 opacity-[0.5] dark:hidden"
+                className="absolute inset-0 opacity-[0.5] dark:opacity-[0.48]"
                 style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(15,23,32,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,32,0.05) 1px, transparent 1px), linear-gradient(rgba(15,23,32,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,32,0.07) 1px, transparent 1px), repeating-linear-gradient(27deg, transparent 0 210px, rgba(15,23,32,0.05) 210px 211px, transparent 211px 420px), repeating-linear-gradient(-57deg, transparent 0 250px, rgba(15,23,32,0.045) 250px 251px, transparent 251px 500px)",
-                    backgroundSize: "34px 34px, 34px 34px, 170px 170px, 170px 170px, auto, auto",
-                    maskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
-                    WebkitMaskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
+                    maskImage: "radial-gradient(132% 108% at 50% 30%, #000 50%, transparent 90%)",
+                    WebkitMaskImage: "radial-gradient(132% 108% at 50% 30%, #000 50%, transparent 90%)",
                 }}
-            />
+            >
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 1600 1000"
+                    preserveAspectRatio="xMidYMid slice"
+                    className="h-full w-full text-[#26334a] dark:text-[#86b0ec]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    {/* River */}
+                    <g className="text-sky-700/35 dark:text-sky-500/25">
+                        <path d="M-60,560 C 240,490 360,690 620,632 C 880,576 1000,724 1260,660 C 1440,616 1540,684 1680,640" strokeWidth="26" />
+                    </g>
+                    {/* Major arteries */}
+                    <g strokeOpacity="0.5" strokeWidth="3.4">
+                        <path d="M-60,300 C 300,228 580,404 900,344 C 1180,292 1430,388 1680,332" />
+                        <path d="M-60,792 C 360,752 700,860 1060,800 C 1330,756 1520,816 1680,788" />
+                        <path d="M360,-60 C 430,260 300,520 470,820 C 560,980 520,1020 600,1060" />
+                        <path d="M1190,-60 C 1120,260 1320,520 1170,880" />
+                    </g>
+                    {/* Diagonal highway */}
+                    <path d="M-60,1000 C 520,640 1000,420 1680,110" strokeOpacity="0.42" strokeWidth="3.6" />
+                    {/* Ring road around downtown */}
+                    <ellipse cx="885" cy="540" rx="250" ry="182" strokeOpacity="0.45" strokeWidth="2.6" />
+                    {/* Secondary connectors */}
+                    <g strokeOpacity="0.4" strokeWidth="1.6">
+                        <path d="M520,210 C 620,330 700,430 770,520" />
+                        <path d="M1060,250 C 1000,360 940,460 905,540" />
+                        <path d="M690,900 C 770,800 830,740 880,712" />
+                        <path d="M300,560 C 470,585 580,592 645,600" />
+                        <path d="M1180,648 C 1340,612 1430,588 1520,560" />
+                    </g>
+                    {/* Angled downtown grid */}
+                    <g transform="rotate(13 885 540)" strokeOpacity="0.32" strokeWidth="1">
+                        {gridV.map((x) => (
+                            <line key={`v${x}`} x1={x} y1={382} x2={x} y2={700} />
+                        ))}
+                        {gridH.map((y) => (
+                            <line key={`h${y}`} x1={702} y1={y} x2={1072} y2={y} />
+                        ))}
+                    </g>
+                </svg>
+            </div>
+
+            {/* Fractal-noise grain (soft-light) for a printed-map texture */}
+            <svg aria-hidden="true" className="absolute h-0 w-0">
+                <defs>
+                    <filter id="uhNoise">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+                    </filter>
+                </defs>
+            </svg>
             <div
-                className="absolute inset-0 hidden opacity-[0.6] dark:block"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(148,197,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148,197,255,0.05) 1px, transparent 1px), linear-gradient(rgba(148,197,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(148,197,255,0.07) 1px, transparent 1px), repeating-linear-gradient(27deg, transparent 0 210px, rgba(148,197,255,0.05) 210px 211px, transparent 211px 420px), repeating-linear-gradient(-57deg, transparent 0 250px, rgba(148,197,255,0.04) 250px 251px, transparent 251px 500px)",
-                    backgroundSize: "34px 34px, 34px 34px, 170px 170px, 170px 170px, auto, auto",
-                    maskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
-                    WebkitMaskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
-                }}
+                className="absolute inset-0 opacity-[0.16] mix-blend-soft-light dark:opacity-[0.1]"
+                style={{ filter: "url(#uhNoise)" }}
             />
 
-            {/* Heat plumes / urban heat-island hotspots */}
-            <div className="animate-aurora-1 absolute left-[3%] top-[8%] h-[54vh] w-[52vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(244,114,22,0.17),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.2),transparent_74%)]" />
-            <div className="animate-aurora-2 absolute right-[2%] top-[20%] h-[50vh] w-[48vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.18),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(251,146,60,0.18),transparent_74%)]" />
-            <div className="animate-aurora-3 absolute top-[44%] left-[40%] h-[46vh] w-[46vw] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.11),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(244,114,22,0.15),transparent_74%)]" style={{ animationDelay: "3s" }} />
-            <div className="animate-aurora-1 absolute bottom-[14%] left-[18%] h-[46vh] w-[50vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.12),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.16),transparent_74%)]" style={{ animationDelay: "7s" }} />
-
-            {/* Cool counterpoint — vegetation / water cooling */}
-            <div className="animate-aurora-2 absolute bottom-[12%] right-[6%] h-[40vh] w-[38vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.14),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.2),transparent_70%)]" style={{ animationDelay: "5s" }} />
+            {/* Organic morphing heat blobs (liquid drift) */}
+            <div className="animate-blob-a absolute -left-[8%] top-[2%] h-[42vw] w-[42vw] opacity-[0.22] blur-[80px] bg-[#f97316] dark:opacity-[0.28] dark:bg-[#7a2f12]" />
+            <div className="animate-blob-b absolute right-[-6%] top-[10%] h-[38vw] w-[38vw] opacity-[0.2] blur-[80px] bg-[#fbbf24] dark:opacity-[0.24] dark:bg-[#8a4b14]" style={{ animationDelay: "-6s" }} />
+            <div className="animate-blob-a absolute bottom-[6%] left-[16%] h-[40vw] w-[40vw] opacity-[0.16] blur-[80px] bg-[#fb7185] dark:opacity-[0.22] dark:bg-[#5c2330]" style={{ animationDelay: "-3s" }} />
+            <div className="animate-blob-b absolute bottom-[8%] right-[8%] h-[32vw] w-[32vw] opacity-[0.15] blur-[80px] bg-[#2dd4bf] dark:opacity-[0.2] dark:bg-[#14414d]" style={{ animationDelay: "-9s" }} />
 
             {/* Moving thermal scan band */}
-            <div className="animate-thermal-sweep absolute -top-[10%] left-0 h-[120%] w-[26vw] bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.12),transparent)] blur-2xl dark:bg-[linear-gradient(90deg,transparent,rgba(248,113,113,0.16),transparent)]" />
-
-            {/* Thermal isotherm contour rings */}
-            <div
-                className="absolute inset-0 opacity-50 dark:hidden"
-                style={{
-                    backgroundImage:
-                        "repeating-radial-gradient(circle at 20% 16%, transparent 0 38px, rgba(234,88,12,0.07) 38px 39px, transparent 39px 78px), repeating-radial-gradient(circle at 84% 28%, transparent 0 34px, rgba(245,158,11,0.06) 34px 35px, transparent 35px 70px), repeating-radial-gradient(circle at 60% 78%, transparent 0 46px, rgba(220,38,38,0.05) 46px 47px, transparent 47px 94px)",
-                }}
-            />
-            <div
-                className="absolute inset-0 hidden opacity-50 dark:block"
-                style={{
-                    backgroundImage:
-                        "repeating-radial-gradient(circle at 20% 16%, transparent 0 38px, rgba(251,146,60,0.09) 38px 39px, transparent 39px 78px), repeating-radial-gradient(circle at 84% 28%, transparent 0 34px, rgba(250,204,21,0.06) 34px 35px, transparent 35px 70px), repeating-radial-gradient(circle at 60% 78%, transparent 0 46px, rgba(239,68,68,0.07) 46px 47px, transparent 47px 94px)",
-                }}
-            />
-
-            {/* Pulsing heat-island hotspots */}
-            <div className="animate-pulse-glow absolute left-[24%] top-[30%] h-3 w-3 rounded-full bg-orange-500/55 blur-[1px] dark:bg-red-500/70" style={{ animationDelay: "0s" }} />
-            <div className="animate-pulse-glow absolute right-[22%] top-[38%] h-2.5 w-2.5 rounded-full bg-amber-500/50 blur-[1px] dark:bg-orange-400/70" style={{ animationDelay: "1.4s" }} />
-            <div className="animate-pulse-glow absolute left-[58%] top-[22%] h-2 w-2 rounded-full bg-red-500/45 blur-[1px] dark:bg-amber-300/70" style={{ animationDelay: "2.6s" }} />
-            <div className="animate-pulse-glow absolute left-[12%] bottom-[34%] h-2.5 w-2.5 rounded-full bg-orange-600/45 blur-[1px] dark:bg-red-400/65" style={{ animationDelay: "0.8s" }} />
+            <div className="animate-thermal-sweep absolute -top-[10%] left-0 h-[120%] w-[26vw] bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.1),transparent)] blur-2xl dark:bg-[linear-gradient(90deg,transparent,rgba(248,113,113,0.14),transparent)]" />
 
             {/* Top fade only — keep the skyline crisp at the bottom */}
             <div className="absolute inset-x-0 top-0 h-44 bg-[linear-gradient(180deg,rgba(243,241,234,0.85),transparent)] dark:bg-[linear-gradient(180deg,rgba(5,8,15,0.92),transparent)]" />
