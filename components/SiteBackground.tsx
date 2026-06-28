@@ -56,11 +56,33 @@ function UrbanHeatBackground() {
             {/* Sky dome — warm sun glow by day, cool night sky by dark */}
             <div className="absolute inset-0 bg-[radial-gradient(95%_62%_at_50%_-10%,rgba(255,209,128,0.62),rgba(255,236,196,0.2)_42%,transparent_74%)] dark:bg-[radial-gradient(95%_62%_at_50%_-12%,rgba(30,64,104,0.7),rgba(10,24,44,0.32)_45%,transparent_74%)]" />
 
+            {/* Cartographic street-grid texture (map underlay) — blocks + avenues */}
+            <div
+                className="absolute inset-0 opacity-[0.5] dark:hidden"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(rgba(15,23,32,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,32,0.05) 1px, transparent 1px), linear-gradient(rgba(15,23,32,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,32,0.07) 1px, transparent 1px), repeating-linear-gradient(27deg, transparent 0 210px, rgba(15,23,32,0.05) 210px 211px, transparent 211px 420px), repeating-linear-gradient(-57deg, transparent 0 250px, rgba(15,23,32,0.045) 250px 251px, transparent 251px 500px)",
+                    backgroundSize: "34px 34px, 34px 34px, 170px 170px, 170px 170px, auto, auto",
+                    maskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
+                    WebkitMaskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
+                }}
+            />
+            <div
+                className="absolute inset-0 hidden opacity-[0.6] dark:block"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(rgba(148,197,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148,197,255,0.05) 1px, transparent 1px), linear-gradient(rgba(148,197,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(148,197,255,0.07) 1px, transparent 1px), repeating-linear-gradient(27deg, transparent 0 210px, rgba(148,197,255,0.05) 210px 211px, transparent 211px 420px), repeating-linear-gradient(-57deg, transparent 0 250px, rgba(148,197,255,0.04) 250px 251px, transparent 251px 500px)",
+                    backgroundSize: "34px 34px, 34px 34px, 170px 170px, 170px 170px, auto, auto",
+                    maskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
+                    WebkitMaskImage: "radial-gradient(125% 100% at 50% 28%, #000 52%, transparent 92%)",
+                }}
+            />
+
             {/* Heat plumes / urban heat-island hotspots */}
-            <div className="animate-aurora-1 absolute left-[3%] top-[8%] h-[50vh] w-[48vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(244,114,22,0.22),transparent_66%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.34),transparent_62%)]" />
-            <div className="animate-aurora-2 absolute right-[2%] top-[20%] h-[46vh] w-[44vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.24),transparent_66%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.32),transparent_62%)]" />
-            <div className="animate-aurora-3 absolute top-[44%] left-[40%] h-[40vh] w-[40vw] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.14),transparent_66%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.26),transparent_62%)]" style={{ animationDelay: "3s" }} />
-            <div className="animate-aurora-1 absolute bottom-[14%] left-[18%] h-[42vh] w-[46vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.16),transparent_66%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.24),transparent_62%)]" style={{ animationDelay: "7s" }} />
+            <div className="animate-aurora-1 absolute left-[3%] top-[8%] h-[54vh] w-[52vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(244,114,22,0.17),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.2),transparent_74%)]" />
+            <div className="animate-aurora-2 absolute right-[2%] top-[20%] h-[50vh] w-[48vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.18),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(251,146,60,0.18),transparent_74%)]" />
+            <div className="animate-aurora-3 absolute top-[44%] left-[40%] h-[46vh] w-[46vw] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.11),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(244,114,22,0.15),transparent_74%)]" style={{ animationDelay: "3s" }} />
+            <div className="animate-aurora-1 absolute bottom-[14%] left-[18%] h-[46vh] w-[50vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.12),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.16),transparent_74%)]" style={{ animationDelay: "7s" }} />
 
             {/* Cool counterpoint — vegetation / water cooling */}
             <div className="animate-aurora-2 absolute bottom-[12%] right-[6%] h-[40vh] w-[38vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.14),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.2),transparent_70%)]" style={{ animationDelay: "5s" }} />
@@ -77,10 +99,10 @@ function UrbanHeatBackground() {
                 }}
             />
             <div
-                className="absolute inset-0 hidden opacity-70 dark:block"
+                className="absolute inset-0 hidden opacity-50 dark:block"
                 style={{
                     backgroundImage:
-                        "repeating-radial-gradient(circle at 20% 16%, transparent 0 38px, rgba(251,146,60,0.1) 38px 39px, transparent 39px 78px), repeating-radial-gradient(circle at 84% 28%, transparent 0 34px, rgba(250,204,21,0.07) 34px 35px, transparent 35px 70px), repeating-radial-gradient(circle at 60% 78%, transparent 0 46px, rgba(239,68,68,0.09) 46px 47px, transparent 47px 94px)",
+                        "repeating-radial-gradient(circle at 20% 16%, transparent 0 38px, rgba(251,146,60,0.09) 38px 39px, transparent 39px 78px), repeating-radial-gradient(circle at 84% 28%, transparent 0 34px, rgba(250,204,21,0.06) 34px 35px, transparent 35px 70px), repeating-radial-gradient(circle at 60% 78%, transparent 0 46px, rgba(239,68,68,0.07) 46px 47px, transparent 47px 94px)",
                 }}
             />
 
@@ -95,10 +117,10 @@ function UrbanHeatBackground() {
 
             {/* City skyline + heat haze rising from it */}
             <div className="absolute inset-x-0 bottom-0 h-[36vh] sm:h-[42vh]">
-                {/* Rising heat haze (clearly visible) */}
-                <div className="animate-heat-haze absolute inset-x-0 bottom-0 h-full bg-[linear-gradient(0deg,rgba(249,115,22,0.5),rgba(251,146,60,0.24)_34%,rgba(251,191,36,0.08)_58%,transparent_84%)] blur-[44px] dark:bg-[linear-gradient(0deg,rgba(239,68,68,0.55),rgba(249,115,22,0.26)_34%,rgba(245,158,11,0.1)_58%,transparent_84%)]" />
-                {/* Glowing rim right at the rooftops */}
-                <div className="absolute inset-x-0 bottom-[42%] h-px bg-[linear-gradient(90deg,transparent,rgba(249,115,22,0.5),rgba(239,68,68,0.4),transparent)] blur-[2px] dark:bg-[linear-gradient(90deg,transparent,rgba(248,113,113,0.6),rgba(249,115,22,0.5),transparent)]" />
+                {/* Rising heat haze — soft, warm, multi-stop so there is no hard band */}
+                <div className="animate-heat-haze absolute inset-x-0 bottom-0 h-full bg-[linear-gradient(0deg,rgba(251,146,60,0.34),rgba(251,146,60,0.2)_24%,rgba(251,191,36,0.1)_46%,rgba(251,191,36,0.04)_66%,transparent_88%)] blur-[64px] dark:bg-[linear-gradient(0deg,rgba(249,115,22,0.4),rgba(244,114,60,0.22)_24%,rgba(245,158,11,0.1)_46%,rgba(245,158,11,0.04)_66%,transparent_88%)]" />
+                {/* Soft glowing rim near the rooftops */}
+                <div className="absolute inset-x-0 bottom-[42%] h-1 bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.3),rgba(249,115,22,0.26),transparent)] blur-[6px] dark:bg-[linear-gradient(90deg,transparent,rgba(249,115,22,0.38),rgba(248,113,113,0.3),transparent)]" />
 
                 {/* Far skyline layer (lighter, shorter, depth) */}
                 <svg
