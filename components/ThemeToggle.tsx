@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 type Mode = "light" | "dark" | "auto";
@@ -58,6 +58,12 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
     const [mode, setMode] = useState<Mode>("auto");
     const [mounted, setMounted] = useState(false);
 
+    // next-themes' setTheme is not referentially stable; keep it in a ref so the
+    // apply effect never depends on it (depending on it caused a re-render storm
+    // where stale closures kept resetting the theme).
+    const setThemeRef = useRef(setTheme);
+    setThemeRef.current = setTheme;
+
     useEffect(() => {
         setMounted(true);
         const saved = localStorage.getItem(MODE_KEY) as Mode | null;
@@ -71,13 +77,13 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
     useEffect(() => {
         if (!mounted) return;
 
-        const apply = () => setTheme(mode === "auto" ? themeForNow() : mode);
+        const apply = () => setThemeRef.current(mode === "auto" ? themeForNow() : mode);
         apply();
 
         if (mode !== "auto") return;
         const id = window.setInterval(apply, 60_000);
         return () => window.clearInterval(id);
-    }, [mode, mounted, setTheme]);
+    }, [mode, mounted]);
 
     const cycle = useCallback(() => {
         setMode((current) => {
