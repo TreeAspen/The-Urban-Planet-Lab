@@ -66,6 +66,22 @@ body {
 .animate-aurora-2 { animation: aurora-2 22s ease-in-out infinite; }
 .animate-aurora-3 { animation: aurora-3 16s ease-in-out infinite; }
 
+/* Urban-heat background motion */
+@keyframes heat-haze {
+    0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.6; }
+    50%      { transform: translateY(-12px) scaleY(1.05); opacity: 0.9; }
+}
+.animate-heat-haze { animation: heat-haze 9s ease-in-out infinite; }
+
+@keyframes thermal-sweep {
+    0%   { transform: translateX(-35%) skewX(-8deg); opacity: 0; }
+    15%  { opacity: 0.55; }
+    55%  { opacity: 0.28; }
+    85%  { opacity: 0.5; }
+    100% { transform: translateX(135%) skewX(-8deg); opacity: 0; }
+}
+.animate-thermal-sweep { animation: thermal-sweep 16s linear infinite; }
+
 * {
     -ms-overflow-style: none;
     scrollbar-width: none;
