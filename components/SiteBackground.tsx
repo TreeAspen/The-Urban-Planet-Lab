@@ -20,6 +20,7 @@ export default function SiteBackground({
 
 const VARIANTS: Record<BackgroundVariant, () => ReactElement> = {
     urbanheat: UrbanHeatBackground,
+    classic: ClassicBackground,
     mesh: MeshBackground,
     aurora: AuroraBackground,
     dots: DotsBackground,
@@ -99,20 +100,21 @@ function UrbanHeatBackground() {
                     stroke="currentColor"
                 >
                     <defs>
-                        <pattern id="uhGraticule" width="120" height="120" patternUnits="userSpaceOnUse">
-                            <path d="M60,52 v16 M52,60 h16" strokeWidth="1" strokeOpacity="0.45" />
-                        </pattern>
+                        <filter id="uhWarp" x="-25%" y="-25%" width="150%" height="150%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.011 0.014" numOctaves="2" seed="7" result="n" />
+                            <feDisplacementMap in="SourceGraphic" in2="n" scale="58" xChannelSelector="R" yChannelSelector="G" />
+                        </filter>
                     </defs>
-                    {/* coordinate graticule of fine crosses */}
-                    <rect x="0" y="0" width="1440" height="900" stroke="none" fill="url(#uhGraticule)" />
-                    {/* isotherm isolines */}
-                    {isotherms.map((c, ci) => (
-                        <g key={ci} transform={`rotate(${c.rot} ${c.cx} ${c.cy})`} strokeOpacity={c.op} strokeWidth="1.1">
-                            {c.rs.map((r, ri) => (
-                                <ellipse key={ri} cx={c.cx} cy={c.cy} rx={r} ry={r * 0.78} />
-                            ))}
-                        </g>
-                    ))}
+                    {/* isotherm isolines, warped into irregular contours */}
+                    <g filter="url(#uhWarp)">
+                        {isotherms.map((c, ci) => (
+                            <g key={ci} transform={`rotate(${c.rot} ${c.cx} ${c.cy})`} strokeOpacity={c.op} strokeWidth="1.1">
+                                {c.rs.map((r, ri) => (
+                                    <ellipse key={ri} cx={c.cx} cy={c.cy} rx={r} ry={r * 0.78} />
+                                ))}
+                            </g>
+                        ))}
+                    </g>
                 </svg>
             </div>
 
@@ -136,7 +138,7 @@ function UrbanHeatBackground() {
                     preserveAspectRatio="none"
                     className="absolute inset-x-0 bottom-0 h-[74%] w-full fill-[#1e293b] opacity-[0.07] dark:fill-[#9cc4ff]"
                 >
-                    <path d="M0,400 L0,330 L70,330 L70,300 L120,300 L120,338 L165,338 L165,288 L210,288 L210,322 L270,322 L270,296 L330,296 L330,330 L395,330 L395,300 L455,300 L455,334 L520,334 L520,304 L585,304 L585,330 L650,330 L650,298 L715,298 L715,332 L785,332 L785,306 L855,306 L855,330 L925,330 L925,300 L995,300 L995,334 L1065,334 L1065,302 L1135,302 L1135,330 L1205,330 L1205,300 L1275,300 L1275,336 L1350,336 L1350,308 L1440,308 L1440,400 Z" />
+                    <path d="M0,400 L0,340 L42,340 L42,318 L86,318 L86,300 L112,300 A20 18 0 0 1 152,300 L152,340 L196,340 L196,312 L240,312 L240,292 L262,292 L262,312 L298,312 L298,342 L356,342 L356,314 L386,314 L386,300 L402,300 L402,314 L428,314 L428,338 L484,338 L484,306 L512,288 L540,306 L540,338 L596,338 L596,302 L646,302 L646,340 L706,340 L706,316 L732,316 L732,302 L748,302 L748,316 L776,316 L776,342 L846,342 L846,314 L878,314 A24 20 0 0 1 942,314 L942,342 L1006,342 L1006,318 L1072,318 L1072,300 L1092,300 L1092,318 L1136,318 L1136,342 L1202,342 L1202,312 L1246,312 L1246,332 L1296,332 L1296,300 L1324,300 L1324,332 L1366,332 L1366,340 L1440,340 L1440,400 Z" />
                 </svg>
 
                 {/* Mid skyline silhouette (depth) */}
@@ -146,7 +148,7 @@ function UrbanHeatBackground() {
                     preserveAspectRatio="none"
                     className="absolute inset-x-0 bottom-0 h-[88%] w-full fill-[#1e293b] opacity-[0.09] dark:fill-[#9cc4ff]"
                 >
-                    <path d="M0,400 L0,322 L70,322 L70,300 L140,300 L140,330 L210,330 L210,286 L248,286 L248,268 L280,268 L280,286 L316,286 L316,318 L384,318 L384,290 L452,290 L452,318 L516,318 L516,278 L580,278 L580,318 L642,318 L642,262 L676,262 L676,244 L706,244 L706,262 L740,262 L740,318 L808,318 L808,288 L876,288 L876,318 L938,318 L938,272 L1004,272 L1004,318 L1068,318 L1068,292 L1136,292 L1136,318 L1198,318 L1198,276 L1262,276 L1262,318 L1326,318 L1326,298 L1396,298 L1396,318 L1440,318 L1440,400 Z" />
+                    <path d="M0,400 L0,320 L46,320 L46,298 L92,298 L92,252 L116,252 A24 22 0 0 1 164,252 L164,320 L210,320 L210,290 L250,290 L250,268 L268,268 L268,252 L284,252 L284,268 L302,268 L302,290 L340,290 L340,320 L398,320 L398,240 L420,240 L420,216 L436,216 L436,240 L458,240 L458,290 L500,290 L500,262 L530,234 L560,262 L560,290 L604,290 L604,320 L660,320 L660,252 L690,252 L690,230 L706,230 L706,252 L736,252 L736,290 L786,290 L786,320 L848,320 L848,242 L880,242 A30 26 0 0 1 944,242 L944,290 L990,290 L990,320 L1048,320 L1048,252 L1078,252 L1078,290 L1120,290 L1120,320 L1180,320 L1180,246 L1210,246 L1210,224 L1226,224 L1226,246 L1256,246 L1256,290 L1300,290 L1300,320 L1360,320 L1360,268 L1404,268 L1404,302 L1440,302 L1440,400 Z" />
                 </svg>
 
                 {/* Near skyline silhouette (detailed: domes, pitched roofs, towers, tanks) */}
@@ -260,5 +262,57 @@ function GlowBackground() {
 function PlainBackground() {
     return (
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#f6f4ee_0%,#eee9df_55%,#e7e1d4_100%)] dark:bg-[linear-gradient(180deg,#0a1620_0%,#081119_55%,#050d13_100%)]" />
+    );
+}
+
+/* ── Classic: the site's original aurora + floating-glass-cards background ───── */
+function ClassicBackground() {
+    return (
+        <>
+            <div className="absolute inset-0 bg-[#f1eee6] dark:bg-[#071118]" />
+
+            {/* Aurora blobs — light mode */}
+            <div className="animate-aurora-1 absolute -left-[10%] top-[5%] h-[55vh] w-[55vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.13),transparent_70%)] blur-3xl dark:hidden" style={{ animationDelay: "0s" }} />
+            <div className="animate-aurora-2 absolute right-[-8%] top-[20%] h-[50vh] w-[48vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.09),transparent_70%)] blur-3xl dark:hidden" style={{ animationDelay: "4s" }} />
+            <div className="animate-aurora-3 absolute bottom-[10%] left-[20%] h-[45vh] w-[50vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.07),transparent_70%)] blur-3xl dark:hidden" style={{ animationDelay: "8s" }} />
+
+            {/* Aurora blobs — dark mode */}
+            <div className="animate-aurora-1 absolute -left-[10%] top-[5%] hidden h-[55vh] w-[55vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.1),transparent_70%)] blur-3xl dark:block" style={{ animationDelay: "0s" }} />
+            <div className="animate-aurora-2 absolute right-[-8%] top-[20%] hidden h-[50vh] w-[48vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.07),transparent_70%)] blur-3xl dark:block" style={{ animationDelay: "4s" }} />
+            <div className="animate-aurora-3 absolute bottom-[10%] left-[20%] hidden h-[45vh] w-[50vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(52,211,153,0.07),transparent_70%)] blur-3xl dark:block" style={{ animationDelay: "8s" }} />
+
+            <div className="absolute inset-0 bg-[radial-gradient(78%_54%_at_50%_0%,rgba(255,255,255,0.94),rgba(255,255,255,0.5)_42%,transparent_78%),linear-gradient(180deg,rgba(241,238,230,0.65)_0%,rgba(233,228,218,0.84)_56%,rgba(227,221,209,0.92)_100%)] dark:bg-[radial-gradient(78%_54%_at_50%_0%,rgba(18,31,39,0.92),rgba(7,17,24,0.42)_42%,transparent_78%),linear-gradient(180deg,rgba(7,17,24,0.82)_0%,rgba(7,17,24,0.92)_52%,rgba(4,10,15,1)_100%)]" />
+
+            <div className="absolute inset-0 dark:hidden" style={{ backgroundImage: "linear-gradient(rgba(15,23,32,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,32,0.035) 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
+            <div className="absolute inset-0 hidden dark:block" style={{ backgroundImage: "linear-gradient(rgba(226,232,240,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(226,232,240,0.04) 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
+            <div className="absolute inset-0 dark:hidden" style={{ backgroundImage: "linear-gradient(rgba(15,23,32,0.075) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,32,0.075) 1px, transparent 1px)", backgroundSize: "180px 180px" }} />
+            <div className="absolute inset-0 hidden dark:block" style={{ backgroundImage: "linear-gradient(rgba(226,232,240,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(226,232,240,0.07) 1px, transparent 1px)", backgroundSize: "180px 180px" }} />
+
+            <div className="absolute inset-0 opacity-60 dark:hidden" style={{ backgroundImage: "repeating-linear-gradient(124deg, transparent 0 250px, rgba(14,165,233,0.13) 250px 252px, transparent 252px 500px), repeating-linear-gradient(32deg, transparent 0 320px, rgba(15,23,32,0.05) 320px 321px, transparent 321px 640px)" }} />
+            <div className="absolute inset-0 hidden opacity-55 dark:block" style={{ backgroundImage: "repeating-linear-gradient(124deg, transparent 0 250px, rgba(34,211,238,0.11) 250px 252px, transparent 252px 500px), repeating-linear-gradient(32deg, transparent 0 320px, rgba(226,232,240,0.06) 320px 321px, transparent 321px 640px)" }} />
+
+            <div className="animate-float-slow absolute left-[4%] top-20 h-[15rem] w-[24rem] rounded-[2.8rem] border border-black/8 bg-white/18 shadow-[0_20px_70px_rgba(15,23,32,0.05)] dark:border-white/10 dark:bg-white/[0.03] dark:shadow-[0_24px_70px_rgba(0,0,0,0.22)]" style={{ animationDelay: "0s" }} />
+            <div className="animate-float-slow absolute left-[8%] top-28 h-[15rem] w-[24rem] rounded-[2.8rem] border border-black/6 dark:border-white/8" style={{ animationDelay: "1.5s" }} />
+            <div className="animate-float-medium absolute right-[5%] top-[9rem] h-[18rem] w-[22rem] rounded-[2.8rem] border border-black/8 bg-black/[0.025] dark:border-white/10 dark:bg-white/[0.025]" style={{ animationDelay: "0.8s" }} />
+            <div className="animate-float-medium absolute right-[9%] top-[12.5rem] h-[9rem] w-[15rem] rounded-[2rem] border border-cyan-500/20 dark:border-cyan-300/22" style={{ animationDelay: "2s" }} />
+            <div className="animate-drift absolute right-[14%] top-[15rem] h-[4rem] w-[4rem] rounded-full border border-amber-500/24 dark:border-amber-300/24" style={{ animationDelay: "1s" }} />
+            <div className="animate-float-slow absolute bottom-[18%] left-[11%] h-[12rem] w-[18rem] rounded-[2.2rem] border border-black/8 bg-white/16 dark:border-white/10 dark:bg-white/[0.02]" style={{ animationDelay: "3s" }} />
+            <div className="animate-float-slow absolute bottom-[14%] left-[16%] h-[8rem] w-[12rem] rounded-[1.8rem] border border-black/6 dark:border-white/8" style={{ animationDelay: "4.5s" }} />
+            <div className="animate-float-medium absolute bottom-[20%] right-[7%] h-[14rem] w-[26rem] rounded-[3rem] border border-black/8 bg-white/12 dark:border-white/10 dark:bg-white/[0.025]" style={{ animationDelay: "1.2s" }} />
+            <div className="animate-float-medium absolute bottom-[23%] right-[12%] h-[14rem] w-[26rem] rounded-[3rem] border border-black/6 dark:border-white/8" style={{ animationDelay: "2.8s" }} />
+
+            <div className="absolute left-[18%] top-[30%] h-px w-[44rem] rotate-[16deg] bg-[linear-gradient(90deg,transparent,rgba(14,165,233,0.38),transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(34,211,238,0.34),transparent)]" />
+            <div className="absolute left-[46%] top-[18%] h-px w-[32rem] rotate-[112deg] bg-[linear-gradient(90deg,transparent,rgba(245,158,11,0.26),transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(251,191,36,0.2),transparent)]" />
+            <div className="absolute left-[30%] top-[58%] h-px w-[24rem] rotate-[-12deg] bg-[linear-gradient(90deg,transparent,rgba(15,23,32,0.18),transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(226,232,240,0.14),transparent)]" />
+
+            <div className="animate-pulse-glow absolute left-[10%] top-[22%] h-3 w-3 rounded-full bg-cyan-500/35 blur-[1px] dark:bg-cyan-300/45" style={{ animationDelay: "0s" }} />
+            <div className="animate-pulse-glow absolute right-[16%] top-[44%] h-3 w-3 rounded-full bg-amber-500/30 blur-[1px] dark:bg-amber-300/35" style={{ animationDelay: "2s" }} />
+            <div className="animate-pulse-glow absolute bottom-[18%] left-[34%] h-2.5 w-2.5 rounded-full bg-black/18 dark:bg-white/18" style={{ animationDelay: "1s" }} />
+
+            <div className="absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),transparent)] dark:bg-[linear-gradient(180deg,rgba(7,17,24,0.82),transparent)]" />
+            <div className="absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(0deg,rgba(241,238,230,0.94),transparent)] dark:bg-[linear-gradient(0deg,rgba(7,17,24,0.97),transparent)]" />
+            <div className="absolute inset-y-0 left-0 w-20 bg-[linear-gradient(90deg,rgba(241,238,230,0.94),transparent)] dark:bg-[linear-gradient(90deg,rgba(7,17,24,0.94),transparent)]" />
+            <div className="absolute inset-y-0 right-0 w-20 bg-[linear-gradient(270deg,rgba(241,238,230,0.94),transparent)] dark:bg-[linear-gradient(270deg,rgba(7,17,24,0.94),transparent)]" />
+        </>
     );
 }

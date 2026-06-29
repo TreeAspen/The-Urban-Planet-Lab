@@ -13,6 +13,7 @@ export function getPageContent<T>(page: string): T {
 
 export type BackgroundVariant =
     | "urbanheat"
+    | "classic"
     | "aurora"
     | "mesh"
     | "dots"

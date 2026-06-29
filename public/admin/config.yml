@@ -38,6 +38,7 @@ collections:
             hint: "Decorative background shown behind every page. 'Urban Heat' gives a thermal day/night identity."
             options:
               - { label: "Urban Heat — thermal day / night (signature)", value: "urbanheat" }
+              - { label: "Classic — original aurora + floating glass cards", value: "classic" }
               - { label: "Mesh — colourful soft gradients (modern)", value: "mesh" }
               - { label: "Aurora — slow drifting blobs", value: "aurora" }
               - { label: "Dots — subtle dotted texture", value: "dots" }
