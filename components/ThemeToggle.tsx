@@ -72,6 +72,7 @@ export default function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
         } else if (mode === "night") {
             setBg("classic");
             setClassic(true);
+            setTheme("light"); // classic is shown in its daytime mode
         } else {
             setBg("urbanheat");
             setClassic(false);

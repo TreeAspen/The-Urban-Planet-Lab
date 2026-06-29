@@ -50,11 +50,10 @@ function EdgeFades() {
    Night — a thermal-infrared satellite view: deep blue base with glowing red /
           orange urban heat-island hotspots and ember-coloured isotherms.        */
 function UrbanHeatBackground() {
-    // Isotherm isolines — nested, slightly elliptical rings read as a heat-map figure
+    // Isotherm isolines — two well-separated centres so contours never cross
     const isotherms = [
-        { cx: 440, cy: 300, rot: -14, op: 0.14, rs: [46, 96, 146, 196, 246, 296, 346] },
-        { cx: 1080, cy: 650, rot: 10, op: 0.12, rs: [50, 106, 162, 218, 274, 330] },
-        { cx: 820, cy: 150, rot: -6, op: 0.1, rs: [38, 82, 126, 170, 214] },
+        { cx: 380, cy: 310, rot: -12, op: 0.14, rs: [48, 94, 140, 186, 232] },
+        { cx: 1095, cy: 650, rot: 12, op: 0.12, rs: [52, 102, 152, 202, 252] },
     ];
 
     return (
@@ -101,8 +100,8 @@ function UrbanHeatBackground() {
                 >
                     <defs>
                         <filter id="uhWarp" x="-25%" y="-25%" width="150%" height="150%">
-                            <feTurbulence type="fractalNoise" baseFrequency="0.011 0.014" numOctaves="2" seed="7" result="n" />
-                            <feDisplacementMap in="SourceGraphic" in2="n" scale="58" xChannelSelector="R" yChannelSelector="G" />
+                            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.007" numOctaves="1" seed="7" result="n" />
+                            <feDisplacementMap in="SourceGraphic" in2="n" scale="24" xChannelSelector="R" yChannelSelector="G" />
                         </filter>
                     </defs>
                     {/* isotherm isolines, warped into irregular contours */}
