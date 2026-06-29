@@ -60,8 +60,8 @@ function UrbanHeatBackground() {
         <>
             <div className="absolute inset-0 bg-[#f8f3e9] dark:bg-[#05080f]" />
 
-            {/* Sky dome — warm sun glow by day, cool night sky by dark */}
-            <div className="absolute inset-0 bg-[radial-gradient(95%_62%_at_50%_-10%,rgba(255,209,128,0.62),rgba(255,236,196,0.2)_42%,transparent_74%)] dark:bg-[radial-gradient(95%_62%_at_50%_-12%,rgba(30,64,104,0.7),rgba(10,24,44,0.32)_45%,transparent_74%)]" />
+            {/* Sky dome — warm sun glow by day, cool night sky by dark (gently breathing) */}
+            <div className="animate-sky-breathe absolute inset-0 bg-[radial-gradient(95%_62%_at_50%_-10%,rgba(255,209,128,0.62),rgba(255,236,196,0.2)_42%,transparent_74%)] dark:bg-[radial-gradient(95%_62%_at_50%_-12%,rgba(30,64,104,0.7),rgba(10,24,44,0.32)_45%,transparent_74%)]" />
 
             {/* Fractal-noise grain (soft-light) for a printed-map texture */}
             <svg aria-hidden="true" className="absolute h-0 w-0">
@@ -100,7 +100,9 @@ function UrbanHeatBackground() {
                 >
                     <defs>
                         <filter id="uhWarp" x="-25%" y="-25%" width="150%" height="150%">
-                            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.007" numOctaves="1" seed="7" result="n" />
+                            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.007" numOctaves="1" seed="7" result="n">
+                                <animate attributeName="baseFrequency" dur="22s" values="0.006 0.007;0.0072 0.0061;0.006 0.007" repeatCount="indefinite" />
+                            </feTurbulence>
                             <feDisplacementMap in="SourceGraphic" in2="n" scale="24" xChannelSelector="R" yChannelSelector="G" />
                         </filter>
                     </defs>
@@ -119,6 +121,21 @@ function UrbanHeatBackground() {
 
             {/* Moving thermal scan band */}
             <div className="animate-thermal-sweep absolute -top-[10%] left-0 h-[120%] w-[26vw] bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.1),transparent)] blur-2xl dark:bg-[linear-gradient(90deg,transparent,rgba(248,113,113,0.14),transparent)]" />
+
+            {/* Ambient rising heat motes */}
+            {[
+                { l: "16%", d: "9s", delay: "0s" },
+                { l: "33%", d: "11s", delay: "3s" },
+                { l: "50%", d: "10s", delay: "1.4s" },
+                { l: "67%", d: "12s", delay: "4.6s" },
+                { l: "84%", d: "9.5s", delay: "2.3s" },
+            ].map((m, i) => (
+                <span
+                    key={i}
+                    className="animate-mote absolute bottom-[18%] h-1.5 w-1.5 rounded-full bg-amber-400/40 blur-[1px] dark:bg-orange-300/45"
+                    style={{ left: m.l, animationDuration: m.d, animationDelay: m.delay }}
+                />
+            ))}
 
             {/* Top fade only — keep the skyline crisp at the bottom */}
             <div className="absolute inset-x-0 top-0 h-44 bg-[linear-gradient(180deg,rgba(243,241,234,0.85),transparent)] dark:bg-[linear-gradient(180deg,rgba(5,8,15,0.92),transparent)]" />
