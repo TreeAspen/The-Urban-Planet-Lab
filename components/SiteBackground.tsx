@@ -49,6 +49,13 @@ function EdgeFades() {
    Night — a thermal-infrared satellite view: deep blue base with glowing red /
           orange urban heat-island hotspots and ember-coloured isotherms.        */
 function UrbanHeatBackground() {
+    // Isotherm isolines — nested, slightly elliptical rings read as a heat-map figure
+    const isotherms = [
+        { cx: 440, cy: 300, rot: -14, op: 0.14, rs: [46, 96, 146, 196, 246, 296, 346] },
+        { cx: 1080, cy: 650, rot: 10, op: 0.12, rs: [50, 106, 162, 218, 274, 330] },
+        { cx: 820, cy: 150, rot: -6, op: 0.1, rs: [38, 82, 126, 170, 214] },
+    ];
+
     return (
         <>
             <div className="absolute inset-0 bg-[#f8f3e9] dark:bg-[#05080f]" />
@@ -69,11 +76,45 @@ function UrbanHeatBackground() {
                 style={{ filter: "url(#uhNoise)" }}
             />
 
-            {/* Organic morphing heat blobs (liquid drift) */}
-            <div className="animate-blob-a absolute -left-[8%] top-[2%] h-[42vw] w-[42vw] opacity-[0.22] blur-[80px] bg-[#f97316] dark:opacity-[0.28] dark:bg-[#7a2f12]" />
-            <div className="animate-blob-b absolute right-[-6%] top-[10%] h-[38vw] w-[38vw] opacity-[0.2] blur-[80px] bg-[#fbbf24] dark:opacity-[0.24] dark:bg-[#8a4b14]" style={{ animationDelay: "-6s" }} />
-            <div className="animate-blob-a absolute bottom-[6%] left-[16%] h-[40vw] w-[40vw] opacity-[0.16] blur-[80px] bg-[#fb7185] dark:opacity-[0.22] dark:bg-[#5c2330]" style={{ animationDelay: "-3s" }} />
-            <div className="animate-blob-b absolute bottom-[8%] right-[8%] h-[32vw] w-[32vw] opacity-[0.15] blur-[80px] bg-[#2dd4bf] dark:opacity-[0.2] dark:bg-[#14414d]" style={{ animationDelay: "-9s" }} />
+            {/* Restrained warm heat-field blobs (liquid drift) */}
+            <div className="animate-blob-a absolute -left-[8%] top-[2%] h-[42vw] w-[42vw] opacity-[0.16] blur-[80px] bg-[#f97316] dark:opacity-[0.22] dark:bg-[#7a2f12]" />
+            <div className="animate-blob-b absolute right-[-6%] top-[10%] h-[38vw] w-[38vw] opacity-[0.15] blur-[80px] bg-[#fbbf24] dark:opacity-[0.2] dark:bg-[#8a4b14]" style={{ animationDelay: "-6s" }} />
+            <div className="animate-blob-a absolute bottom-[6%] left-[16%] h-[40vw] w-[40vw] opacity-[0.12] blur-[80px] bg-[#fb7185] dark:opacity-[0.18] dark:bg-[#5c2330]" style={{ animationDelay: "-3s" }} />
+            <div className="animate-blob-b absolute bottom-[8%] right-[8%] h-[32vw] w-[32vw] opacity-[0.11] blur-[80px] bg-[#2dd4bf] dark:opacity-[0.16] dark:bg-[#14414d]" style={{ animationDelay: "-9s" }} />
+
+            {/* Scientific overlay — coordinate graticule + isotherm isolines (heat-map figure) */}
+            <div
+                className="absolute inset-0 opacity-[0.6] dark:opacity-[0.5]"
+                style={{
+                    maskImage: "radial-gradient(135% 112% at 50% 32%, #000 56%, transparent 92%)",
+                    WebkitMaskImage: "radial-gradient(135% 112% at 50% 32%, #000 56%, transparent 92%)",
+                }}
+            >
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 1440 900"
+                    preserveAspectRatio="xMidYMid slice"
+                    className="h-full w-full text-[#243044] dark:text-[#8fb6ec]"
+                    fill="none"
+                    stroke="currentColor"
+                >
+                    <defs>
+                        <pattern id="uhGraticule" width="120" height="120" patternUnits="userSpaceOnUse">
+                            <path d="M60,52 v16 M52,60 h16" strokeWidth="1" strokeOpacity="0.45" />
+                        </pattern>
+                    </defs>
+                    {/* coordinate graticule of fine crosses */}
+                    <rect x="0" y="0" width="1440" height="900" stroke="none" fill="url(#uhGraticule)" />
+                    {/* isotherm isolines */}
+                    {isotherms.map((c, ci) => (
+                        <g key={ci} transform={`rotate(${c.rot} ${c.cx} ${c.cy})`} strokeOpacity={c.op} strokeWidth="1.1">
+                            {c.rs.map((r, ri) => (
+                                <ellipse key={ri} cx={c.cx} cy={c.cy} rx={r} ry={r * 0.78} />
+                            ))}
+                        </g>
+                    ))}
+                </svg>
+            </div>
 
             {/* Moving thermal scan band */}
             <div className="animate-thermal-sweep absolute -top-[10%] left-0 h-[120%] w-[26vw] bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.1),transparent)] blur-2xl dark:bg-[linear-gradient(90deg,transparent,rgba(248,113,113,0.14),transparent)]" />
@@ -88,24 +129,34 @@ function UrbanHeatBackground() {
                 {/* Soft glowing rim near the rooftops */}
                 <div className="absolute inset-x-0 bottom-[42%] h-1 bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.3),rgba(249,115,22,0.26),transparent)] blur-[6px] dark:bg-[linear-gradient(90deg,transparent,rgba(249,115,22,0.38),rgba(248,113,113,0.3),transparent)]" />
 
-                {/* Far skyline silhouette (depth) — 10% opacity */}
+                {/* Far skyline silhouette (most distant, faint) */}
                 <svg
                     aria-hidden="true"
                     viewBox="0 0 1440 400"
                     preserveAspectRatio="none"
-                    className="absolute inset-x-0 bottom-0 h-[82%] w-full fill-[#1e293b] opacity-10 dark:fill-[#9cc4ff]"
+                    className="absolute inset-x-0 bottom-0 h-[74%] w-full fill-[#1e293b] opacity-[0.07] dark:fill-[#9cc4ff]"
                 >
                     <path d="M0,400 L0,330 L70,330 L70,300 L120,300 L120,338 L165,338 L165,288 L210,288 L210,322 L270,322 L270,296 L330,296 L330,330 L395,330 L395,300 L455,300 L455,334 L520,334 L520,304 L585,304 L585,330 L650,330 L650,298 L715,298 L715,332 L785,332 L785,306 L855,306 L855,330 L925,330 L925,300 L995,300 L995,334 L1065,334 L1065,302 L1135,302 L1135,330 L1205,330 L1205,300 L1275,300 L1275,336 L1350,336 L1350,308 L1440,308 L1440,400 Z" />
                 </svg>
 
-                {/* Near skyline silhouette (taller, detailed setbacks) — 10% opacity */}
+                {/* Mid skyline silhouette (depth) */}
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 1440 400"
+                    preserveAspectRatio="none"
+                    className="absolute inset-x-0 bottom-0 h-[88%] w-full fill-[#1e293b] opacity-[0.09] dark:fill-[#9cc4ff]"
+                >
+                    <path d="M0,400 L0,322 L70,322 L70,300 L140,300 L140,330 L210,330 L210,286 L248,286 L248,268 L280,268 L280,286 L316,286 L316,318 L384,318 L384,290 L452,290 L452,318 L516,318 L516,278 L580,278 L580,318 L642,318 L642,262 L676,262 L676,244 L706,244 L706,262 L740,262 L740,318 L808,318 L808,288 L876,288 L876,318 L938,318 L938,272 L1004,272 L1004,318 L1068,318 L1068,292 L1136,292 L1136,318 L1198,318 L1198,276 L1262,276 L1262,318 L1326,318 L1326,298 L1396,298 L1396,318 L1440,318 L1440,400 Z" />
+                </svg>
+
+                {/* Near skyline silhouette (detailed: domes, pitched roofs, towers, tanks) */}
                 <svg
                     aria-hidden="true"
                     viewBox="0 0 1440 400"
                     preserveAspectRatio="none"
                     className="absolute inset-x-0 bottom-0 h-full w-full fill-[#1e293b] opacity-10 dark:fill-[#9cc4ff]"
                 >
-                    <path d="M0,400 L0,312 L66,312 L66,282 L112,282 L112,330 L150,330 L150,232 L176,232 L176,210 L206,210 L206,232 L232,232 L232,300 L272,300 L272,262 L332,262 L332,300 L362,300 L362,182 L382,182 L382,150 L412,150 L412,182 L432,182 L432,252 L472,252 L472,300 L522,300 L522,222 L562,222 L562,300 L602,300 L602,142 L617,142 L617,110 L647,110 L647,142 L662,142 L662,240 L702,240 L702,290 L762,290 L762,202 L802,202 L802,262 L842,262 L842,162 L862,162 L862,130 L892,130 L892,162 L912,162 L912,252 L952,252 L952,300 L1002,300 L1002,212 L1042,212 L1042,300 L1082,300 L1082,172 L1102,172 L1102,150 L1132,150 L1132,172 L1152,172 L1152,262 L1202,262 L1202,300 L1257,300 L1257,232 L1302,232 L1302,300 L1342,300 L1342,252 L1402,252 L1402,290 L1440,290 L1440,400 Z" />
+                    <path d="M0,400 L0,300 L46,300 L46,332 L92,332 L92,250 L120,250 L120,228 L150,228 L150,250 L178,250 L178,300 L214,300 L214,256 L246,256 A34 30 0 0 1 314,256 L314,300 L348,300 L348,182 L376,182 L376,158 L396,158 L396,182 L420,182 L420,262 L456,262 L456,300 L494,300 L494,214 L524,182 L554,214 L554,300 L590,300 L590,150 L612,150 L612,120 L626,120 L626,150 L648,150 L648,250 L686,250 L686,300 L726,300 L726,206 L756,206 L756,182 L772,182 L772,206 L800,206 L800,262 L834,262 L834,176 L866,176 A36 34 0 0 1 938,176 L938,262 L978,262 L978,300 L1024,300 L1024,212 L1056,212 L1056,300 L1094,300 L1094,164 L1114,164 L1114,138 L1128,138 L1128,164 L1150,164 L1150,256 L1196,256 L1196,300 L1248,300 L1248,224 L1278,196 L1308,224 L1308,300 L1346,300 L1346,250 L1404,250 L1404,288 L1440,288 L1440,400 Z" />
                 </svg>
             </div>
         </>
