@@ -142,10 +142,8 @@ function UrbanHeatBackground() {
 
             {/* City skyline + heat haze rising from it */}
             <div className="absolute inset-x-0 bottom-0 h-[36vh] sm:h-[42vh]">
-                {/* Rising heat haze — soft, warm, multi-stop so there is no hard band */}
-                <div className="animate-heat-haze absolute inset-x-0 bottom-0 h-full bg-[linear-gradient(0deg,rgba(251,146,60,0.34),rgba(251,146,60,0.2)_24%,rgba(251,191,36,0.1)_46%,rgba(251,191,36,0.04)_66%,transparent_88%)] blur-[64px] dark:bg-[linear-gradient(0deg,rgba(249,115,22,0.4),rgba(244,114,60,0.22)_24%,rgba(245,158,11,0.1)_46%,rgba(245,158,11,0.04)_66%,transparent_88%)]" />
-                {/* Soft glowing rim near the rooftops */}
-                <div className="absolute inset-x-0 bottom-[42%] h-1 bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.3),rgba(249,115,22,0.26),transparent)] blur-[6px] dark:bg-[linear-gradient(90deg,transparent,rgba(249,115,22,0.38),rgba(248,113,113,0.3),transparent)]" />
+                {/* Rising heat haze — faint warm amber glow, no hard band */}
+                <div className="animate-heat-haze absolute inset-x-0 bottom-0 h-full bg-[linear-gradient(0deg,rgba(251,191,36,0.2),rgba(251,191,36,0.09)_36%,rgba(251,191,36,0.03)_64%,transparent_86%)] blur-[64px] dark:bg-[linear-gradient(0deg,rgba(251,146,60,0.16),rgba(245,158,11,0.07)_36%,rgba(245,158,11,0.02)_64%,transparent_86%)]" />
 
                 {/* Far skyline silhouette (most distant, faint) */}
                 <svg
