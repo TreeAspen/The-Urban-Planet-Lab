@@ -49,69 +49,12 @@ function EdgeFades() {
    Night — a thermal-infrared satellite view: deep blue base with glowing red /
           orange urban heat-island hotspots and ember-coloured isotherms.        */
 function UrbanHeatBackground() {
-    // Angled downtown grid — short blocks inside the ring road
-    const gridV = [720, 775, 830, 885, 940, 995, 1050];
-    const gridH = [400, 455, 510, 565, 620, 675];
-
     return (
         <>
             <div className="absolute inset-0 bg-[#f8f3e9] dark:bg-[#05080f]" />
 
             {/* Sky dome — warm sun glow by day, cool night sky by dark */}
             <div className="absolute inset-0 bg-[radial-gradient(95%_62%_at_50%_-10%,rgba(255,209,128,0.62),rgba(255,236,196,0.2)_42%,transparent_74%)] dark:bg-[radial-gradient(95%_62%_at_50%_-12%,rgba(30,64,104,0.7),rgba(10,24,44,0.32)_45%,transparent_74%)]" />
-
-            {/* Real road-network map: river, arteries, ring road, angled downtown grid */}
-            <div
-                className="absolute inset-0 opacity-[0.5] dark:opacity-[0.48]"
-                style={{
-                    maskImage: "radial-gradient(132% 108% at 50% 30%, #000 50%, transparent 90%)",
-                    WebkitMaskImage: "radial-gradient(132% 108% at 50% 30%, #000 50%, transparent 90%)",
-                }}
-            >
-                <svg
-                    aria-hidden="true"
-                    viewBox="0 0 1600 1000"
-                    preserveAspectRatio="xMidYMid slice"
-                    className="h-full w-full text-[#26334a] dark:text-[#86b0ec]"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
-                    {/* River */}
-                    <g className="text-sky-700/35 dark:text-sky-500/25">
-                        <path d="M-60,560 C 240,490 360,690 620,632 C 880,576 1000,724 1260,660 C 1440,616 1540,684 1680,640" strokeWidth="26" />
-                    </g>
-                    {/* Major arteries */}
-                    <g strokeOpacity="0.5" strokeWidth="3.4">
-                        <path d="M-60,300 C 300,228 580,404 900,344 C 1180,292 1430,388 1680,332" />
-                        <path d="M-60,792 C 360,752 700,860 1060,800 C 1330,756 1520,816 1680,788" />
-                        <path d="M360,-60 C 430,260 300,520 470,820 C 560,980 520,1020 600,1060" />
-                        <path d="M1190,-60 C 1120,260 1320,520 1170,880" />
-                    </g>
-                    {/* Diagonal highway */}
-                    <path d="M-60,1000 C 520,640 1000,420 1680,110" strokeOpacity="0.42" strokeWidth="3.6" />
-                    {/* Ring road around downtown */}
-                    <ellipse cx="885" cy="540" rx="250" ry="182" strokeOpacity="0.45" strokeWidth="2.6" />
-                    {/* Secondary connectors */}
-                    <g strokeOpacity="0.4" strokeWidth="1.6">
-                        <path d="M520,210 C 620,330 700,430 770,520" />
-                        <path d="M1060,250 C 1000,360 940,460 905,540" />
-                        <path d="M690,900 C 770,800 830,740 880,712" />
-                        <path d="M300,560 C 470,585 580,592 645,600" />
-                        <path d="M1180,648 C 1340,612 1430,588 1520,560" />
-                    </g>
-                    {/* Angled downtown grid */}
-                    <g transform="rotate(13 885 540)" strokeOpacity="0.32" strokeWidth="1">
-                        {gridV.map((x) => (
-                            <line key={`v${x}`} x1={x} y1={382} x2={x} y2={700} />
-                        ))}
-                        {gridH.map((y) => (
-                            <line key={`h${y}`} x1={702} y1={y} x2={1072} y2={y} />
-                        ))}
-                    </g>
-                </svg>
-            </div>
 
             {/* Fractal-noise grain (soft-light) for a printed-map texture */}
             <svg aria-hidden="true" className="absolute h-0 w-0">
@@ -145,36 +88,24 @@ function UrbanHeatBackground() {
                 {/* Soft glowing rim near the rooftops */}
                 <div className="absolute inset-x-0 bottom-[42%] h-1 bg-[linear-gradient(90deg,transparent,rgba(251,146,60,0.3),rgba(249,115,22,0.26),transparent)] blur-[6px] dark:bg-[linear-gradient(90deg,transparent,rgba(249,115,22,0.38),rgba(248,113,113,0.3),transparent)]" />
 
-                {/* Far skyline — line drawing (lighter, depth) */}
+                {/* Far skyline silhouette (depth) — 10% opacity */}
                 <svg
                     aria-hidden="true"
                     viewBox="0 0 1440 400"
                     preserveAspectRatio="none"
-                    className="absolute inset-x-0 bottom-0 h-[82%] w-full text-[#26334a] dark:text-[#86b0ec]"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeOpacity="0.26"
-                    strokeWidth="1.3"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
+                    className="absolute inset-x-0 bottom-0 h-[82%] w-full fill-[#1e293b] opacity-10 dark:fill-[#9cc4ff]"
                 >
-                    <path d="M0,400 L0,330 L70,330 L70,300 L120,300 L120,338 L165,338 L165,288 L210,288 L210,322 L270,322 L270,296 L330,296 L330,330 L395,330 L395,300 L455,300 L455,334 L520,334 L520,304 L585,304 L585,330 L650,330 L650,298 L715,298 L715,332 L785,332 L785,306 L855,306 L855,330 L925,330 L925,300 L995,300 L995,334 L1065,334 L1065,302 L1135,302 L1135,330 L1205,330 L1205,300 L1275,300 L1275,336 L1350,336 L1350,308 L1440,308" vectorEffect="non-scaling-stroke" />
+                    <path d="M0,400 L0,330 L70,330 L70,300 L120,300 L120,338 L165,338 L165,288 L210,288 L210,322 L270,322 L270,296 L330,296 L330,330 L395,330 L395,300 L455,300 L455,334 L520,334 L520,304 L585,304 L585,330 L650,330 L650,298 L715,298 L715,332 L785,332 L785,306 L855,306 L855,330 L925,330 L925,300 L995,300 L995,334 L1065,334 L1065,302 L1135,302 L1135,330 L1205,330 L1205,300 L1275,300 L1275,336 L1350,336 L1350,308 L1440,308 L1440,400 Z" />
                 </svg>
 
-                {/* Near skyline — line drawing (taller, detailed setbacks) */}
+                {/* Near skyline silhouette (taller, detailed setbacks) — 10% opacity */}
                 <svg
                     aria-hidden="true"
                     viewBox="0 0 1440 400"
                     preserveAspectRatio="none"
-                    className="absolute inset-x-0 bottom-0 h-full w-full text-[#26334a] dark:text-[#9cc4ff]"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeOpacity="0.5"
-                    strokeWidth="1.7"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
+                    className="absolute inset-x-0 bottom-0 h-full w-full fill-[#1e293b] opacity-10 dark:fill-[#9cc4ff]"
                 >
-                    <path d="M0,400 L0,312 L66,312 L66,282 L112,282 L112,330 L150,330 L150,232 L176,232 L176,210 L206,210 L206,232 L232,232 L232,300 L272,300 L272,262 L332,262 L332,300 L362,300 L362,182 L382,182 L382,150 L412,150 L412,182 L432,182 L432,252 L472,252 L472,300 L522,300 L522,222 L562,222 L562,300 L602,300 L602,142 L617,142 L617,110 L647,110 L647,142 L662,142 L662,240 L702,240 L702,290 L762,290 L762,202 L802,202 L802,262 L842,262 L842,162 L862,162 L862,130 L892,130 L892,162 L912,162 L912,252 L952,252 L952,300 L1002,300 L1002,212 L1042,212 L1042,300 L1082,300 L1082,172 L1102,172 L1102,150 L1132,150 L1132,172 L1152,172 L1152,262 L1202,262 L1202,300 L1257,300 L1257,232 L1302,232 L1302,300 L1342,300 L1342,252 L1402,252 L1402,290 L1440,290" vectorEffect="non-scaling-stroke" />
+                    <path d="M0,400 L0,312 L66,312 L66,282 L112,282 L112,330 L150,330 L150,232 L176,232 L176,210 L206,210 L206,232 L232,232 L232,300 L272,300 L272,262 L332,262 L332,300 L362,300 L362,182 L382,182 L382,150 L412,150 L412,182 L432,182 L432,252 L472,252 L472,300 L522,300 L522,222 L562,222 L562,300 L602,300 L602,142 L617,142 L617,110 L647,110 L647,142 L662,142 L662,240 L702,240 L702,290 L762,290 L762,202 L802,202 L802,262 L842,262 L842,162 L862,162 L862,130 L892,130 L892,162 L912,162 L912,252 L952,252 L952,300 L1002,300 L1002,212 L1042,212 L1042,300 L1082,300 L1082,172 L1102,172 L1102,150 L1132,150 L1132,172 L1152,172 L1152,262 L1202,262 L1202,300 L1257,300 L1257,232 L1302,232 L1302,300 L1342,300 L1342,252 L1402,252 L1402,290 L1440,290 L1440,400 Z" />
                 </svg>
             </div>
         </>
