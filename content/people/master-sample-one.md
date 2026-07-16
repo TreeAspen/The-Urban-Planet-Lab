@@ -1,9 +1,9 @@
 ---
-name: "Master Student One"
-role: "MS Student"
-category: "master"
+name: U.P. Nguyen
+category: master
+role: MS Student
 photo: ""
-bio: "Research interest placeholder. Replace with actual information."
+bio: This is UP
 email: ""
 website: ""
 scholar: ""
