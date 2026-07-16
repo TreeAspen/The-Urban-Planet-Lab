@@ -1,10 +1,10 @@
 {
-  "background": "urbanheat",
+  "background": "classic",
   "sections": {
     "research": true,
     "publications": true,
     "people": true,
-    "news": false,
+    "news": true,
     "teaching": true,
     "home_places": true
   }
