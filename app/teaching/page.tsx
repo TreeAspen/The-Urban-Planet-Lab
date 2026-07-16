@@ -6,7 +6,7 @@ import { ContinueExploring } from "@/components/ContinueExploring";
 export const metadata = {
     title: "Teaching — The Urban Planet Lab",
     description:
-        "Graduate and undergraduate courses taught by faculty of The Urban Planet Lab.",
+        "Graduate courses taught by faculty of The Urban Planet Lab",
 };
 
 function CourseCard({ course }: { course: Course }) {
