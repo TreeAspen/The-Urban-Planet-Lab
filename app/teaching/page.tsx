@@ -60,7 +60,7 @@ export default function TeachingPage() {
                         Teaching
                     </h1>
                     <p className="mt-4 text-lg leading-relaxed text-black/75 dark:text-white/72">
-                        Courses taught by lab faculty at the graduate and undergraduate level.
+                        Courses taught at the graduate level. 
                     </p>
                 </AnimateIn>
             </section>
