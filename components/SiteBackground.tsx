@@ -49,12 +49,49 @@ function EdgeFades() {
           a cool teal "cooling corridor", over faint isotherm contour rings.
    Night — a thermal-infrared satellite view: deep blue base with glowing red /
           orange urban heat-island hotspots and ember-coloured isotherms.        */
+
+/** Irregular closed isotherm: base radius wobbled by low-order harmonics so the
+    ring grows lobes. Rings sharing a centre and phases are proportional scalings
+    of one shape, so nested rings can never cross. */
+function contourPath(
+    cx: number,
+    cy: number,
+    r: number,
+    squash: number,
+    rotDeg: number,
+    phases: number[],
+    amp = 1,
+) {
+    const rot = (rotDeg * Math.PI) / 180;
+    const pts: string[] = [];
+    const N = 84;
+    for (let i = 0; i <= N; i++) {
+        const t = (i / N) * Math.PI * 2;
+        const w =
+            1 +
+            amp *
+                (0.09 * Math.sin(3 * t + phases[0]) +
+                    0.05 * Math.sin(5 * t + phases[1]) +
+                    0.07 * Math.sin(2 * t + phases[2]));
+        const x0 = Math.cos(t) * r * w;
+        const y0 = Math.sin(t) * r * squash * w;
+        const x = cx + x0 * Math.cos(rot) - y0 * Math.sin(rot);
+        const y = cy + x0 * Math.sin(rot) + y0 * Math.cos(rot);
+        pts.push(`${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`);
+    }
+    return pts.join(" ") + " Z";
+}
+
 function UrbanHeatBackground() {
-    // Isotherm isolines — two well-separated centres so contours never cross
-    const isotherms = [
-        { cx: 380, cy: 310, rot: -12, op: 0.14, rs: [48, 94, 140, 186, 232] },
-        { cx: 1095, cy: 650, rot: 12, op: 0.12, rs: [52, 102, 152, 202, 252] },
+    // Multi-cell isotherm field: two strong heat cells with lobed nested contours,
+    // a weak saddle pocket between them, and broad outer isotherms wrapping the
+    // whole merged field — spaced so nothing ever crosses.
+    const cells = [
+        { cx: 380, cy: 310, squash: 0.8, rot: -12, phases: [0.4, 1.9, 3.1], op: 0.14, w: 1.1, amp: 1, rs: [48, 94, 140, 186, 232] },
+        { cx: 1095, cy: 650, squash: 0.82, rot: 14, phases: [2.2, 0.7, 4.4], op: 0.12, w: 1.1, amp: 1, rs: [52, 102, 152, 202, 252] },
+        { cx: 720, cy: 470, squash: 0.75, rot: 40, phases: [3.4, 1.2, 5.5], op: 0.1, w: 1, amp: 0.9, rs: [28, 55] },
     ];
+    const outer = { cx: 740, cy: 470, squash: 0.66, rot: 25, phases: [1.1, 3.6, 5.2], op: 0.08, rs: [820, 930] };
 
     return (
         <>
@@ -106,15 +143,20 @@ function UrbanHeatBackground() {
                             <feDisplacementMap in="SourceGraphic" in2="n" scale="24" xChannelSelector="R" yChannelSelector="G" />
                         </filter>
                     </defs>
-                    {/* isotherm isolines, warped into irregular contours */}
+                    {/* isotherm isolines — lobed heat cells + broad merged-field contours */}
                     <g filter="url(#uhWarp)">
-                        {isotherms.map((c, ci) => (
-                            <g key={ci} transform={`rotate(${c.rot} ${c.cx} ${c.cy})`} strokeOpacity={c.op} strokeWidth="1.1">
-                                {c.rs.map((r, ri) => (
-                                    <ellipse key={ri} cx={c.cx} cy={c.cy} rx={r} ry={r * 0.78} />
+                        {cells.map((c, ci) => (
+                            <g key={ci} strokeOpacity={c.op} strokeWidth={c.w}>
+                                {c.rs.map((r) => (
+                                    <path key={r} d={contourPath(c.cx, c.cy, r, c.squash, c.rot, c.phases, c.amp)} />
                                 ))}
                             </g>
                         ))}
+                        <g strokeOpacity={outer.op} strokeWidth="1">
+                            {outer.rs.map((r) => (
+                                <path key={r} d={contourPath(outer.cx, outer.cy, r, outer.squash, outer.rot, outer.phases, 0.5)} />
+                            ))}
+                        </g>
                     </g>
                 </svg>
             </div>
