@@ -1,7 +1,7 @@
 ---
 code: CUSP-GX 8063 / ME-GY 7863
 name: "Urban Sensing: Making sense of the City"
-semester: "Every Fall "
+semester: Every Fall
 description: This course introduces the emerging science and technology of
   observing urban activity and microclimate through physical and social data.
   Students explore how satellite imagery, sensor networks, mobile devices, and
