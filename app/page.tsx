@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getCollection, getPageContent, getSiteSettings, type HomeContent, type Place } from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
@@ -58,18 +59,18 @@ export default function Home() {
 
                 <AnimateIn delay={0.5}>
                     <div className="mt-8 flex flex-wrap gap-3">
-                        <a
+                        <Link
                             href="/research"
                             className="rounded-full px-5 py-2.5 text-sm font-medium bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
                         >
                             Explore Research
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             href="/people"
                             className="rounded-full px-5 py-2.5 text-sm font-medium border border-black/20 dark:border-white/25 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/15 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
                         >
                             Meet the Team
-                        </a>
+                        </Link>
                     </div>
                 </AnimateIn>
             </section>

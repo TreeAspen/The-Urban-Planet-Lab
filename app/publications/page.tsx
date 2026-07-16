@@ -5,6 +5,8 @@ import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "Publications — The Urban Planet Lab",
+    description:
+        "Peer-reviewed articles, conference papers, and reports from The Urban Planet Lab on urban heat, climate, and environmental justice.",
 };
 
 const PUB_TYPE_LABELS: Record<string, string> = {

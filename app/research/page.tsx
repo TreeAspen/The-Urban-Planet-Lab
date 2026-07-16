@@ -6,6 +6,8 @@ import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "Research — The Urban Planet Lab",
+    description:
+        "Research directions of The Urban Planet Lab, spanning urban heat, climate resilience, environmental justice, and urban data science.",
 };
 
 type AccentTheme = {

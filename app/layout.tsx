@@ -12,6 +12,44 @@ const fontSans = IBM_Plex_Sans({
     display: "swap",
 });
 
+const SITE_URL = "https://the-urban-planet-lab.vercel.app";
+const SITE_DESCRIPTION =
+    "An interdisciplinary research group studying urban systems, climate change, and environmental justice through spatial analysis, remote sensing, and community-engaged methods.";
+
+export const metadata = {
+    metadataBase: new URL(SITE_URL),
+    title: {
+        default: "The Urban Planet Lab",
+        template: "%s",
+    },
+    description: SITE_DESCRIPTION,
+    keywords: [
+        "urban heat island",
+        "urban sustainability",
+        "environmental justice",
+        "urban data science",
+        "climate resilience",
+        "remote sensing",
+    ],
+    openGraph: {
+        title: "The Urban Planet Lab",
+        description: SITE_DESCRIPTION,
+        url: SITE_URL,
+        siteName: "The Urban Planet Lab",
+        type: "website",
+        locale: "en_US",
+    },
+    twitter: {
+        card: "summary",
+        title: "The Urban Planet Lab",
+        description: SITE_DESCRIPTION,
+    },
+    robots: {
+        index: true,
+        follow: true,
+    },
+};
+
 export default function RootLayout({
     children,
 }: {

@@ -6,6 +6,8 @@ import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "News — The Urban Planet Lab",
+    description:
+        "Updates on publications, grants, events, and lab life at The Urban Planet Lab.",
 };
 
 function formatDate(dateStr: string) {

@@ -189,6 +189,7 @@ export default function Navbar({
                                         width={40}
                                         height={40}
                                         priority
+                                        unoptimized
                                         className="h-10 w-10 shrink-0"
                                     />
                                     <span className="min-w-0 text-sm font-semibold tracking-wide text-black dark:text-white sm:text-base">

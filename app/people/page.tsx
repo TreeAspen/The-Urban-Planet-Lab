@@ -6,6 +6,8 @@ import { ContinueExploring } from "@/components/ContinueExploring";
 
 export const metadata = {
     title: "People — The Urban Planet Lab",
+    description:
+        "Faculty, students, and alumni of The Urban Planet Lab — researchers united by rigorous, equity-centered urban science.",
 };
 
 const CATEGORY_CONFIG = [

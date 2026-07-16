@@ -110,6 +110,30 @@ body {
 }
 .animate-mote { animation: mote-rise linear infinite; will-change: transform, opacity; }
 
+/* Respect the user's reduced-motion preference: freeze all decorative
+   background animation (content stays fully functional). */
+@media (prefers-reduced-motion: reduce) {
+    .animate-float-slow,
+    .animate-float-medium,
+    .animate-float-fast,
+    .animate-pulse-glow,
+    .animate-drift,
+    .animate-aurora-1,
+    .animate-aurora-2,
+    .animate-aurora-3,
+    .animate-heat-haze,
+    .animate-thermal-sweep,
+    .animate-blob-a,
+    .animate-blob-b,
+    .animate-sky-breathe,
+    .animate-mote {
+        animation: none !important;
+    }
+    .animate-mote {
+        opacity: 0; /* motes only exist as motion; hide them when frozen */
+    }
+}
+
 * {
     -ms-overflow-style: none;
     scrollbar-width: none;
