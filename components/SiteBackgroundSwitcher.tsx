@@ -8,9 +8,9 @@ export const BG_KEY = "upl-bg";
 export const BG_EVENT = "upl-bg-change";
 
 /**
- * Renders the site background and lets the user switch it at runtime (the theme
- * toggle dispatches a `upl-bg-change` event / writes localStorage). The CMS
- * `settings.background` is the default for first-time visitors.
+ * Renders the site background. Reads an optional runtime override from
+ * localStorage (written elsewhere via `upl-bg-change`); otherwise falls back
+ * to the CMS-configured `settings.background`.
  */
 export default function SiteBackgroundSwitcher({
     defaultVariant,

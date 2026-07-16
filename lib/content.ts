@@ -13,7 +13,6 @@ export function getPageContent<T>(page: string): T {
 
 export type BackgroundVariant =
     | "urbanheat"
-    | "classic"
     | "aurora"
     | "mesh"
     | "dots"
@@ -107,12 +106,13 @@ export type ResearchDirection = {
 export type Person = {
     name: string;
     role: string;
-    category: "faculty" | "phd" | "master" | "alumni";
+    category: "faculty" | "phd" | "master" | "undergrad" | "highschool" | "external" | "alumni";
     photo: string;
     bio: string;
     email: string;
     website: string;
     scholar: string;
+    linkedin: string;
     twitter: string;
     sort_order: number;
     slug: string;

@@ -38,7 +38,6 @@ collections:
             hint: "Decorative background shown behind every page. 'Urban Heat' gives a thermal day/night identity."
             options:
               - { label: "Urban Heat — thermal day / night (signature)", value: "urbanheat" }
-              - { label: "Classic — original aurora + floating glass cards", value: "classic" }
               - { label: "Mesh — colourful soft gradients (modern)", value: "mesh" }
               - { label: "Aurora — slow drifting blobs", value: "aurora" }
               - { label: "Dots — subtle dotted texture", value: "dots" }
@@ -161,6 +160,7 @@ collections:
       - label: "Full Name"
         name: "name"
         widget: "string"
+        hint: "Up to 3 contact links are shown publicly, in priority order: Website, Email, LinkedIn, Google Scholar, Twitter/X — fill in only the ones you want visitors to see."
       - label: "Category"
         name: "category"
         widget: "select"
@@ -169,6 +169,9 @@ collections:
           - { label: "Faculty", value: "faculty" }
           - { label: "PhD Student", value: "phd" }
           - { label: "Master Student", value: "master" }
+          - { label: "Undergraduate Student", value: "undergrad" }
+          - { label: "High School Student", value: "highschool" }
+          - { label: "External Friend", value: "external" }
           - { label: "Alumni", value: "alumni" }
       - label: "Role / Title"
         name: "role"
@@ -198,6 +201,11 @@ collections:
         widget: "string"
         required: false
         hint: "Full URL to Google Scholar profile"
+      - label: "LinkedIn URL"
+        name: "linkedin"
+        widget: "string"
+        required: false
+        hint: "Full URL to LinkedIn profile, e.g. https://www.linkedin.com/in/..."
       - label: "Twitter / X Handle"
         name: "twitter"
         widget: "string"

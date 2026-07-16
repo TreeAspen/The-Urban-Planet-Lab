@@ -11,10 +11,13 @@ export const metadata = {
 };
 
 const CATEGORY_CONFIG = [
-    { key: "faculty" as const, label: "Faculty" },
-    { key: "phd" as const, label: "PhD Students" },
-    { key: "master" as const, label: "Master Students" },
-    { key: "alumni" as const, label: "Alumni" },
+    { key: "faculty" as const, label: "Faculty", layout: "faculty" as const },
+    { key: "phd" as const, label: "PhD Students", layout: "grid" as const },
+    { key: "master" as const, label: "Master Students", layout: "grid" as const },
+    { key: "undergrad" as const, label: "Undergraduate Students", layout: "grid" as const },
+    { key: "highschool" as const, label: "High School Students", layout: "grid" as const },
+    { key: "external" as const, label: "External Friends", layout: "grid" as const },
+    { key: "alumni" as const, label: "Alumni", layout: "rows" as const },
 ];
 
 function PersonAvatar({ person }: { person: Person }) {
@@ -38,17 +41,27 @@ function PersonAvatar({ person }: { person: Person }) {
     );
 }
 
+type PersonLink = { href: string; label: string; external?: boolean };
+
+const MAX_PERSON_LINKS = 3;
+
+/** Priority order: whichever of these a person has filled in, the first three win. */
+function buildPersonLinks(person: Person): PersonLink[] {
+    const candidates: (PersonLink | null)[] = [
+        person.website ? { href: person.website, label: "Website", external: true } : null,
+        person.email ? { href: `mailto:${person.email}`, label: "Email" } : null,
+        person.linkedin ? { href: person.linkedin, label: "LinkedIn", external: true } : null,
+        person.scholar ? { href: person.scholar, label: "Scholar", external: true } : null,
+        person.twitter
+            ? { href: `https://twitter.com/${person.twitter}`, label: `@${person.twitter}`, external: true }
+            : null,
+    ];
+
+    return (candidates.filter(Boolean) as PersonLink[]).slice(0, MAX_PERSON_LINKS);
+}
+
 function PersonLinks({ person }: { person: Person }) {
-    const links = [
-        person.email && { href: `mailto:${person.email}`, label: "Email" },
-        person.website && { href: person.website, label: "Website", external: true },
-        person.scholar && { href: person.scholar, label: "Scholar", external: true },
-        person.twitter && {
-            href: `https://twitter.com/${person.twitter}`,
-            label: `@${person.twitter}`,
-            external: true,
-        },
-    ].filter(Boolean) as { href: string; label: string; external?: boolean }[];
+    const links = buildPersonLinks(person);
 
     if (links.length === 0) return null;
 
@@ -102,6 +115,8 @@ function StudentCard({ person }: { person: Person }) {
 }
 
 function AlumniRow({ person }: { person: Person }) {
+    const links = buildPersonLinks(person);
+
     return (
         <div className="flex items-center justify-between gap-4 border-b border-black/8 py-3.5 last:border-0 transition-colors duration-200 hover:bg-black/[0.02] dark:border-white/10 dark:hover:bg-white/[0.02]">
             <div className="min-w-0">
@@ -112,26 +127,17 @@ function AlumniRow({ person }: { person: Person }) {
                 ) : null}
             </div>
             <div className="flex shrink-0 gap-2">
-                {person.website ? (
+                {links.map((link) => (
                     <a
-                        href={person.website}
-                        target="_blank"
-                        rel="noreferrer"
+                        key={link.href}
+                        href={link.href}
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noreferrer" : undefined}
                         className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/65 transition-colors hover:border-black/30 hover:text-black dark:border-white/20 dark:text-white/60 dark:hover:border-white/35 dark:hover:text-white"
                     >
-                        Website
+                        {link.label}
                     </a>
-                ) : null}
-                {person.scholar ? (
-                    <a
-                        href={person.scholar}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/65 transition-colors hover:border-black/30 hover:text-black dark:border-white/20 dark:text-white/60 dark:hover:border-white/35 dark:hover:text-white"
-                    >
-                        Scholar
-                    </a>
-                ) : null}
+                ))}
             </div>
         </div>
     );
@@ -144,12 +150,10 @@ export default function PeoplePage() {
         (a, b) => (a.sort_order ?? 99) - (b.sort_order ?? 99)
     );
 
-    const grouped = Object.fromEntries(
-        CATEGORY_CONFIG.map(({ key }) => [
-            key,
-            allPeople.filter((p) => p.category === key),
-        ])
-    ) as Record<"faculty" | "phd" | "master" | "alumni", Person[]>;
+    const groups = CATEGORY_CONFIG.map((config) => ({
+        ...config,
+        people: allPeople.filter((p) => p.category === config.key),
+    })).filter((group) => group.people.length > 0);
 
     return (
         <div className="relative">
@@ -164,73 +168,47 @@ export default function PeoplePage() {
                 </AnimateIn>
             </section>
 
-            {grouped.faculty.length > 0 ? (
-                <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
+            {groups.map((group, i) => (
+                <section
+                    key={group.key}
+                    className={[
+                        "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8",
+                        i === groups.length - 1 ? "pb-16" : "pb-10",
+                    ].join(" ")}
+                >
                     <AnimateIn>
                         <h2 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-black/50 dark:text-white/45">
-                            Faculty
+                            {group.label}
                         </h2>
                     </AnimateIn>
-                    <StaggerContainer className="grid gap-4 lg:grid-cols-2">
-                        {grouped.faculty.map((person) => (
-                            <StaggerItem key={person.slug}>
-                                <FacultyCard person={person} />
-                            </StaggerItem>
-                        ))}
-                    </StaggerContainer>
-                </section>
-            ) : null}
 
-            {grouped.phd.length > 0 ? (
-                <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
-                    <AnimateIn>
-                        <h2 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-black/50 dark:text-white/45">
-                            PhD Students
-                        </h2>
-                    </AnimateIn>
-                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {grouped.phd.map((person) => (
-                            <StaggerItem key={person.slug}>
-                                <StudentCard person={person} />
-                            </StaggerItem>
-                        ))}
-                    </StaggerContainer>
-                </section>
-            ) : null}
-
-            {grouped.master.length > 0 ? (
-                <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
-                    <AnimateIn>
-                        <h2 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-black/50 dark:text-white/45">
-                            Master Students
-                        </h2>
-                    </AnimateIn>
-                    <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {grouped.master.map((person) => (
-                            <StaggerItem key={person.slug}>
-                                <StudentCard person={person} />
-                            </StaggerItem>
-                        ))}
-                    </StaggerContainer>
-                </section>
-            ) : null}
-
-            {grouped.alumni.length > 0 ? (
-                <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-                    <AnimateIn>
-                        <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-black/50 dark:text-white/45">
-                            Alumni
-                        </h2>
-                    </AnimateIn>
-                    <AnimateIn delay={0.1}>
-                        <div className="rounded-2xl border border-black/10 bg-white/70 px-5 backdrop-blur-xl dark:border-white/15 dark:bg-black/60">
-                            {grouped.alumni.map((person) => (
-                                <AlumniRow key={person.slug} person={person} />
+                    {group.layout === "faculty" ? (
+                        <StaggerContainer className="grid gap-4 lg:grid-cols-2">
+                            {group.people.map((person) => (
+                                <StaggerItem key={person.slug}>
+                                    <FacultyCard person={person} />
+                                </StaggerItem>
                             ))}
-                        </div>
-                    </AnimateIn>
+                        </StaggerContainer>
+                    ) : group.layout === "rows" ? (
+                        <AnimateIn delay={0.1}>
+                            <div className="rounded-2xl border border-black/10 bg-white/70 px-5 backdrop-blur-xl dark:border-white/15 dark:bg-black/60">
+                                {group.people.map((person) => (
+                                    <AlumniRow key={person.slug} person={person} />
+                                ))}
+                            </div>
+                        </AnimateIn>
+                    ) : (
+                        <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {group.people.map((person) => (
+                                <StaggerItem key={person.slug}>
+                                    <StudentCard person={person} />
+                                </StaggerItem>
+                            ))}
+                        </StaggerContainer>
+                    )}
                 </section>
-            ) : null}
+            ))}
 
             <ContinueExploring from="people" />
         </div>
