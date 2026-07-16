@@ -45,16 +45,17 @@ collections:
               - { label: "Grid — minimal blueprint lines", value: "grid" }
               - { label: "Glow — single clean centre glow", value: "glow" }
               - { label: "Plain — smooth gradient, no texture", value: "plain" }
-          - label: "Visible Sections"
+          - label: "Visible Sections (turn a switch OFF to hide that section)"
             name: "sections"
             widget: "object"
-            hint: "Turn entire sections on/off. A hidden section disappears from the navigation, cross-page links, and its own page becomes unavailable."
+            collapsed: false
+            hint: "Each switch shows/hides a whole section across the site — its nav link, its cross-page links, and its own page. For example, switch News OFF to hide the News module everywhere."
             fields:
-              - { label: "Research", name: "research", widget: "boolean", default: true }
-              - { label: "Publications", name: "publications", widget: "boolean", default: true }
-              - { label: "People", name: "people", widget: "boolean", default: true }
-              - { label: "News", name: "news", widget: "boolean", default: true }
-              - { label: "Teaching", name: "teaching", widget: "boolean", default: true }
+              - { label: "Research — show in site", name: "research", widget: "boolean", default: true }
+              - { label: "Publications — show in site", name: "publications", widget: "boolean", default: true }
+              - { label: "People — show in site", name: "people", widget: "boolean", default: true }
+              - { label: "News — show in site (OFF = hide the News module)", name: "news", widget: "boolean", default: true }
+              - { label: "Teaching — show in site", name: "teaching", widget: "boolean", default: true }
               - { label: "Home page — Meaningful Places map", name: "home_places", widget: "boolean", default: true }
 
       - name: "home"
