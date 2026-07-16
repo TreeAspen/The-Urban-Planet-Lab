@@ -1,10 +1,10 @@
 ---
-name: "PhD Student One"
-role: "PhD Candidate"
-category: "phd"
+name: "Quentin Dehaene "
+category: phd
+role: PhD Candidate
 photo: ""
-bio: "Research focus placeholder. Replace with the student's actual research interests and dissertation topic."
-email: ""
+bio: "This is Quentin "
+email: qd2160@nyu.edu
 website: ""
 scholar: ""
 twitter: ""
