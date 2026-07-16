@@ -1,9 +1,9 @@
 ---
-name: "PhD Student Two"
-role: "PhD Student, 2nd Year"
-category: "phd"
-photo: ""
-bio: "Research focus placeholder. Replace with the student's actual research interests."
+name: Isabela Burattini Freire
+category: phd
+role: PhD candidate
+photo: /uploads/isabela.jpeg
+bio: "This is Isabela "
 email: ""
 website: ""
 scholar: ""
