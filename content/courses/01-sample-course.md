@@ -1,5 +1,5 @@
 ---
-code: "CUSP-GX 8063 "
+code: CUSP-GX 8063 / ME-GY 7863
 name: "Urban Sensing: Making sense of the City"
 semester: "Every Fall "
 description: This course introduces the emerging science and technology of
