@@ -1,11 +1,14 @@
 ---
-name: "Alumni Name Two"
-role: "MS, 2022"
-category: "alumni"
-photo: ""
-bio: "Current position placeholder. Replace with where this alumnus is now."
-email: ""
-website: ""
+name: Cheolhee Yoo
+category: alumni
+role: Postdoctoral Fellow
+photo: /uploads/cheolhee_yoo_photo.jpg
+bio: "Cheolhee Yoo is a JPL Postdoctoral Fellow working with the Urban Planet
+  Lab to understand how densification versus expansion in India contribute to
+  urban heat intensification over decades. He is now an Assistant Professor at
+  Busan National University. "
+email: yoo@pusan.ac.kr
+website: https://www.linkedin.com/in/cheolhee-yoo-7560263a3/
 scholar: ""
 twitter: ""
 sort_order: 2
