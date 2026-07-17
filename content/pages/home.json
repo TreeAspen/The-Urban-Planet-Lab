@@ -1,21 +1,21 @@
 {
-  "tagline": "Urban Sustainability · Environmental Justice · Data Science",
+  "tagline": "Urban Climate · Urban Data and Sensing · Complex Systems",
   "main_heading": "The Urban Planet Lab",
-  "description": "We are an interdisciplinary research group studying the intersections of urban systems, climate change, and environmental justice. Our work combines spatial analysis, remote sensing, and community-engaged methods to address pressing challenges in cities worldwide. ",
+  "description": "Cities extend their influence far beyond their physical boundaries, affecting ecosystems, climate, and societies worldwide. At the Urban Planet Lab, we study the dynamics and impacts of urbanization at multiple scales—from local neighborhoods to global systems—to better understand and address the complex challenges of our increasingly urbanized world.",
   "hero_image": "",
   "hero_image_alt": "The Urban Planet Lab",
   "cards": [
     {
-      "title": "Climate Resilience",
-      "description": "Investigating how cities can adapt to and mitigate the impacts of climate change through data-driven policy and design."
+      "title": "Urban Data and Sensing",
+      "description": "Observing and Measuring the city to Investigating how cities can adapt to and mitigate the impacts of climate change through data-driven policy and design."
     },
     {
-      "title": "Environmental Justice",
-      "description": "Examining unequal distributions of environmental burdens and benefits across urban communities."
+      "title": "Complex Systems ",
+      "description": "Cities and extreme weather are two complex dynamical systems that interact across scales, and urban heat is one of the many emergent outcomes. "
     },
     {
-      "title": "Urban Data Science",
-      "description": "Developing new methods and tools for analyzing complex urban systems using large-scale spatial and temporal datasets."
+      "title": "Environmental Justice ",
+      "description": "Coming soon "
     }
   ]
 }
