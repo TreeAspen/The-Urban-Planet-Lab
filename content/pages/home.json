@@ -6,16 +6,16 @@
   "hero_image_alt": "The Urban Planet Lab",
   "cards": [
     {
-      "title": "Urban Data and Sensing",
-      "description": "Observing and Measuring the city to Investigating how cities can adapt to and mitigate the impacts of climate change through data-driven policy and design."
-    },
-    {
       "title": "Complex Systems ",
-      "description": "Cities and extreme weather are two complex dynamical systems that interact across scales, and urban heat is one of the many emergent outcomes. "
+      "description": "Cities and extreme weather are two complex dynamical systems that interact across scales, and urban heat is one of the many emergent outcomes. We bring fractals, scaling laws, and network thinking to understand how cities self-organize."
     },
     {
-      "title": "Environmental Justice ",
-      "description": "Coming soon "
+      "title": "Urban Climate Resilience",
+      "description": "How the built environment and the local climate dynamically interact with one another. We study both persistent urban heat and periodic heatwaves and design solutions to build resilience against them."
+    },
+    {
+      "title": "Urban Data and Sensing",
+      "description": "Using ground-based, airborne, and spaceborne thermal remote sensing, we characterize the built environment and the microclimate at high-resolution spatial scale to turn observation into insight."
     }
   ]
 }
