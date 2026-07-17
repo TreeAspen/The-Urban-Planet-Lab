@@ -163,7 +163,7 @@ export default function PeoplePage() {
                         People
                     </h1>
                     <p className="mt-4 text-lg leading-relaxed text-black/75 dark:text-white/72">
-                        The Urban Planet Lab brings together researchers at all career stages united by a commitment to rigorous, equity-centered urban science.
+                        The Urban Planet Lab is its people. We bring together researchers at all career stages united by their interest in urban science and a passion for climate adaptation. 
                     </p>
                 </AnimateIn>
             </section>
