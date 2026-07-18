@@ -7,15 +7,15 @@
   "cards": [
     {
       "title": "Cities as Complex Systems ",
-      "description": "Cities and extreme weather are two complex dynamical systems that interact across scales, and urban heat is one of the many emergent outcomes. We bring fractals, scaling laws, and network thinking to understand how cities self-organize."
+      "description": "Cities and extreme weather are two complex dynamical systems that interact across scales, and urban heat is one of the many emergent outcomes. We bring systems thinking and tools such as fractals, scaling laws, and complex networks to understand how cities, their people and socio-economic systems, and the physical microclimate self-organize and impact each other."
     },
     {
       "title": "Multi-scale Urban Sensing ",
-      "description": "How the built environment and the local climate dynamically interact with one another. We study both persistent urban heat and periodic heatwaves and design solutions to build resilience against them."
+      "description": "Resilient cities need observation systems that resolve heat where people live, not only city-wide averages. We combine ground sensors, airborne instruments, and satellite-based remote sensing to characterize the urban form and fabric as well as heat across multiple spatio-temporal scales. This help us spot persistent hotspots, follow how heat evolves during extreme weather, and turn those observations into guidance for adaptation."
     },
     {
       "title": "Climate-conscious Urban Design",
-      "description": "Using ground-based, airborne, and spaceborne thermal remote sensing, we characterize the built environment and the microclimate at high-resolution spatial scale to turn observation into insight."
+      "description": "We study how urban form, materials, and green infrastructure shape thermal landscape, and how socio-economic inequality, as well as historic social drivers such as redlining, determine today’s intra-urban heat disparities. Our work then aims to identify interventions such as cooling strategies, design choices, and targeted investments that would make cities more climate-resilient and equitable for all. "
     }
   ]
 }
