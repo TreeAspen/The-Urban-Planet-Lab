@@ -2,6 +2,7 @@
 name: John Ward
 category: phd
 role: PhD student
+photo: /uploads/johnward.png
 bio: John is a PhD student with industry experience in XR, spatial AI, remote
   sensing, and decision science. He holds a master's degree in data science from
   Harvard University, where his research was in risk optimization in dynamic
