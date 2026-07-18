@@ -1,7 +1,7 @@
 ---
 name: Cheolhee Yoo
-category: alumni
-role: Postdoctoral Fellow
+category: external
+role: Collaborator
 photo: /uploads/cheolhee_yoo_photo.jpg
 bio: "Cheolhee Yoo is a JPL Postdoctoral Fellow working with the Urban Planet
   Lab to understand how densification versus expansion in India contribute to
