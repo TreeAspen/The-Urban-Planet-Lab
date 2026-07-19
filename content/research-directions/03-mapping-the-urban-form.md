@@ -7,7 +7,7 @@ publications:
 partners: WUDAPT · Purdue University · DLR
 tagline: A shared language for describing the built environment.
 order: 3
-index: 3
+index: 2
 status: Ongoing
 title: Mapping the Urban Form
 image: ""
