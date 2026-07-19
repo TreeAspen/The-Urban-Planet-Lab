@@ -7,7 +7,7 @@ publications:
 partners: NOAA-CREST · NASA JPL
 tagline: How extreme heat events play out block by block.
 order: 2
-index: 2
+index: 4
 status: Ongoing
 title: Heatwaves on the City
 image: ""
