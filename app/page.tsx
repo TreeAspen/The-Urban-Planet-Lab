@@ -89,10 +89,10 @@ export default function Home() {
 
             {content.cards && content.cards.length > 0 ? (
                 <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20">
-                    <StaggerContainer className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <StaggerContainer className="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-3">
                         {content.cards.map((card, index) => (
-                            <StaggerItem key={index}>
-                                <div className="rounded-2xl border border-black/10 dark:border-white/15 bg-white/70 dark:bg-black/60 backdrop-blur-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_16px_50px_rgba(15,23,42,0.08)] dark:hover:shadow-[0_16px_50px_rgba(0,0,0,0.25)]">
+                            <StaggerItem key={index} className="h-full">
+                                <div className="h-full rounded-2xl border border-black/10 dark:border-white/15 bg-white/70 dark:bg-black/60 backdrop-blur-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_16px_50px_rgba(15,23,42,0.08)] dark:hover:shadow-[0_16px_50px_rgba(0,0,0,0.25)]">
                                     <h3 className="text-lg font-semibold text-black dark:text-white">
                                         {card.title}
                                     </h3>

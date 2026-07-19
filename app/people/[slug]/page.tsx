@@ -2,16 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCollection, getSiteSettings, type Person } from "@/lib/content";
-import { CATEGORY_LABELS, buildPersonLinks } from "@/lib/people";
+import { buildPersonLinks } from "@/lib/people";
 import { AnimateIn } from "@/components/AnimateIn";
 
+// Only Faculty get an individual profile page — everyone else stays plain text
+// on the People list.
+function getFacultyPeople(): Person[] {
+    return getCollection<Person>("people").filter((p) => p.category === "faculty");
+}
+
 export function generateStaticParams() {
-    return getCollection<Person>("people").map((person) => ({ slug: person.slug }));
+    return getFacultyPeople().map((person) => ({ slug: person.slug }));
 }
 
 function getPerson(slug: string): Person | null {
-    const person = getCollection<Person>("people").find((p) => p.slug === slug);
-    return person ?? null;
+    return getFacultyPeople().find((p) => p.slug === slug) ?? null;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -66,7 +71,7 @@ export default async function PersonPage({ params }: { params: Promise<{ slug: s
                             <ProfileAvatar person={person} />
                             <div className="min-w-0">
                                 <span className="inline-flex rounded-full bg-black/6 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-[0.14em] text-black/55 dark:bg-white/10 dark:text-white/50">
-                                    {CATEGORY_LABELS[person.category]}
+                                    Faculty
                                 </span>
                                 <h1 className="mt-3 text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
                                     {person.name}

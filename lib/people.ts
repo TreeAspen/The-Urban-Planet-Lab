@@ -14,10 +14,6 @@ export const CATEGORY_CONFIG: {
     { key: "alumni", label: "Alumni", layout: "rows" },
 ];
 
-export const CATEGORY_LABELS: Record<Person["category"], string> = Object.fromEntries(
-    CATEGORY_CONFIG.map((c) => [c.key, c.label])
-) as Record<Person["category"], string>;
-
 export type PersonLink = { href: string; label: string; external?: boolean };
 
 export const MAX_PERSON_LINKS = 3;

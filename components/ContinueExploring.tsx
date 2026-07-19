@@ -196,9 +196,9 @@ export function ContinueExploring({ from }: { from: keyof typeof PAGE_MAP }) {
                 </div>
             </AnimateIn>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((item, i) => (
-                    <AnimateIn key={item.href} delay={0.05 * i} y={20}>
+                    <AnimateIn key={item.href} className="h-full" delay={0.05 * i} y={20}>
                         <Link
                             href={item.href}
                             className="group block h-full rounded-[1.5rem] border border-black/10 bg-white/70 p-6 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-black/25 hover:shadow-[0_18px_60px_rgba(15,23,42,0.08)] dark:border-white/15 dark:bg-black/60 dark:hover:border-white/30 dark:hover:shadow-[0_18px_60px_rgba(0,0,0,0.28)]"

@@ -55,9 +55,10 @@ function PersonLinks({ person }: { person: Person }) {
     );
 }
 
+/** Only Faculty get an individual profile page — everyone else is plain text. */
 function FacultyCard({ person }: { person: Person }) {
     return (
-        <div className="flex gap-5 rounded-[1.75rem] border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_12px_40px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.22)] sm:gap-6 sm:p-6">
+        <div className="flex h-full gap-5 rounded-[1.75rem] border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_12px_40px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.22)] sm:gap-6 sm:p-6">
             <Link href={`/people/${person.slug}`} className="shrink-0">
                 <PersonAvatar person={person} />
             </Link>
@@ -79,16 +80,10 @@ function FacultyCard({ person }: { person: Person }) {
 
 function StudentCard({ person }: { person: Person }) {
     return (
-        <div className="flex flex-col items-start rounded-2xl border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_10px_35px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_10px_35px_rgba(0,0,0,0.22)]">
-            <Link href={`/people/${person.slug}`}>
-                <PersonAvatar person={person} />
-            </Link>
+        <div className="flex h-full flex-col items-start rounded-2xl border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_10px_35px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_10px_35px_rgba(0,0,0,0.22)]">
+            <PersonAvatar person={person} />
             <div className="mt-3 min-w-0 w-full">
-                <h3 className="text-base font-semibold text-black dark:text-white">
-                    <Link href={`/people/${person.slug}`} className="hover:underline underline-offset-4">
-                        {person.name}
-                    </Link>
-                </h3>
+                <h3 className="text-base font-semibold text-black dark:text-white">{person.name}</h3>
                 <p className="mt-0.5 text-sm text-black/60 dark:text-white/60">{person.role}</p>
                 {person.bio ? (
                     <p className="mt-2 text-sm leading-relaxed text-black/72 dark:text-white/68">{person.bio}</p>
@@ -105,9 +100,7 @@ function AlumniRow({ person }: { person: Person }) {
     return (
         <div className="flex items-center justify-between gap-4 border-b border-black/8 py-3.5 last:border-0 transition-colors duration-200 hover:bg-black/[0.02] dark:border-white/10 dark:hover:bg-white/[0.02]">
             <div className="min-w-0">
-                <Link href={`/people/${person.slug}`} className="font-medium text-black hover:underline underline-offset-4 dark:text-white">
-                    {person.name}
-                </Link>
+                <span className="font-medium text-black dark:text-white">{person.name}</span>
                 <span className="ml-2 text-sm text-black/60 dark:text-white/55">{person.role}</span>
                 {person.bio ? (
                     <p className="mt-0.5 text-sm text-black/55 dark:text-white/50">{person.bio}</p>
@@ -150,7 +143,7 @@ export default function PeoplePage() {
                         People
                     </h1>
                     <p className="mt-4 text-lg leading-relaxed text-black/75 dark:text-white/72">
-                        The Urban Planet Lab is its people. We bring together researchers at all career stages united by their interest in urban science and a passion for climate adaptation. 
+                        The Urban Planet Lab is its people. We bring together researchers at all career stages united by their interest in urban science and a passion for climate adaptation.
                     </p>
                 </AnimateIn>
             </section>
@@ -170,9 +163,9 @@ export default function PeoplePage() {
                     </AnimateIn>
 
                     {group.layout === "faculty" ? (
-                        <StaggerContainer className="grid gap-4 lg:grid-cols-2">
+                        <StaggerContainer className="grid items-stretch gap-4 lg:grid-cols-2">
                             {group.people.map((person) => (
-                                <StaggerItem key={person.slug}>
+                                <StaggerItem key={person.slug} className="h-full">
                                     <FacultyCard person={person} />
                                 </StaggerItem>
                             ))}
@@ -186,9 +179,9 @@ export default function PeoplePage() {
                             </div>
                         </AnimateIn>
                     ) : (
-                        <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        <StaggerContainer className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
                             {group.people.map((person) => (
-                                <StaggerItem key={person.slug}>
+                                <StaggerItem key={person.slug} className="h-full">
                                     <StudentCard person={person} />
                                 </StaggerItem>
                             ))}

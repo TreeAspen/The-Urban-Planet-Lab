@@ -27,13 +27,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ];
 
     if (sections.people !== false) {
+        // Only Faculty have an individual profile page.
         entries.push(
-            ...getCollection<Person>("people").map((person) => ({
-                url: `${SITE_URL}/people/${person.slug}`,
-                lastModified: now,
-                changeFrequency: "monthly" as const,
-                priority: 0.5,
-            }))
+            ...getCollection<Person>("people")
+                .filter((person) => person.category === "faculty")
+                .map((person) => ({
+                    url: `${SITE_URL}/people/${person.slug}`,
+                    lastModified: now,
+                    changeFrequency: "monthly" as const,
+                    priority: 0.5,
+                }))
         );
     }
 

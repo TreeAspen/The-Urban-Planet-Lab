@@ -104,9 +104,9 @@ export default function BlogPage() {
 
             <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
                 {posts.length > 0 ? (
-                    <StaggerContainer className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <StaggerContainer className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {posts.map((post) => (
-                            <StaggerItem key={post.slug}>
+                            <StaggerItem key={post.slug} className="h-full">
                                 <BlogCard post={post} />
                             </StaggerItem>
                         ))}
