@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCollection, getSiteSettings, type Person } from "@/lib/content";
+import { CATEGORY_CONFIG, buildPersonLinks } from "@/lib/people";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -9,16 +11,6 @@ export const metadata = {
     description:
         "Faculty, students, and alumni of The Urban Planet Lab — researchers united by rigorous, equity-centered urban science.",
 };
-
-const CATEGORY_CONFIG = [
-    { key: "faculty" as const, label: "Faculty", layout: "faculty" as const },
-    { key: "phd" as const, label: "PhD Students", layout: "grid" as const },
-    { key: "master" as const, label: "Master Students", layout: "grid" as const },
-    { key: "undergrad" as const, label: "Undergraduate Students", layout: "grid" as const },
-    { key: "highschool" as const, label: "High School Students", layout: "grid" as const },
-    { key: "external" as const, label: "External Friends", layout: "grid" as const },
-    { key: "alumni" as const, label: "Alumni", layout: "rows" as const },
-];
 
 function PersonAvatar({ person }: { person: Person }) {
     if (person.photo) {
@@ -39,25 +31,6 @@ function PersonAvatar({ person }: { person: Person }) {
             {person.name.charAt(0)}
         </div>
     );
-}
-
-type PersonLink = { href: string; label: string; external?: boolean };
-
-const MAX_PERSON_LINKS = 3;
-
-/** Priority order: whichever of these a person has filled in, the first three win. */
-function buildPersonLinks(person: Person): PersonLink[] {
-    const candidates: (PersonLink | null)[] = [
-        person.website ? { href: person.website, label: "Website", external: true } : null,
-        person.email ? { href: `mailto:${person.email}`, label: "Email" } : null,
-        person.linkedin ? { href: person.linkedin, label: "LinkedIn", external: true } : null,
-        person.scholar ? { href: person.scholar, label: "Scholar", external: true } : null,
-        person.twitter
-            ? { href: `https://twitter.com/${person.twitter}`, label: `@${person.twitter}`, external: true }
-            : null,
-    ];
-
-    return (candidates.filter(Boolean) as PersonLink[]).slice(0, MAX_PERSON_LINKS);
 }
 
 function PersonLinks({ person }: { person: Person }) {
@@ -85,9 +58,15 @@ function PersonLinks({ person }: { person: Person }) {
 function FacultyCard({ person }: { person: Person }) {
     return (
         <div className="flex gap-5 rounded-[1.75rem] border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_12px_40px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.22)] sm:gap-6 sm:p-6">
-            <PersonAvatar person={person} />
+            <Link href={`/people/${person.slug}`} className="shrink-0">
+                <PersonAvatar person={person} />
+            </Link>
             <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-semibold text-black dark:text-white">{person.name}</h3>
+                <h3 className="text-lg font-semibold text-black dark:text-white">
+                    <Link href={`/people/${person.slug}`} className="hover:underline underline-offset-4">
+                        {person.name}
+                    </Link>
+                </h3>
                 <p className="mt-0.5 text-sm text-black/60 dark:text-white/60">{person.role}</p>
                 {person.bio ? (
                     <p className="mt-2 text-sm leading-relaxed text-black/75 dark:text-white/72">{person.bio}</p>
@@ -101,9 +80,15 @@ function FacultyCard({ person }: { person: Person }) {
 function StudentCard({ person }: { person: Person }) {
     return (
         <div className="flex flex-col items-start rounded-2xl border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_10px_35px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_10px_35px_rgba(0,0,0,0.22)]">
-            <PersonAvatar person={person} />
+            <Link href={`/people/${person.slug}`}>
+                <PersonAvatar person={person} />
+            </Link>
             <div className="mt-3 min-w-0 w-full">
-                <h3 className="text-base font-semibold text-black dark:text-white">{person.name}</h3>
+                <h3 className="text-base font-semibold text-black dark:text-white">
+                    <Link href={`/people/${person.slug}`} className="hover:underline underline-offset-4">
+                        {person.name}
+                    </Link>
+                </h3>
                 <p className="mt-0.5 text-sm text-black/60 dark:text-white/60">{person.role}</p>
                 {person.bio ? (
                     <p className="mt-2 text-sm leading-relaxed text-black/72 dark:text-white/68">{person.bio}</p>
@@ -120,7 +105,9 @@ function AlumniRow({ person }: { person: Person }) {
     return (
         <div className="flex items-center justify-between gap-4 border-b border-black/8 py-3.5 last:border-0 transition-colors duration-200 hover:bg-black/[0.02] dark:border-white/10 dark:hover:bg-white/[0.02]">
             <div className="min-w-0">
-                <span className="font-medium text-black dark:text-white">{person.name}</span>
+                <Link href={`/people/${person.slug}`} className="font-medium text-black hover:underline underline-offset-4 dark:text-white">
+                    {person.name}
+                </Link>
                 <span className="ml-2 text-sm text-black/60 dark:text-white/55">{person.role}</span>
                 {person.bio ? (
                     <p className="mt-0.5 text-sm text-black/55 dark:text-white/50">{person.bio}</p>

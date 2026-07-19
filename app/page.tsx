@@ -26,6 +26,18 @@ export default function Home() {
                         </AnimateIn>
                     ) : null}
 
+                    <AnimateIn delay={0.15}>
+                        <div className="mt-3 inline-flex items-center rounded-lg border border-black/10 bg-white/90 px-3 py-1.5 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
+                            <Image
+                                src="/uploads/nyu-cusp-logo.png"
+                                alt="NYU Center for Urban Science and Progress"
+                                width={194}
+                                height={32}
+                                className="h-6 w-auto sm:h-7"
+                            />
+                        </div>
+                    </AnimateIn>
+
                     <AnimateIn delay={0.2} y={32}>
                         <h1 className="mt-5 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[0.95] text-black dark:text-white">
                             {content.main_heading}

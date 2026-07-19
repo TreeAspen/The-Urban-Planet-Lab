@@ -67,7 +67,7 @@ export default function TeachingPage() {
 
             <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
                 {courses.length > 0 ? (
-                    <StaggerContainer className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <StaggerContainer className="grid gap-5 sm:grid-cols-2">
                         {courses.map((course) => (
                             <StaggerItem key={course.slug}>
                                 <CourseCard course={course} />

@@ -25,6 +25,7 @@ export type SectionKey =
     | "publications"
     | "people"
     | "news"
+    | "blog"
     | "teaching"
     | "home_places";
 
@@ -40,6 +41,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
         publications: true,
         people: true,
         news: false,
+        blog: true,
         teaching: true,
         home_places: true,
     },
@@ -62,7 +64,8 @@ export function getSiteSettings(): SiteSettings {
     }
 }
 
-export function getCollection<T>(collectionDir: string): (T & { slug: string })[] {
+/** `body` is the markdown content below the frontmatter (empty string if none). */
+export function getCollection<T>(collectionDir: string): (T & { slug: string; body: string })[] {
     const dir = path.join(CONTENT_DIR, collectionDir);
     if (!fs.existsSync(dir)) return [];
     return fs
@@ -70,8 +73,8 @@ export function getCollection<T>(collectionDir: string): (T & { slug: string })[
         .filter((f) => f.endsWith(".md"))
         .map((filename) => {
             const raw = fs.readFileSync(path.join(dir, filename), "utf8");
-            const { data } = matter(raw);
-            return { ...(data as T), slug: filename.replace(/\.md$/, "") };
+            const { data, content } = matter(raw);
+            return { ...(data as T), slug: filename.replace(/\.md$/, ""), body: content.trim() };
         });
 }
 
@@ -151,6 +154,21 @@ export type Course = {
     syllabus_url: string;
     sort_order: number;
     slug: string;
+};
+
+export type BlogPost = {
+    title: string;
+    date: string;
+    author: string;
+    summary: string;
+    cover_image: string;
+    cover_image_alt: string;
+    /** "long" = has its own page rendering the markdown body; "card" = list entry only, like News. */
+    post_type: "long" | "card";
+    external_link: string;
+    featured: boolean;
+    slug: string;
+    body: string;
 };
 
 export type Place = {

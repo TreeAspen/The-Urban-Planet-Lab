@@ -5,6 +5,7 @@
     "publications": true,
     "people": true,
     "news": true,
+    "blog": true,
     "teaching": true,
     "home_places": true
   }

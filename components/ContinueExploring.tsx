@@ -7,6 +7,7 @@ const HREF_TO_SECTION: Record<string, SectionKey> = {
     "/publications": "publications",
     "/people": "people",
     "/news": "news",
+    "/blog": "blog",
     "/teaching": "teaching",
 };
 
@@ -36,6 +37,12 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
             title: "What's new",
             description: "Recent grants, talks, and lab life.",
             href: "/news",
+        },
+        {
+            label: "Blog",
+            title: "Longer reads",
+            description: "Essays and deep dives from lab members.",
+            href: "/blog",
         },
     ],
     research: [
@@ -116,6 +123,32 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
             title: "Our ongoing work",
             description: "What drives these updates.",
             href: "/research",
+        },
+        {
+            label: "Blog",
+            title: "Longer reads",
+            description: "Essays and deep dives from lab members.",
+            href: "/blog",
+        },
+    ],
+    blog: [
+        {
+            label: "News",
+            title: "Quick updates",
+            description: "Short highlights on grants, talks, and lab life.",
+            href: "/news",
+        },
+        {
+            label: "Publications",
+            title: "The research behind it",
+            description: "Peer-reviewed papers and reports.",
+            href: "/publications",
+        },
+        {
+            label: "People",
+            title: "Meet the authors",
+            description: "Who's writing and researching at the lab.",
+            href: "/people",
         },
     ],
     teaching: [

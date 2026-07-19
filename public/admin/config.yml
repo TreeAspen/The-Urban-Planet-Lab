@@ -54,6 +54,7 @@ collections:
               - { label: "Publications — show in site", name: "publications", widget: "boolean", default: true }
               - { label: "People — show in site", name: "people", widget: "boolean", default: true }
               - { label: "News — show in site (OFF = hide the News module)", name: "news", widget: "boolean", default: true }
+              - { label: "Blog — show in site", name: "blog", widget: "boolean", default: true }
               - { label: "Teaching — show in site", name: "teaching", widget: "boolean", default: true }
               - { label: "Home page — Meaningful Places map", name: "home_places", widget: "boolean", default: true }
 
@@ -317,6 +318,64 @@ collections:
         widget: "boolean"
         default: false
         hint: "Featured items appear before regular items regardless of date"
+
+  # ── Blog ────────────────────────────────────────────────────────────────────
+  - name: "blog"
+    label: "📝 Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{fields.date}} — {{fields.title}} ({{fields.post_type}})"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        required: false
+        hint: "Name shown as the author, e.g. 'Shu Yang'"
+      - label: "Post Type"
+        name: "post_type"
+        widget: "select"
+        default: "long"
+        hint: "Long-form gets its own page with the full article below. Quick update behaves like a News card — no dedicated page."
+        options:
+          - { label: "Long-form post (has its own page)", value: "long" }
+          - { label: "Quick update (card only, like News)", value: "card" }
+      - label: "Summary"
+        name: "summary"
+        widget: "text"
+        hint: "1–3 sentence summary shown on the blog card (and below the title on long-form pages)"
+      - label: "Cover Image"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        hint: "Optional image shown on the card and at the top of the article (recommended: 16:9 ratio)"
+      - label: "Cover Image Alt Text"
+        name: "cover_image_alt"
+        widget: "string"
+        required: false
+      - label: "External Link (Quick updates only)"
+        name: "external_link"
+        widget: "string"
+        required: false
+        hint: "Only used when Post Type is 'Quick update' — clicking the card opens this link in a new tab"
+      - label: "Featured (pin to top)"
+        name: "featured"
+        widget: "boolean"
+        default: false
+      - label: "Article Content (Long-form posts only)"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "The full article — only used and shown when Post Type is 'Long-form post'"
 
   # ── Teaching / Courses ──────────────────────────────────────────────────────
   - name: "courses"

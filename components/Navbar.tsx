@@ -13,6 +13,7 @@ const navigationItems: { href: string; label: string; key: SectionKey }[] = [
     { href: "/publications", label: "Publications", key: "publications" },
     { href: "/people", label: "People", key: "people" },
     { href: "/news", label: "News", key: "news" },
+    { href: "/blog", label: "Blog", key: "blog" },
     { href: "/teaching", label: "Teaching", key: "teaching" },
 ];
 
