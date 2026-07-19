@@ -9,7 +9,7 @@ tagline: How extreme heat events play out block by block.
 order: 2
 index: 4
 status: Ongoing
-title: Heatwaves on the City
+title: "Heatwaves "
 image: ""
 description: "Heatwaves are among the deadliest weather extremes, and cities
   amplify them unevenly, shifting depending on whether the air is dry or humid.
