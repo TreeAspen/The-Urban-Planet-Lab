@@ -115,15 +115,14 @@ export default function Home() {
                                     Places that have shaped us
                                 </p> */}
                                 <h2 className="mt-2 text-3l font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
-                                    Places that mean something to us
+                                    Cities that shaped us
                                 </h2>
                                 <p className="mt-3 max-w-2xl text-base leading-relaxed text-black/70 dark:text-white/65">
                                     Every member has a place that changed how they think about cities. Click a pin
                                     to read why
-                                    <a href="/admin" className="underline underline-offset-4 hover:text-black dark:hover:text-white">
+                                    {/* <a href="/admin" className="underline underline-offset-4 hover:text-black dark:hover:text-white">
                                         admin
-                                    </a>
-                                    .
+                                    </a> */}
                                 </p>
                             </div>
                         </div>
