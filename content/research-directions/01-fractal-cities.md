@@ -9,7 +9,7 @@ tagline: Finding the hidden order in how cities heat up.
 order: 1
 index: 1
 status: Foundational
-title: Intra-urban heat islets
+title: Fractal intra-urban heat islets
 image: ""
 description: Within a single city, some neighborhoods run several degrees hotter
   than others just a few blocks away. Using Land Surface Temperature, we showed
