@@ -1,9 +1,16 @@
 ---
-title: "New Paper Published in Sample Journal"
-date: "2024-01-22"
-summary: "Placeholder news summary. Replace with the actual news story about this publication or research finding."
-cover_image: ""
-cover_image_alt: ""
-link: ""
-featured: false
+title: Anamika named a Top 10 Finalist for the Women's Impact Award
+date: 2026-07-15
+summary: The Women's Impact Award, presented by the Falling Walls Foundation and
+  The Elsevier Foundation, recognizes exceptional contributions by women in
+  science who are advancing breakthrough research and driving positive change in
+  their fields. The award honors individuals who demonstrate scientific
+  excellence and commitment to building an equitable future in science.
+  Finalists are selected through a rigorous global competition and will be
+  announced through the Falling Walls channels, with further recognition and
+  support throughout the award cycle.
+cover_image: /uploads/fw26_08_womens-impact-award_finalists_sharepics.jpg
+cover_image_alt: Falling Walls
+link: https://www.linkedin.com/feed/update/urn:li:activity:7483615463948779520/
+featured: true
 ---
