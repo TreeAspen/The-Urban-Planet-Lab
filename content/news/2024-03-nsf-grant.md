@@ -9,5 +9,5 @@ summary: Anamika attends HeatHack, a summer workshop organized by Prof. Karen
 cover_image: /uploads/ncar_group.jpeg
 cover_image_alt: NCAR
 link: https://karenamckinnon.github.io/heathack.html
-featured: true
+featured: false
 ---
