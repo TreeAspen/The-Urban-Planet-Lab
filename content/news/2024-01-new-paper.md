@@ -1,5 +1,5 @@
 ---
-title: Anamika named a Top 10 Finalist for the Women's Impact Award
+title: Anamika named a Finalist for the Women's Impact Award
 date: 2026-07-15
 summary: The Women's Impact Award, presented by the Falling Walls Foundation and
   The Elsevier Foundation, recognizes exceptional contributions by women in
