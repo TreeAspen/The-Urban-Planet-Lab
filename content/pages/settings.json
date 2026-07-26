@@ -2,6 +2,7 @@
   "background": "urbanheat",
   "sections": {
     "research": true,
+    "projects": true,
     "publications": true,
     "people": true,
     "news": true,

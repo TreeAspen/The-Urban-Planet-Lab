@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { marked } from "marked";
 import { getCollection, getSiteSettings, type Person } from "@/lib/content";
 import { buildPersonLinks } from "@/lib/people";
 import { AnimateIn } from "@/components/AnimateIn";
+import { Icon } from "@/components/Icons";
 
 // Only Faculty get an individual profile page — everyone else stays plain text
 // on the People list.
@@ -52,6 +54,9 @@ export default async function PersonPage({ params }: { params: Promise<{ slug: s
     if (!person) notFound();
 
     const links = buildPersonLinks(person, 10);
+    // The profile page shows the long bio (markdown body); the short `bio` on
+    // the People list is only a fallback when no long bio has been written.
+    const longBioHtml = person.body ? (marked.parse(person.body) as string) : "";
 
     return (
         <div className="relative">
@@ -86,8 +91,9 @@ export default async function PersonPage({ params }: { params: Promise<{ slug: s
                                                 href={link.href}
                                                 target={link.external ? "_blank" : undefined}
                                                 rel={link.external ? "noreferrer" : undefined}
-                                                className="rounded-full border border-black/15 px-3.5 py-1.5 text-xs font-medium text-black/70 transition-all duration-200 hover:border-black/30 hover:text-black hover:scale-[1.04] dark:border-white/20 dark:text-white/65 dark:hover:border-white/40 dark:hover:text-white"
+                                                className="inline-flex items-center gap-1.5 rounded-full border border-black/15 px-3.5 py-1.5 text-xs font-medium text-black/70 transition-all duration-200 hover:border-black/30 hover:text-black hover:scale-[1.04] dark:border-white/20 dark:text-white/65 dark:hover:border-white/40 dark:hover:text-white"
                                             >
+                                                <Icon name={link.icon} />
                                                 {link.label}
                                             </a>
                                         ))}
@@ -96,7 +102,12 @@ export default async function PersonPage({ params }: { params: Promise<{ slug: s
                             </div>
                         </div>
 
-                        {person.bio ? (
+                        {longBioHtml ? (
+                            <div
+                                className="prose prose-neutral mt-8 max-w-3xl prose-headings:font-semibold prose-headings:tracking-tight prose-p:leading-relaxed prose-a:text-black prose-a:underline-offset-4 dark:prose-invert dark:prose-a:text-white sm:prose-lg"
+                                dangerouslySetInnerHTML={{ __html: longBioHtml }}
+                            />
+                        ) : person.bio ? (
                             <p className="mt-8 max-w-2xl text-base leading-relaxed text-black/78 dark:text-white/74 sm:text-lg">
                                 {person.bio}
                             </p>

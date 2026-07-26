@@ -51,11 +51,12 @@ collections:
             hint: "Each switch shows/hides a whole section across the site — its nav link, its cross-page links, and its own page. For example, switch News OFF to hide the News module everywhere."
             fields:
               - { label: "Research — show in site", name: "research", widget: "boolean", default: true }
+              - { label: "Projects — show in site", name: "projects", widget: "boolean", default: true }
               - { label: "Publications — show in site", name: "publications", widget: "boolean", default: true }
               - { label: "People — show in site", name: "people", widget: "boolean", default: true }
               - { label: "News — show in site (OFF = hide the News module)", name: "news", widget: "boolean", default: true }
               - { label: "Blog — show in site", name: "blog", widget: "boolean", default: true }
-              - { label: "Teaching — show in site", name: "teaching", widget: "boolean", default: true }
+              - { label: "Courses — show in site", name: "teaching", widget: "boolean", default: true }
               - { label: "Home page — Meaningful Places map", name: "home_places", widget: "boolean", default: true }
 
       - name: "home"
@@ -72,13 +73,13 @@ collections:
             hint: "The large title displayed on the homepage"
           - label: "Description Paragraph"
             name: "description"
-            widget: "text"
-            hint: "Main intro paragraph shown below the hero image"
+            widget: "markdown"
+            hint: "Main intro paragraph. You can add links here (e.g. CUSP, MAE) — select text and use the link button; links appear underlined on the site."
           - label: "Hero Image"
             name: "hero_image"
             widget: "image"
             required: false
-            hint: "Banner image at the top of the homepage (recommended: 1600×900px)"
+            hint: "Full-width banner at the very top of the homepage — it parallaxes and fades out as visitors scroll. A wide panorama works best (roughly 2:1 or wider, at least 2000px across)."
           - label: "Hero Image Alt Text"
             name: "hero_image_alt"
             widget: "string"
@@ -127,6 +128,41 @@ collections:
             required: false
             hint: "Optional quote or statement shown at the bottom of the page"
 
+      - name: "projects_page"
+        label: "🧭 Projects Page"
+        file: "content/pages/projects.json"
+        fields:
+          - label: "Main Heading"
+            name: "main_heading"
+            widget: "string"
+          - label: "Intro Description"
+            name: "description"
+            widget: "text"
+            hint: "Paragraph below the page title"
+          - label: "Closing Statement"
+            name: "closing_statement"
+            widget: "text"
+            required: false
+            hint: "Optional statement shown at the bottom of the Projects page"
+
+      - name: "news_page"
+        label: "📰 News Page (lab photo)"
+        file: "content/pages/news.json"
+        fields:
+          - label: "Lab Photo"
+            name: "lab_photo"
+            widget: "image"
+            required: false
+            hint: "Group photo of the lab, shown at the top of the News page (recommended: 16:7 ratio). Leave empty to show a blank placeholder."
+          - label: "Lab Photo Alt Text"
+            name: "lab_photo_alt"
+            widget: "string"
+            required: false
+          - label: "Lab Photo Caption"
+            name: "lab_photo_caption"
+            widget: "string"
+            required: false
+
   # ── Research Directions ─────────────────────────────────────────────────────
   - name: "research_directions"
     label: "🔬 Research Directions"
@@ -149,6 +185,93 @@ collections:
         name: "description"
         widget: "text"
         hint: "One to two paragraphs explaining what this direction covers and why it matters"
+      - label: "Selected Papers (max 3)"
+        name: "publications"
+        widget: "list"
+        required: false
+        max: 3
+        hint: "Pick up to 3 papers. They appear under this direction on the Research page, and this is also what groups papers by direction on the Publications page. Fewer than 3 is fine."
+        field:
+          label: "Publication"
+          name: "publication"
+          widget: "relation"
+          collection: "publications"
+          search_fields: ["title", "authors", "year"]
+          value_field: "{{slug}}"
+          display_fields: ["{{year}} — {{title}}"]
+
+  # ── Projects ────────────────────────────────────────────────────────────────
+  - name: "projects"
+    label: "🧭 Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{fields.order}}-{{title}}"
+    summary: "{{fields.order}}. {{fields.title}} ({{fields.status}})"
+    fields:
+      - label: "Display Order"
+        name: "order"
+        widget: "number"
+        value_type: "int"
+        min: 1
+        hint: "1 = first on the Projects page"
+      - label: "Project Title"
+        name: "title"
+        widget: "string"
+      - label: "Tagline"
+        name: "tagline"
+        widget: "string"
+        required: false
+        hint: "One line shown in italics under the title"
+      - label: "Status"
+        name: "status"
+        widget: "string"
+        required: false
+        hint: "e.g. Ongoing, Foundational, Completed"
+      - label: "Period"
+        name: "period"
+        widget: "string"
+        required: false
+        hint: "e.g. 2023 – present. Leave empty to hide."
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        hint: "One paragraph on what this project does and why it matters"
+      - label: "Research Direction"
+        name: "direction"
+        widget: "relation"
+        required: false
+        collection: "research_directions"
+        search_fields: ["title"]
+        value_field: "{{slug}}"
+        display_fields: ["{{title}}"]
+        hint: "Which research direction this project belongs to — shown as a link at the bottom of the project"
+      - label: "Partners"
+        name: "partners"
+        widget: "string"
+        required: false
+        hint: "Funders and collaborating institutions, separated by ' · '"
+      - label: "Project Image"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "Optional (recommended: 4:3). With no image, a themed placeholder tile is shown instead."
+      - label: "Project Image Alt Text"
+        name: "image_alt"
+        widget: "string"
+        required: false
+      - label: "Selected Papers (max 3)"
+        name: "publications"
+        widget: "list"
+        required: false
+        max: 3
+        field:
+          label: "Publication"
+          name: "publication"
+          widget: "relation"
+          collection: "publications"
+          search_fields: ["title", "authors", "year"]
+          value_field: "{{slug}}"
+          display_fields: ["{{year}} — {{title}}"]
 
   # ── People ──────────────────────────────────────────────────────────────────
   - name: "people"
@@ -172,7 +295,7 @@ collections:
           - { label: "Master Student", value: "master" }
           - { label: "Undergraduate Student", value: "undergrad" }
           - { label: "High School Student", value: "highschool" }
-          - { label: "External Friend", value: "external" }
+          - { label: "Lab Collaborator", value: "external" }
           - { label: "Alumni", value: "alumni" }
       - label: "Role / Title"
         name: "role"
@@ -183,11 +306,16 @@ collections:
         widget: "image"
         required: false
         hint: "Headshot (recommended: square, at least 400×400px)"
-      - label: "Short Bio"
+      - label: "Short Bio (People page)"
         name: "bio"
         widget: "text"
         required: false
-        hint: "1–3 sentences about research interests or background"
+        hint: "1–3 sentences shown on the People list. Keep it short — the long version below is separate."
+      - label: "Full Bio (individual profile page — Faculty only)"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "The long biography shown on the faculty member's own page. Only Faculty have an individual page. If left empty, that page falls back to the short bio."
       - label: "Email"
         name: "email"
         widget: "string"
@@ -271,11 +399,11 @@ collections:
         name: "abstract"
         widget: "text"
         required: false
-      - label: "Tags"
+      - label: "Tags (internal keywords)"
         name: "tags"
         widget: "list"
         required: false
-        hint: "Keywords for this paper, e.g. 'climate, urban heat, equity'"
+        hint: "Not shown on the site. Papers are grouped on the Publications page by research direction — add a paper to a direction under 🔬 Research Directions → Selected Papers."
 
   # ── News ────────────────────────────────────────────────────────────────────
   - name: "news"
@@ -379,7 +507,7 @@ collections:
 
   # ── Teaching / Courses ──────────────────────────────────────────────────────
   - name: "courses"
-    label: "🎓 Teaching"
+    label: "🎓 Courses"
     folder: "content/courses"
     create: true
     slug: "{{fields.sort_order}}-{{fields.code | slugify}}"
@@ -400,11 +528,19 @@ collections:
         name: "description"
         widget: "text"
         hint: "2–4 sentences describing the course content and learning objectives"
-      - label: "Syllabus URL"
+      - label: "Syllabus — Link"
         name: "syllabus_url"
         widget: "string"
         required: false
-        hint: "Link to the syllabus PDF or page (Google Drive, course website, etc.)"
+        hint: "Link to an online syllabus (Google Drive, course website, etc.)"
+      - label: "Syllabus — Upload PDF"
+        name: "syllabus_file"
+        widget: "file"
+        required: false
+        media_library:
+          config:
+            multiple: false
+        hint: "Upload a syllabus PDF instead of linking. If both are filled in, the uploaded file wins. With neither, the button still shows but does nothing."
       - label: "Display Order"
         name: "sort_order"
         widget: "number"
@@ -420,6 +556,12 @@ collections:
     slug: "{{fields.member_name | slugify}}-{{fields.place_name | slugify}}"
     summary: "{{fields.member_name}} — {{fields.place_name}} ({{fields.year}})"
     fields:
+      - label: "This is the lab office"
+        name: "is_office"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "ON = pinned first on the homepage map and shown as a blue 'office' pin instead of a personal place."
       - label: "Your Name"
         name: "member_name"
         widget: "string"

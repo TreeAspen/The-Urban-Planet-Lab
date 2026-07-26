@@ -1,8 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPageContent, getCollection, getSiteSettings, type ResearchContent, type ResearchDirection } from "@/lib/content";
+import { getPageContent, getSiteSettings, type Publication, type ResearchContent, type ResearchDirection } from "@/lib/content";
+import { getDirections, getPublications, resolveDirectionPublications } from "@/lib/research";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
+import { Icon } from "@/components/Icons";
 
 export const metadata = {
     title: "Research — The Urban Planet Lab",
@@ -50,16 +53,52 @@ const accentThemes: AccentTheme[] = [
     },
 ];
 
+/** Up to three papers per direction, linked to their entry on Publications. */
+function DirectionPublications({ publications }: { publications: Publication[] }) {
+    if (publications.length === 0) return null;
+
+    return (
+        <div className="mt-6 border-t border-black/8 pt-5 dark:border-white/10">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-black/45 dark:text-white/40">
+                Selected papers
+            </p>
+            <ul className="mt-3 space-y-2">
+                {publications.map((pub) => (
+                    <li key={pub.slug}>
+                        <Link
+                            href={`/publications#${pub.slug}`}
+                            className="group flex items-start gap-2.5 text-sm leading-relaxed text-black/70 transition-colors hover:text-black dark:text-white/65 dark:hover:text-white"
+                        >
+                            <Icon name="paper" className="mt-0.5 h-4 w-4 shrink-0 opacity-60" />
+                            <span>
+                                <span className="underline-offset-4 group-hover:underline">{pub.title}</span>
+                                <span className="text-black/45 dark:text-white/40"> · {pub.venue}</span>
+                                {pub.year ? (
+                                    <span className="text-black/45 dark:text-white/40"> ({pub.year})</span>
+                                ) : null}
+                            </span>
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
 function DirectionPanel({
     direction,
     accent,
+    publications,
 }: {
     direction: ResearchDirection;
     accent: AccentTheme;
+    publications: Publication[];
 }) {
     return (
         <article
+            id={direction.slug}
             className={[
+                "scroll-mt-28",
                 "relative overflow-hidden rounded-[2rem] border border-black/10 bg-white/72 p-6 shadow-[0_18px_60px_rgba(15,23,42,0.05)] backdrop-blur-xl transition duration-300 hover:scale-[1.01] hover:shadow-[0_24px_80px_rgba(15,23,42,0.10)] dark:border-white/15 dark:bg-black/62 dark:shadow-[0_20px_80px_rgba(0,0,0,0.22)] dark:hover:shadow-[0_26px_90px_rgba(0,0,0,0.3)] sm:p-8",
                 accent.hoverBorder,
             ].join(" ")}
@@ -81,6 +120,7 @@ function DirectionPanel({
                     <p className="mt-5 max-w-3xl text-base leading-8 text-black/76 dark:text-white/74">
                         {direction.description}
                     </p>
+                    <DirectionPublications publications={publications} />
                 </div>
             </div>
         </article>
@@ -91,8 +131,8 @@ export default function ResearchPage() {
     if (getSiteSettings().sections.research === false) notFound();
 
     const content = getPageContent<ResearchContent>("research");
-    const directions = getCollection<ResearchDirection>("research-directions")
-        .sort((a, b) => a.index - b.index);
+    const directions = getDirections();
+    const allPublications = getPublications();
 
     return (
         <div className="relative">
@@ -157,6 +197,10 @@ export default function ResearchPage() {
                                         <DirectionPanel
                                             direction={direction}
                                             accent={accentThemes[index % accentThemes.length]}
+                                            publications={resolveDirectionPublications(
+                                                direction,
+                                                allPublications
+                                            )}
                                         />
                                     </StaggerItem>
                                 ))}

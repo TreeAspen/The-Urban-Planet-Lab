@@ -5,6 +5,7 @@ const SITE_URL = "https://the-urban-planet-lab.vercel.app";
 
 const SECTION_ROUTES: { path: string; key: SectionKey }[] = [
     { path: "/research", key: "research" },
+    { path: "/projects", key: "projects" },
     { path: "/publications", key: "publications" },
     { path: "/people", key: "people" },
     { path: "/news", key: "news" },

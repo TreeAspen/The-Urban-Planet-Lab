@@ -1,9 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
-import { getCollection, getPageContent, getSiteSettings, type HomeContent, type Place } from "@/lib/content";
+import { marked } from "marked";
+import {
+    getCollection,
+    getPageContent,
+    getSiteSettings,
+    publicFileExists,
+    type HomeContent,
+    type Place,
+} from "@/lib/content";
+import HeroBanner from "@/components/HeroBanner";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import MeaningfulMapClient from "@/components/MeaningfulMapClient";
+import { Icon } from "@/components/Icons";
 
 export const metadata = {
     title: "The Urban Planet Lab",
@@ -11,12 +20,22 @@ export const metadata = {
 
 export default function Home() {
     const content = getPageContent<HomeContent>("home");
-    const places = getCollection<Place>("places").sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
+    // The lab office always leads the list; everyone else follows by year.
+    const places = getCollection<Place>("places").sort((a, b) => {
+        if (a.is_office !== b.is_office) return a.is_office ? -1 : 1;
+        return (a.year ?? 0) - (b.year ?? 0);
+    });
     const { sections } = getSiteSettings();
+    const descriptionHtml = content.description ? (marked.parse(content.description) as string) : "";
 
     return (
         <div className="relative">
-            <section className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:px-8 lg:pt-24 lg:pb-16">
+            <HeroBanner
+                src={publicFileExists(content.hero_image) ? content.hero_image : null}
+                alt={content.hero_image_alt || content.main_heading}
+            />
+
+            <section className="mx-auto max-w-6xl px-4 pt-10 pb-12 sm:px-6 sm:pt-12 sm:pb-14 lg:px-8 lg:pt-16 lg:pb-16">
                 <div className="max-w-3xl">
                     {content.tagline ? (
                         <AnimateIn delay={0.1}>
@@ -45,27 +64,13 @@ export default function Home() {
                     </AnimateIn>
                 </div>
 
-                {content.hero_image ? (
-                    <AnimateIn delay={0.35} y={20}>
-                        <div className="mt-8 overflow-hidden rounded-[2rem] border border-black/10 bg-white/60 shadow-[0_22px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/15 dark:bg-black/50 dark:shadow-[0_26px_90px_rgba(0,0,0,0.28)]">
-                            <Image
-                                src={content.hero_image}
-                                alt={content.hero_image_alt || content.main_heading}
-                                width={1600}
-                                height={900}
-                                priority
-                                sizes="(min-width: 1024px) 1120px, (min-width: 640px) 90vw, 100vw"
-                                className="h-auto w-full object-cover"
-                            />
-                        </div>
-                    </AnimateIn>
-                ) : null}
-
-                {content.description ? (
+                {descriptionHtml ? (
                     <AnimateIn delay={0.4}>
-                        <p className="mt-6 text-lg sm:text-xl leading-relaxed text-black/80 dark:text-white/75">
-                            {content.description}
-                        </p>
+                        {/* Markdown so links (e.g. CUSP, MAE) can be written inline in the admin. */}
+                        <div
+                            className="mt-6 text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:text-[#57068C] hover:[&_a]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:hover:[&_a]:text-[#c39bec] dark:hover:[&_a]:decoration-[#c39bec] [&_p+p]:mt-4"
+                            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                        />
                     </AnimateIn>
                 ) : null}
 
@@ -118,8 +123,9 @@ export default function Home() {
                                     Cities that shaped us
                                 </h2>
                                 <p className="mt-3 max-w-2xl text-base leading-relaxed text-black/70 dark:text-white/65">
-                                    Every member has a place that changed how they think about cities. Click a pin
-                                    to read why
+                                    The first pin is where you can find us — our office at NYU CUSP in Brooklyn.
+                                    Beyond it, every member has a place that changed how they think about cities.
+                                    Click a pin to read why
                                     {/* <a href="/admin" className="underline underline-offset-4 hover:text-black dark:hover:text-white">
                                         admin
                                     </a> */}

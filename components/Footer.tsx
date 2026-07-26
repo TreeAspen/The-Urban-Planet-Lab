@@ -1,3 +1,5 @@
+import { Icon } from "./Icons";
+
 export default function Footer() {
     const contactEmail = "as20884@nyu.edu";
 
@@ -13,8 +15,9 @@ export default function Footer() {
                         {contactEmail ? (
                             <a
                                 href={`mailto:${contactEmail}`}
-                                className="w-fit text-sm text-black/80 underline-offset-4 transition-colors duration-200 hover:underline hover:text-black dark:text-white/80 dark:hover:text-white"
+                                className="inline-flex w-fit items-center gap-1.5 text-sm text-black/80 underline-offset-4 transition-colors duration-200 hover:underline hover:text-black dark:text-white/80 dark:hover:text-white"
                             >
+                                <Icon name="mail" className="h-4 w-4 shrink-0" />
                                 Contact Us
                             </a>
                         ) : null}

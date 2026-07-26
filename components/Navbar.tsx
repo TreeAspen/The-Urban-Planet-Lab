@@ -10,11 +10,12 @@ import type { SectionKey } from "@/lib/content";
 
 const navigationItems: { href: string; label: string; key: SectionKey }[] = [
     { href: "/research", label: "Research", key: "research" },
+    { href: "/projects", label: "Projects", key: "projects" },
     { href: "/publications", label: "Publications", key: "publications" },
     { href: "/people", label: "People", key: "people" },
     { href: "/news", label: "News", key: "news" },
     { href: "/blog", label: "Blog", key: "blog" },
-    { href: "/teaching", label: "Teaching", key: "teaching" },
+    { href: "/teaching", label: "Courses", key: "teaching" },
 ];
 
 function NavLink({

@@ -18,17 +18,23 @@ const TILES = {
 };
 
 // Glowing "heat-island" marker — on-theme and legible on both basemaps.
-function makeIcon(active: boolean) {
-    const size = active ? 22 : 14;
+// The lab office gets a cool blue variant so it reads as a different kind of pin.
+function makeIcon(active: boolean, isOffice = false) {
+    const size = active ? 22 : isOffice ? 18 : 14;
     const ring = active ? 5 : 3;
     const glow = active ? 18 : 10;
+    const fill = isOffice
+        ? "radial-gradient(circle at 50% 38%, #bae6fd 0%, #38bdf8 46%, #1d4ed8 100%)"
+        : "radial-gradient(circle at 50% 38%, #fde68a 0%, #fb923c 46%, #ef4444 100%)";
+    const ringColor = isOffice ? "56,189,248" : "249,115,22";
+    const glowColor = isOffice ? "37,99,235" : "239,68,68";
     return L.divIcon({
         className: "upl-pin",
         html: `<span style="
             display:block;width:${size}px;height:${size}px;border-radius:9999px;
-            background:radial-gradient(circle at 50% 38%, #fde68a 0%, #fb923c 46%, #ef4444 100%);
-            box-shadow: 0 0 0 ${ring}px rgba(249,115,22,${active ? 0.26 : 0.16}),
-                        0 0 ${glow}px ${active ? 5 : 3}px rgba(239,68,68,${active ? 0.55 : 0.4}),
+            background:${fill};
+            box-shadow: 0 0 0 ${ring}px rgba(${ringColor},${active ? 0.26 : 0.16}),
+                        0 0 ${glow}px ${active ? 5 : 3}px rgba(${glowColor},${active ? 0.55 : 0.4}),
                         0 4px 12px rgba(0,0,0,0.28);
             transition: all 200ms ease;
         "></span>`,
@@ -97,7 +103,7 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
                             <Marker
                                 key={p.slug}
                                 position={[p.lat, p.lng]}
-                                icon={makeIcon(activeSlug === p.slug)}
+                                icon={makeIcon(activeSlug === p.slug, p.is_office)}
                                 ref={(ref) => {
                                     markerRefs.current[p.slug] = ref;
                                 }}
@@ -109,7 +115,7 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
                                 <Popup closeButton={false} className="upl-popup">
                                     <div className="min-w-[200px]">
                                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-black/55">
-                                            {p.member_name}
+                                            {p.is_office ? "Our office" : p.member_name}
                                         </p>
                                         <p className="mt-1 text-base font-semibold text-black">
                                             {p.place_name}
@@ -172,9 +178,12 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
                                         <span
                                             className={[
                                                 "mt-1.5 inline-block h-2 w-2 shrink-0 rounded-full transition-all",
-                                                isActive
-                                                    ? "scale-125 bg-black dark:bg-white"
-                                                    : "bg-black/40 dark:bg-white/40",
+                                                p.is_office
+                                                    ? "bg-sky-500 dark:bg-sky-400"
+                                                    : isActive
+                                                      ? "scale-125 bg-black dark:bg-white"
+                                                      : "bg-black/40 dark:bg-white/40",
+                                                isActive ? "scale-125" : "",
                                             ].join(" ")}
                                         />
                                         <span className="min-w-0 flex-1">
@@ -182,8 +191,8 @@ export default function MeaningfulMap({ places }: MeaningfulMapProps) {
                                                 {p.place_name}
                                             </span>
                                             <span className="block text-xs text-black/55 dark:text-white/50">
-                                                {p.member_name}
-                                                {p.year ? ` · ${p.year}` : ""}
+                                                {p.is_office ? "Lab office" : p.member_name}
+                                                {!p.is_office && p.year ? ` · ${p.year}` : ""}
                                             </span>
                                         </span>
                                     </button>

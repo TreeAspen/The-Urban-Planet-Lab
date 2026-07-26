@@ -4,6 +4,7 @@ import { getSiteSettings, type SectionKey } from "@/lib/content";
 
 const HREF_TO_SECTION: Record<string, SectionKey> = {
     "/research": "research",
+    "/projects": "projects",
     "/publications": "publications",
     "/people": "people",
     "/news": "news",
@@ -27,6 +28,12 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
             href: "/research",
         },
         {
+            label: "Projects",
+            title: "See it in practice",
+            description: "Active projects, partners, and the papers behind them.",
+            href: "/projects",
+        },
+        {
             label: "People",
             title: "Meet the team",
             description: "Faculty, students, and alumni who power the lab.",
@@ -47,6 +54,12 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
     ],
     research: [
         {
+            label: "Projects",
+            title: "Directions in practice",
+            description: "The projects, partners, and datasets behind each direction.",
+            href: "/projects",
+        },
+        {
             label: "Publications",
             title: "See it in print",
             description: "Peer-reviewed papers and reports from each direction.",
@@ -58,11 +71,25 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
             description: "The researchers leading these directions.",
             href: "/people",
         },
+    ],
+    projects: [
         {
-            label: "Teaching",
-            title: "Learn with us",
-            description: "Graduate and undergraduate courses we offer.",
-            href: "/teaching",
+            label: "Research",
+            title: "The thinking behind them",
+            description: "The research directions each project belongs to.",
+            href: "/research",
+        },
+        {
+            label: "Publications",
+            title: "What came out of them",
+            description: "Papers and reports produced by these projects.",
+            href: "/publications",
+        },
+        {
+            label: "People",
+            title: "Who's on them",
+            description: "Faculty, students, and collaborators behind the work.",
+            href: "/people",
         },
     ],
     people: [
@@ -79,7 +106,7 @@ const PAGE_MAP: Record<string, Suggestion[]> = {
             href: "/publications",
         },
         {
-            label: "Teaching",
+            label: "Courses",
             title: "Where they teach",
             description: "Courses taught by lab faculty.",
             href: "/teaching",

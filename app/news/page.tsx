@@ -1,6 +1,12 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getCollection, getSiteSettings, type NewsItem } from "@/lib/content";
+import {
+    getCollection,
+    getPageContent,
+    getSiteSettings,
+    type NewsItem,
+    type NewsPageContent,
+} from "@/lib/content";
 import { AnimateIn } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -75,9 +81,44 @@ function NewsRow({ item }: { item: NewsItem }) {
     return inner;
 }
 
+/** Lab group photo. Until one is uploaded, a blank framed placeholder holds the spot. */
+function LabPhoto({ content }: { content: NewsPageContent }) {
+    return (
+        <AnimateIn delay={0.1} y={16}>
+            <figure className="mt-10">
+                {content.lab_photo ? (
+                    <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-white/60 shadow-[0_22px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/15 dark:bg-black/50 dark:shadow-[0_26px_90px_rgba(0,0,0,0.28)]">
+                        <Image
+                            src={content.lab_photo}
+                            alt={content.lab_photo_alt || "The Urban Planet Lab"}
+                            width={1600}
+                            height={900}
+                            priority
+                            sizes="(min-width: 1024px) 1120px, 100vw"
+                            className="h-auto w-full object-cover"
+                        />
+                    </div>
+                ) : (
+                    <div className="flex aspect-[16/7] w-full items-center justify-center rounded-[2rem] border border-dashed border-black/15 bg-white/40 dark:border-white/15 dark:bg-black/30">
+                        <span className="text-sm text-black/40 dark:text-white/35">
+                            Lab photo — add one in the admin
+                        </span>
+                    </div>
+                )}
+                {content.lab_photo_caption ? (
+                    <figcaption className="mt-3 text-sm text-black/55 dark:text-white/50">
+                        {content.lab_photo_caption}
+                    </figcaption>
+                ) : null}
+            </figure>
+        </AnimateIn>
+    );
+}
+
 export default function NewsPage() {
     if (getSiteSettings().sections.news === false) notFound();
 
+    const pageContent = getPageContent<NewsPageContent>("news");
     const allNews = getCollection<NewsItem>("news").sort((a, b) => {
         if (a.featured && !b.featured) return -1;
         if (!a.featured && b.featured) return 1;
@@ -95,6 +136,8 @@ export default function NewsPage() {
                         Updates on publications, grants, events, and lab life.
                     </p>
                 </AnimateIn>
+
+                <LabPhoto content={pageContent} />
             </section>
 
             <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">

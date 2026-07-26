@@ -5,6 +5,7 @@ import { getCollection, getSiteSettings, type Person } from "@/lib/content";
 import { CATEGORY_CONFIG, buildPersonLinks } from "@/lib/people";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
+import { Icon } from "@/components/Icons";
 
 export const metadata = {
     title: "People — The Urban Planet Lab",
@@ -12,42 +13,57 @@ export const metadata = {
         "Faculty, students, and alumni of The Urban Planet Lab — researchers united by rigorous, equity-centered urban science.",
 };
 
-function PersonAvatar({ person }: { person: Person }) {
+function PersonAvatar({ person, size = "sm" }: { person: Person; size?: "sm" | "lg" }) {
+    const box =
+        size === "lg"
+            ? "h-28 w-28 sm:h-36 sm:w-36"
+            : "h-20 w-20 sm:h-24 sm:w-24";
+
     if (person.photo) {
         return (
-            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-black/8 dark:ring-white/12 sm:h-24 sm:w-24">
+            <div
+                className={`relative shrink-0 overflow-hidden rounded-full ring-2 ring-black/8 dark:ring-white/12 ${box}`}
+            >
                 <Image
                     src={person.photo}
                     alt={person.name}
                     fill
-                    sizes="96px"
+                    sizes={size === "lg" ? "144px" : "96px"}
                     className="object-cover"
                 />
             </div>
         );
     }
     return (
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-black/8 text-2xl font-semibold text-black/50 ring-2 ring-black/8 dark:bg-white/10 dark:text-white/50 dark:ring-white/12 sm:h-24 sm:w-24">
+        <div
+            className={`flex shrink-0 items-center justify-center rounded-full bg-black/8 font-semibold text-black/50 ring-2 ring-black/8 dark:bg-white/10 dark:text-white/50 dark:ring-white/12 ${box} ${
+                size === "lg" ? "text-4xl" : "text-2xl"
+            }`}
+        >
             {person.name.charAt(0)}
         </div>
     );
 }
 
-function PersonLinks({ person }: { person: Person }) {
+function PersonLinks({ person, size = "sm" }: { person: Person; size?: "sm" | "lg" }) {
     const links = buildPersonLinks(person);
 
     if (links.length === 0) return null;
 
     return (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={size === "lg" ? "mt-6 flex flex-wrap gap-2.5" : "mt-3 flex flex-wrap gap-2"}>
             {links.map((link) => (
                 <a
                     key={link.href}
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noreferrer" : undefined}
-                    className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/70 transition-all duration-200 hover:border-black/30 hover:text-black hover:scale-[1.04] dark:border-white/20 dark:text-white/65 dark:hover:border-white/40 dark:hover:text-white"
+                    className={[
+                        "inline-flex items-center gap-1.5 rounded-full border border-black/15 font-medium text-black/70 transition-all duration-200 hover:border-black/30 hover:text-black hover:scale-[1.04] dark:border-white/20 dark:text-white/65 dark:hover:border-white/40 dark:hover:text-white",
+                        size === "lg" ? "px-4 py-1.5 text-sm" : "px-3 py-1 text-xs",
+                    ].join(" ")}
                 >
+                    <Icon name={link.icon} className={size === "lg" ? "h-4 w-4 shrink-0" : "h-3.5 w-3.5 shrink-0"} />
                     {link.label}
                 </a>
             ))}
@@ -55,26 +71,57 @@ function PersonLinks({ person }: { person: Person }) {
     );
 }
 
-/** Only Faculty get an individual profile page — everyone else is plain text. */
-function FacultyCard({ person }: { person: Person }) {
+/**
+ * Only Faculty get an individual profile page — and a full-width feature panel
+ * here, with the short bio. The long bio lives on the profile page.
+ */
+function FacultyPanel({ person }: { person: Person }) {
     return (
-        <div className="flex h-full gap-5 rounded-[1.75rem] border border-black/10 bg-white/70 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_12px_40px_rgba(15,23,42,0.07)] dark:border-white/15 dark:bg-black/60 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.22)] sm:gap-6 sm:p-6">
-            <Link href={`/people/${person.slug}`} className="shrink-0">
-                <PersonAvatar person={person} />
-            </Link>
-            <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-semibold text-black dark:text-white">
-                    <Link href={`/people/${person.slug}`} className="hover:underline underline-offset-4">
-                        {person.name}
-                    </Link>
-                </h3>
-                <p className="mt-0.5 text-sm text-black/60 dark:text-white/60">{person.role}</p>
-                {person.bio ? (
-                    <p className="mt-2 text-sm leading-relaxed text-black/75 dark:text-white/72">{person.bio}</p>
-                ) : null}
-                <PersonLinks person={person} />
+        <article className="relative overflow-hidden rounded-[2.5rem] border border-black/10 bg-white/72 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:shadow-[0_26px_90px_rgba(15,23,42,0.10)] dark:border-white/15 dark:bg-black/62 dark:shadow-[0_22px_80px_rgba(0,0,0,0.26)] sm:p-10 lg:p-12">
+            <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(15,23,42,0.18),transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
+            <div className="pointer-events-none absolute -left-16 -top-16 h-52 w-52 rounded-full bg-amber-400/12 blur-3xl dark:bg-amber-300/10" />
+            <div className="pointer-events-none absolute -bottom-20 -right-12 h-60 w-60 rounded-full bg-sky-400/12 blur-3xl dark:bg-sky-300/10" />
+
+            <div className="relative flex flex-col gap-7 sm:flex-row sm:items-start sm:gap-10">
+                <Link href={`/people/${person.slug}`} className="shrink-0">
+                    <PersonAvatar person={person} size="lg" />
+                </Link>
+
+                <div className="min-w-0 flex-1">
+                    <span className="inline-flex rounded-full bg-black/6 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/55 dark:bg-white/10 dark:text-white/50">
+                        Principal Investigator
+                    </span>
+
+                    <h3 className="mt-3 text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
+                        <Link href={`/people/${person.slug}`} className="hover:underline underline-offset-[6px]">
+                            {person.name}
+                        </Link>
+                    </h3>
+
+                    <span className="mt-4 block h-1.5 w-16 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 dark:from-amber-300 dark:to-rose-400" />
+
+                    <p className="mt-4 text-base text-black/65 dark:text-white/60">{person.role}</p>
+
+                    {person.bio ? (
+                        <p className="mt-5 max-w-3xl text-lg leading-8 text-black/78 dark:text-white/74">
+                            {person.bio}
+                        </p>
+                    ) : null}
+
+                    <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                        <Link
+                            href={`/people/${person.slug}`}
+                            className="inline-flex items-center gap-1.5 rounded-full bg-black px-4 py-1.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.03] hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
+                        >
+                            Full profile
+                            <Icon name="arrow" className="h-4 w-4 shrink-0" />
+                        </Link>
+                    </div>
+
+                    <PersonLinks person={person} size="lg" />
+                </div>
             </div>
-        </div>
+        </article>
     );
 }
 
@@ -113,8 +160,9 @@ function AlumniRow({ person }: { person: Person }) {
                         href={link.href}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noreferrer" : undefined}
-                        className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/65 transition-colors hover:border-black/30 hover:text-black dark:border-white/20 dark:text-white/60 dark:hover:border-white/35 dark:hover:text-white"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/65 transition-colors hover:border-black/30 hover:text-black dark:border-white/20 dark:text-white/60 dark:hover:border-white/35 dark:hover:text-white"
                     >
+                        <Icon name={link.icon} />
                         {link.label}
                     </a>
                 ))}
@@ -163,10 +211,10 @@ export default function PeoplePage() {
                     </AnimateIn>
 
                     {group.layout === "faculty" ? (
-                        <StaggerContainer className="grid items-stretch gap-4 lg:grid-cols-2">
+                        <StaggerContainer className="space-y-5">
                             {group.people.map((person) => (
-                                <StaggerItem key={person.slug} className="h-full">
-                                    <FacultyCard person={person} />
+                                <StaggerItem key={person.slug} y={24}>
+                                    <FacultyPanel person={person} />
                                 </StaggerItem>
                             ))}
                         </StaggerContainer>

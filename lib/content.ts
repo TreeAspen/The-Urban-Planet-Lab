@@ -4,6 +4,15 @@ import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
+/**
+ * True when a `/uploads/...` style path actually exists in `public/`. Lets a
+ * page fall back to a placeholder instead of rendering a broken image.
+ */
+export function publicFileExists(publicPath: string): boolean {
+    if (!publicPath) return false;
+    return fs.existsSync(path.join(process.cwd(), "public", publicPath.replace(/^\//, "")));
+}
+
 export function getPageContent<T>(page: string): T {
     const filePath = path.join(CONTENT_DIR, "pages", `${page}.json`);
     return JSON.parse(fs.readFileSync(filePath, "utf8")) as T;
@@ -22,6 +31,7 @@ export type BackgroundVariant =
 
 export type SectionKey =
     | "research"
+    | "projects"
     | "publications"
     | "people"
     | "news"
@@ -38,6 +48,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
     background: "urbanheat",
     sections: {
         research: true,
+        projects: true,
         publications: true,
         people: true,
         news: false,
@@ -89,6 +100,12 @@ export type HomeContent = {
     cards: { title: string; description: string }[];
 };
 
+export type NewsPageContent = {
+    lab_photo: string;
+    lab_photo_alt: string;
+    lab_photo_caption: string;
+};
+
 export type ResearchContent = {
     main_heading: string;
     description: string;
@@ -99,10 +116,38 @@ export type ResearchContent = {
     closing_statement: string;
 };
 
+export type ProjectsContent = {
+    main_heading: string;
+    description: string;
+    closing_statement: string;
+};
+
 export type ResearchDirection = {
     index: number;
     title: string;
     description: string;
+    tagline: string;
+    status: string;
+    partners: string;
+    /** Slugs of publications in content/publications — at most 3 are shown. */
+    publications: string[];
+    slug: string;
+};
+
+export type Project = {
+    /** Display order on the Projects page (1 = first). */
+    order: number;
+    title: string;
+    tagline: string;
+    status: string;
+    period: string;
+    description: string;
+    /** Slug of the research direction this project belongs to. */
+    direction: string;
+    partners: string;
+    image: string;
+    image_alt: string;
+    publications: string[];
     slug: string;
 };
 
@@ -111,7 +156,10 @@ export type Person = {
     role: string;
     category: "faculty" | "phd" | "master" | "undergrad" | "highschool" | "external" | "alumni";
     photo: string;
+    /** Short bio shown on the People list. The markdown `body` is the long
+     *  version shown on the individual profile page. */
     bio: string;
+    body: string;
     email: string;
     website: string;
     scholar: string;
@@ -151,7 +199,10 @@ export type Course = {
     name: string;
     semester: string;
     description: string;
+    /** External syllabus link; `syllabus_file` is an uploaded PDF. Either one
+     *  activates the syllabus button — with neither, it renders inert. */
     syllabus_url: string;
+    syllabus_file: string;
     sort_order: number;
     slug: string;
 };
@@ -180,5 +231,7 @@ export type Place = {
     year: number;
     story: string;
     photo: string;
+    /** The lab's own office — pinned first and styled differently on the map. */
+    is_office: boolean;
     slug: string;
 };
