@@ -76,26 +76,34 @@ function PersonLinks({ person, size = "sm" }: { person: Person; size?: "sm" | "l
  * here, with the short bio. The long bio lives on the profile page.
  */
 function FacultyPanel({ person }: { person: Person }) {
+    const href = `/people/${person.slug}`;
+
     return (
-        <article className="relative overflow-hidden rounded-[2.5rem] border border-black/10 bg-white/72 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:shadow-[0_26px_90px_rgba(15,23,42,0.10)] dark:border-white/15 dark:bg-black/62 dark:shadow-[0_22px_80px_rgba(0,0,0,0.26)] sm:p-10 lg:p-12">
+        <article className="group relative overflow-hidden rounded-[2.5rem] border border-black/10 bg-white/72 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:border-black/20 hover:shadow-[0_26px_90px_rgba(15,23,42,0.12)] dark:border-white/15 dark:bg-black/62 dark:shadow-[0_22px_80px_rgba(0,0,0,0.26)] dark:hover:border-white/30 sm:p-10 lg:p-12">
             <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(15,23,42,0.18),transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
             <div className="pointer-events-none absolute -left-16 -top-16 h-52 w-52 rounded-full bg-amber-400/12 blur-3xl dark:bg-amber-300/10" />
             <div className="pointer-events-none absolute -bottom-20 -right-12 h-60 w-60 rounded-full bg-sky-400/12 blur-3xl dark:bg-sky-300/10" />
 
+            {/* Stretched link: the whole card navigates to the profile. It sits
+                above the text but below the contact links, which are raised. */}
+            <Link
+                href={href}
+                aria-label={`Read more about ${person.name}`}
+                className="absolute inset-0 z-10 rounded-[2.5rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black dark:focus-visible:outline-white"
+            />
+
             <div className="relative flex flex-col gap-7 sm:flex-row sm:items-start sm:gap-10">
-                <Link href={`/people/${person.slug}`} className="shrink-0">
+                <div className="shrink-0">
                     <PersonAvatar person={person} size="lg" />
-                </Link>
+                </div>
 
                 <div className="min-w-0 flex-1">
                     <span className="inline-flex rounded-full bg-black/6 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/55 dark:bg-white/10 dark:text-white/50">
                         Principal Investigator
                     </span>
 
-                    <h3 className="mt-3 text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
-                        <Link href={`/people/${person.slug}`} className="hover:underline underline-offset-[6px]">
-                            {person.name}
-                        </Link>
+                    <h3 className="mt-3 text-3xl font-semibold tracking-tight text-black underline-offset-[6px] group-hover:underline dark:text-white sm:text-4xl">
+                        {person.name}
                     </h3>
 
                     <span className="mt-4 block h-1.5 w-16 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 dark:from-amber-300 dark:to-rose-400" />
@@ -108,17 +116,15 @@ function FacultyPanel({ person }: { person: Person }) {
                         </p>
                     ) : null}
 
-                    <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                        <Link
-                            href={`/people/${person.slug}`}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-black px-4 py-1.5 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.03] hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
-                        >
-                            Full profile
-                            <Icon name="arrow" className="h-4 w-4 shrink-0" />
-                        </Link>
-                    </div>
+                    <span className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition-all duration-200 group-hover:gap-2.5 group-hover:bg-black/90 dark:bg-white dark:text-black dark:group-hover:bg-white/90">
+                        Read more
+                        <Icon name="arrow" className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </span>
 
-                    <PersonLinks person={person} size="lg" />
+                    {/* Raised above the stretched link so contact links still work. */}
+                    <div className="relative z-20">
+                        <PersonLinks person={person} size="lg" />
+                    </div>
                 </div>
             </div>
         </article>
