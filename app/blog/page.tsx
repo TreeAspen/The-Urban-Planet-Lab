@@ -1,7 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCollection, getSiteSettings, type BlogPost } from "@/lib/content";
+import {
+    byDateDesc,
+    formatDate,
+    getCollection,
+    getSiteSettings,
+    toISODate,
+    type BlogPost,
+} from "@/lib/content";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 
@@ -9,11 +16,6 @@ export const metadata = {
     title: "Blog — The Urban Planet Lab",
     description: "Essays, deep dives, and long-form writing from The Urban Planet Lab.",
 };
-
-function formatDate(dateStr: string) {
-    const date = new Date(dateStr + "T00:00:00");
-    return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-}
 
 function BlogCard({ post }: { post: BlogPost }) {
     const inner = (
@@ -38,7 +40,7 @@ function BlogCard({ post }: { post: BlogPost }) {
                 ) : null}
 
                 <div className="flex flex-wrap items-center gap-1.5 text-xs font-medium uppercase tracking-[0.15em] text-black/50 dark:text-white/45">
-                    <time dateTime={post.date}>{formatDate(post.date)}</time>
+                    <time dateTime={toISODate(post.date)}>{formatDate(post.date)}</time>
                     {post.author ? <span>· {post.author}</span> : null}
                 </div>
 
@@ -86,7 +88,7 @@ export default function BlogPage() {
     const posts = getCollection<BlogPost>("blog").sort((a, b) => {
         if (a.featured && !b.featured) return -1;
         if (!a.featured && b.featured) return 1;
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return byDateDesc(a.date, b.date);
     });
 
     return (

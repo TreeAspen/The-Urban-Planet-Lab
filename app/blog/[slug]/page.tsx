@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
-import { getCollection, getSiteSettings, type BlogPost } from "@/lib/content";
+import { formatDate, getCollection, getSiteSettings, toISODate, type BlogPost } from "@/lib/content";
 import { AnimateIn } from "@/components/AnimateIn";
 
 function getLongFormPosts() {
@@ -15,11 +15,6 @@ export function generateStaticParams() {
 
 function getPost(slug: string): BlogPost | null {
     return getLongFormPosts().find((p) => p.slug === slug) ?? null;
-}
-
-function formatDate(dateStr: string) {
-    const date = new Date(dateStr + "T00:00:00");
-    return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -55,7 +50,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
                 <AnimateIn delay={0.1} y={20}>
                     <div className="mt-6 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.15em] text-black/50 dark:text-white/45">
-                        <time dateTime={post.date}>{formatDate(post.date)}</time>
+                        <time dateTime={toISODate(post.date)}>{formatDate(post.date)}</time>
                         {post.author ? <span>· {post.author}</span> : null}
                         {post.featured ? (
                             <span className="inline-flex rounded-full bg-black/8 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-widest text-black/60 dark:bg-white/10 dark:text-white/55">

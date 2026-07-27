@@ -89,6 +89,49 @@ export function getCollection<T>(collectionDir: string): (T & { slug: string; bo
         });
 }
 
+// ── Dates ─────────────────────────────────────────────────────────────────────
+
+/**
+ * YAML turns an unquoted `date: 2026-06-22` into a Date but leaves a quoted
+ * one as a string, and the CMS writes both. Every date field is therefore
+ * either — never assume a string.
+ */
+export type DateValue = string | Date;
+
+/** Parses to UTC midnight so the calendar day never shifts by timezone. */
+function toDate(value: DateValue | null | undefined): Date | null {
+    if (!value) return null;
+    const date =
+        value instanceof Date
+            ? value
+            : /^\d{4}-\d{2}-\d{2}$/.test(value)
+              ? new Date(`${value}T00:00:00Z`)
+              : new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/** e.g. "June 22, 2026". Empty string when the date is missing or unparseable. */
+export function formatDate(value: DateValue | null | undefined): string {
+    const date = toDate(value);
+    if (!date) return "";
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        timeZone: "UTC",
+    });
+}
+
+/** "2026-06-22" for the machine-readable `datetime` attribute. */
+export function toISODate(value: DateValue | null | undefined): string | undefined {
+    return toDate(value)?.toISOString().slice(0, 10);
+}
+
+/** Newest first; entries without a usable date sort last. */
+export function byDateDesc(a: DateValue, b: DateValue): number {
+    return (toDate(b)?.getTime() ?? 0) - (toDate(a)?.getTime() ?? 0);
+}
+
 // ── Typed helpers ─────────────────────────────────────────────────────────────
 
 export type HomeContent = {
@@ -185,7 +228,7 @@ export type Publication = {
 
 export type NewsItem = {
     title: string;
-    date: string;
+    date: DateValue;
     summary: string;
     cover_image: string;
     cover_image_alt: string;
@@ -209,7 +252,7 @@ export type Course = {
 
 export type BlogPost = {
     title: string;
-    date: string;
+    date: DateValue;
     author: string;
     summary: string;
     cover_image: string;

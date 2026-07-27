@@ -1,9 +1,12 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
+    byDateDesc,
+    formatDate,
     getCollection,
     getPageContent,
     getSiteSettings,
+    toISODate,
     type NewsItem,
     type NewsPageContent,
 } from "@/lib/content";
@@ -15,11 +18,6 @@ export const metadata = {
     description:
         "Updates on publications, grants, events, and lab life at The Urban Planet Lab.",
 };
-
-function formatDate(dateStr: string) {
-    const date = new Date(dateStr + "T00:00:00");
-    return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-}
 
 function NewsRow({ item }: { item: NewsItem }) {
     const inner = (
@@ -38,12 +36,14 @@ function NewsRow({ item }: { item: NewsItem }) {
 
             <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                    <time
-                        dateTime={item.date}
-                        className="text-xs font-medium uppercase tracking-[0.15em] text-black/50 dark:text-white/45"
-                    >
-                        {formatDate(item.date)}
-                    </time>
+                    {formatDate(item.date) ? (
+                        <time
+                            dateTime={toISODate(item.date)}
+                            className="text-xs font-medium uppercase tracking-[0.15em] text-black/50 dark:text-white/45"
+                        >
+                            {formatDate(item.date)}
+                        </time>
+                    ) : null}
                     {item.featured ? (
                         <span className="inline-flex rounded-full bg-black/8 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-widest text-black/60 dark:bg-white/10 dark:text-white/55">
                             Featured
@@ -122,7 +122,7 @@ export default function NewsPage() {
     const allNews = getCollection<NewsItem>("news").sort((a, b) => {
         if (a.featured && !b.featured) return -1;
         if (!a.featured && b.featured) return 1;
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return byDateDesc(a.date, b.date);
     });
 
     return (
