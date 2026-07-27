@@ -191,6 +191,8 @@ export type Project = {
     image: string;
     image_alt: string;
     publications: string[];
+    /** Optional long write-up (markdown) shown on the project's own page. */
+    body: string;
     slug: string;
 };
 

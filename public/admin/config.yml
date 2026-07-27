@@ -254,11 +254,12 @@ collections:
         name: "image"
         widget: "image"
         required: false
-        hint: "Optional (recommended: 4:3). With no image, a themed placeholder tile is shown instead."
+        hint: "Shown on the Projects page and at the top of this project's own page. Landscape works best (4:3 or 16:9, at least 1200px wide). Leave empty and a themed placeholder tile is used instead."
       - label: "Project Image Alt Text"
         name: "image_alt"
         widget: "string"
         required: false
+        hint: "Accessibility description of the image"
       - label: "Selected Papers (max 3)"
         name: "publications"
         widget: "list"
@@ -272,6 +273,11 @@ collections:
           search_fields: ["title", "authors", "year"]
           value_field: "{{slug}}"
           display_fields: ["{{year}} — {{title}}"]
+      - label: "Full Write-up (project's own page)"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "Optional long-form text shown on this project's own page, below the description. Leave empty and the page just shows the description."
 
   # ── People ──────────────────────────────────────────────────────────────────
   - name: "people"

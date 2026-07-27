@@ -1,5 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getCollection, getSiteSettings, type BlogPost, type Person, type SectionKey } from "@/lib/content";
+import {
+    getCollection,
+    getSiteSettings,
+    type BlogPost,
+    type Person,
+    type Project,
+    type SectionKey,
+} from "@/lib/content";
 
 const SITE_URL = "https://the-urban-planet-lab.vercel.app";
 
@@ -38,6 +45,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
                     changeFrequency: "monthly" as const,
                     priority: 0.5,
                 }))
+        );
+    }
+
+    if (sections.projects !== false) {
+        entries.push(
+            ...getCollection<Project>("projects").map((project) => ({
+                url: `${SITE_URL}/projects/${project.slug}`,
+                lastModified: now,
+                changeFrequency: "monthly" as const,
+                priority: 0.6,
+            }))
         );
     }
 
