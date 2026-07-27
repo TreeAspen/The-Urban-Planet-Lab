@@ -68,7 +68,7 @@ export default function Home() {
                     <AnimateIn delay={0.4}>
                         {/* Markdown so links (e.g. CUSP, MAE) can be written inline in the admin. */}
                         <div
-                            className="mt-6 text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:text-[#57068C] hover:[&_a]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:hover:[&_a]:text-[#c39bec] dark:hover:[&_a]:decoration-[#c39bec] [&_p+p]:mt-4"
+                            className="mt-6 text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec] [&_p+p]:mt-4"
                             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                         />
                     </AnimateIn>
