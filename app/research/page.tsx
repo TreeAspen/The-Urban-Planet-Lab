@@ -155,41 +155,34 @@ export default function ResearchPage() {
 
     return (
         <div className="relative">
-            <section className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:px-8 lg:pt-24 lg:pb-16">
+            {/* Plain page header, matching Projects and People — no panel. */}
+            <section className="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
                 <AnimateIn y={28} duration={0.7}>
-                    <div className="relative overflow-hidden rounded-[2.75rem] border border-black/10 bg-white/68 px-6 py-10 shadow-[0_24px_90px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-white/15 dark:bg-black/56 dark:shadow-[0_26px_100px_rgba(0,0,0,0.28)] sm:px-8 sm:py-12 lg:px-12 lg:py-16">
-                        <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(15,23,42,0.18),transparent)] dark:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)]" />
-                        <div className="absolute left-0 top-0 h-44 w-44 -translate-x-1/3 -translate-y-1/3 rounded-full bg-sky-400/10 blur-3xl dark:bg-sky-400/12" />
-                        <div className="absolute bottom-0 right-0 h-52 w-52 translate-x-1/3 translate-y-1/3 rounded-full bg-emerald-400/10 blur-3xl dark:bg-fuchsia-400/10" />
+                    {content.main_heading ? (
+                        <h1 className="max-w-4xl text-balance text-4xl font-semibold tracking-tight text-black dark:text-white sm:text-5xl lg:text-6xl">
+                            {content.main_heading}
+                        </h1>
+                    ) : null}
 
-                        <div className="relative mx-auto max-w-4xl">
-                            {content.main_heading ? (
-                                <h1 className="text-balance text-4xl font-semibold tracking-tight text-black dark:text-white sm:text-5xl lg:text-6xl">
-                                    {content.main_heading}
-                                </h1>
-                            ) : null}
+                    {content.description ? (
+                        <p className="mt-6 max-w-3xl text-lg leading-8 text-black/78 dark:text-white/74">
+                            {content.description}
+                        </p>
+                    ) : null}
 
-                            {content.hero_image ? (
-                                <div className="mt-8 overflow-hidden rounded-[2rem] border border-black/10 bg-white/60 shadow-[0_22px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/15 dark:bg-black/50 dark:shadow-[0_26px_90px_rgba(0,0,0,0.28)]">
-                                    <Image
-                                        src={content.hero_image}
-                                        alt={content.hero_image_alt || content.main_heading}
-                                        width={1600}
-                                        height={900}
-                                        priority
-                                        sizes="(min-width: 1024px) 896px, (min-width: 640px) 90vw, 100vw"
-                                        className="h-auto w-full object-cover"
-                                    />
-                                </div>
-                            ) : null}
-
-                            {content.description ? (
-                                <p className="mt-8 text-lg leading-8 text-black/78 dark:text-white/74 lg:text-[1.15rem]">
-                                    {content.description}
-                                </p>
-                            ) : null}
+                    {content.hero_image ? (
+                        <div className="mt-8 overflow-hidden rounded-[2rem] border border-black/10 bg-white/60 dark:border-white/15 dark:bg-black/50">
+                            <Image
+                                src={content.hero_image}
+                                alt={content.hero_image_alt || content.main_heading}
+                                width={1600}
+                                height={900}
+                                priority
+                                sizes="(min-width: 1024px) 1120px, 100vw"
+                                className="h-auto w-full object-cover"
+                            />
                         </div>
-                    </div>
+                    ) : null}
                 </AnimateIn>
             </section>
 

@@ -85,7 +85,7 @@ function NewsRow({ item }: { item: NewsItem }) {
 function LabPhoto({ content }: { content: NewsPageContent }) {
     return (
         <AnimateIn delay={0.1} y={16}>
-            <figure className="mt-10">
+            <figure>
                 {content.lab_photo ? (
                     <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-white/60 shadow-[0_22px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-white/15 dark:bg-black/50 dark:shadow-[0_26px_90px_rgba(0,0,0,0.28)]">
                         <Image
@@ -93,7 +93,6 @@ function LabPhoto({ content }: { content: NewsPageContent }) {
                             alt={content.lab_photo_alt || "The Urban Planet Lab"}
                             width={1600}
                             height={900}
-                            priority
                             sizes="(min-width: 1024px) 1120px, 100vw"
                             className="h-auto w-full object-cover"
                         />
@@ -136,11 +135,9 @@ export default function NewsPage() {
                         Updates on publications, grants, events, and lab life.
                     </p>
                 </AnimateIn>
-
-                <LabPhoto content={pageContent} />
             </section>
 
-            <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
+            <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-16">
                 {allNews.length > 0 ? (
                     <AnimateIn delay={0.1} y={16}>
                         <div className="divide-y divide-black/8 rounded-[1.75rem] border border-black/10 bg-white/70 px-6 backdrop-blur-xl dark:divide-white/10 dark:border-white/15 dark:bg-black/60 sm:px-7">
@@ -156,6 +153,11 @@ export default function NewsPage() {
                         </div>
                     </AnimateIn>
                 )}
+            </section>
+
+            {/* The lab photo closes the page, below the news highlights. */}
+            <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
+                <LabPhoto content={pageContent} />
             </section>
 
             <ContinueExploring from="news" />
