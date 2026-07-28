@@ -172,6 +172,8 @@ export type ResearchDirection = {
     tagline: string;
     status: string;
     partners: string;
+    image: string;
+    image_alt: string;
     /** Slugs of publications in content/publications — at most 3 are shown. */
     publications: string[];
     slug: string;

@@ -6,6 +6,7 @@ import { getDirections, getPublications, resolveDirectionPublications } from "@/
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import { Icon } from "@/components/Icons";
+import { MediaTile } from "@/components/MediaTile";
 
 export const metadata = {
     title: "Research — The Urban Planet Lab",
@@ -18,6 +19,8 @@ type AccentTheme = {
     hoverBorder: string;
     number: string;
     rule: string;
+    /** Gradient behind the placeholder tile when no image is uploaded. */
+    tile: string;
 };
 
 const accentThemes: AccentTheme[] = [
@@ -26,30 +29,35 @@ const accentThemes: AccentTheme[] = [
         hoverBorder: "hover:border-cyan-500/25 dark:hover:border-cyan-300/22",
         number: "text-cyan-700/18 dark:text-cyan-200/15",
         rule: "bg-cyan-500 dark:bg-cyan-300",
+        tile: "from-cyan-400/28 via-sky-400/16 to-indigo-500/24",
     },
     {
         halo: "bg-rose-500/12 dark:bg-rose-400/14",
         hoverBorder: "hover:border-rose-500/25 dark:hover:border-rose-300/22",
         number: "text-rose-700/18 dark:text-rose-200/15",
         rule: "bg-rose-500 dark:bg-rose-300",
+        tile: "from-rose-400/28 via-orange-400/18 to-amber-400/26",
     },
     {
         halo: "bg-emerald-500/12 dark:bg-emerald-400/14",
         hoverBorder: "hover:border-emerald-500/25 dark:hover:border-emerald-300/22",
         number: "text-emerald-700/18 dark:text-emerald-200/15",
         rule: "bg-emerald-500 dark:bg-emerald-300",
+        tile: "from-emerald-400/28 via-teal-400/16 to-cyan-500/24",
     },
     {
         halo: "bg-amber-500/12 dark:bg-amber-400/14",
         hoverBorder: "hover:border-amber-500/25 dark:hover:border-amber-300/22",
         number: "text-amber-700/18 dark:text-amber-200/15",
         rule: "bg-amber-500 dark:bg-amber-300",
+        tile: "from-amber-400/30 via-orange-500/18 to-rose-500/24",
     },
     {
         halo: "bg-violet-500/12 dark:bg-violet-400/14",
         hoverBorder: "hover:border-violet-500/25 dark:hover:border-violet-300/22",
         number: "text-violet-700/18 dark:text-violet-200/15",
         rule: "bg-violet-500 dark:bg-violet-300",
+        tile: "from-violet-400/28 via-fuchsia-400/16 to-sky-500/24",
     },
 ];
 
@@ -104,6 +112,17 @@ function DirectionPanel({
             ].join(" ")}
         >
             <div className={`pointer-events-none absolute right-5 top-5 h-24 w-24 rounded-full blur-3xl ${accent.halo}`} />
+
+            <div className="relative mb-6 sm:mb-8">
+                <MediaTile
+                    src={direction.image}
+                    alt={direction.image_alt || direction.title}
+                    index={direction.index}
+                    accent={accent.tile}
+                    className="aspect-[16/7]"
+                    sizes="(min-width: 1024px) 660px, 100vw"
+                />
+            </div>
 
             <div className="relative grid gap-6 lg:grid-cols-[92px_minmax(0,1fr)] lg:gap-8">
                 <div className="flex items-start justify-between lg:block">

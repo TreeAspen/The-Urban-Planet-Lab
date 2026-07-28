@@ -185,6 +185,16 @@ collections:
         name: "description"
         widget: "text"
         hint: "One to two paragraphs explaining what this direction covers and why it matters"
+      - label: "Direction Image"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "Banner shown at the top of this direction on the Research page. Wide landscape works best (16:7 or wider, at least 1200px). Leave empty and a themed placeholder tile is used instead."
+      - label: "Direction Image Alt Text"
+        name: "image_alt"
+        widget: "string"
+        required: false
+        hint: "Accessibility description of the image"
       - label: "Selected Papers (max 3)"
         name: "publications"
         widget: "list"

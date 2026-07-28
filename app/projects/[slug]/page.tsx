@@ -6,7 +6,7 @@ import { getDirections, getPublications } from "@/lib/research";
 import { accentFor, getProjects } from "@/lib/projects";
 import { AnimateIn } from "@/components/AnimateIn";
 import { Icon } from "@/components/Icons";
-import { ProjectTile } from "@/components/ProjectTile";
+import { MediaTile } from "@/components/MediaTile";
 
 /** Position matters: it drives the accent colour and the placeholder number. */
 function findProject(slug: string): { project: Project; position: number } | null {
@@ -89,8 +89,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
                 <AnimateIn delay={0.15} y={16}>
                     <div className="mt-8">
-                        <ProjectTile
-                            project={project}
+                        <MediaTile
+                            src={project.image}
+                            alt={project.image_alt || project.title}
                             index={position + 1}
                             accent={accent.tile}
                             className="aspect-[16/9]"

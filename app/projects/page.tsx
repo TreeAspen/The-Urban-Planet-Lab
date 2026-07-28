@@ -12,7 +12,7 @@ import { accentFor, getProjects, type ProjectAccent } from "@/lib/projects";
 import { AnimateIn } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import { Icon } from "@/components/Icons";
-import { ProjectTile } from "@/components/ProjectTile";
+import { MediaTile } from "@/components/MediaTile";
 
 export const metadata = {
     title: "Projects — The Urban Planet Lab",
@@ -41,8 +41,9 @@ function ProjectRow({
             <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
                 <div className={flipped ? "lg:order-2" : undefined}>
                     <Link href={href} className="block transition-transform duration-300 hover:scale-[1.015]">
-                        <ProjectTile
-                            project={project}
+                        <MediaTile
+                            src={project.image}
+                            alt={project.image_alt || project.title}
                             index={position + 1}
                             accent={accent.tile}
                             priority={position === 0}
