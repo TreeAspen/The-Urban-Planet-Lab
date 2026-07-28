@@ -169,7 +169,9 @@ export default function Navbar({
     }, [mobileMenuOpen]);
 
     return (
-        <header>
+        // Raised so page content — the homepage hero photo in particular — can
+        // sit behind the floating nav pill rather than starting below it.
+        <header className="relative z-50">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                 <motion.div
                     className="mt-4 rounded-[1.75rem] border border-black/10 bg-white/60 backdrop-blur-xl dark:border-white/15 dark:bg-black/60 sm:mt-6"

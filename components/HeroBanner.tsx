@@ -16,6 +16,15 @@ import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motio
 const BOTTOM_FADE =
     "linear-gradient(to bottom, #000 0%, #000 62%, rgba(0,0,0,0.55) 82%, rgba(0,0,0,0.16) 93%, transparent 100%)";
 
+/**
+ * Height of the floating nav (its top margin plus the pill). The banner is
+ * pulled up by exactly this much so the photo runs behind the nav instead of
+ * starting under it, and grows by the same amount so nothing below shifts.
+ *   mobile  16 (mt-4) + 32 (py-4) + 44 (menu button)  = 92
+ *   sm and up 24 (mt-6) + 32 (py-4) + 40 (logo)       = 96
+ */
+const NAV_OFFSET = "-mt-[92px] sm:-mt-[96px]";
+
 export default function HeroBanner({ src, alt }: { src: string | null; alt: string }) {
     const ref = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -32,7 +41,10 @@ export default function HeroBanner({ src, alt }: { src: string | null; alt: stri
     const cueOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
 
     return (
-        <div ref={ref} className="relative h-[46vh] min-h-[240px] w-full overflow-hidden sm:h-[52vh] lg:max-h-[560px]">
+        <div
+            ref={ref}
+            className={`relative h-[calc(46vh+92px)] min-h-[332px] w-full overflow-hidden sm:h-[calc(52vh+96px)] lg:max-h-[656px] ${NAV_OFFSET}`}
+        >
             {/* The mask lives on this static wrapper, not on the moving layer, so
                 the soft bottom edge stays put while the image scales and drifts.
                 Fading the image's own alpha lets the page's textured background
