@@ -40,10 +40,12 @@ export default function Home() {
                 straight into the description. */}
             <section className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:px-8 lg:pt-24 lg:pb-16">
                 {descriptionHtml ? (
-                    <AnimateIn delay={0.4}>
-                        {/* Markdown so links (e.g. CUSP, MAE) can be written inline in the admin. */}
+                    <AnimateIn delay={0.1}>
+                        {/* Set as a statement rather than body copy: heavier, larger
+                            and tighter. Markdown so links (CUSP, MAE) can be written
+                            inline in the admin. */}
                         <div
-                            className="max-w-4xl text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec] [&_p+p]:mt-4"
+                            className="max-w-5xl text-xl font-semibold leading-9 tracking-tight text-black/88 dark:text-white/88 sm:text-2xl sm:leading-10 lg:text-[1.7rem] lg:leading-[2.75rem] [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/30 [&_a]:underline-offset-[6px] [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/40 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec] [&_p+p]:mt-6"
                             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                         />
                     </AnimateIn>
