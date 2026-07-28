@@ -17,6 +17,10 @@ export const metadata = {
     title: "The Urban Planet Lab",
 };
 
+/** Links inside the intro: underlined, turning NYU violet on hover. */
+const LINK_STYLES =
+    "[&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec]";
+
 export default function Home() {
     const content = getPageContent<HomeContent>("home");
     // The lab office always leads the list; everyone else follows by year.
@@ -25,7 +29,15 @@ export default function Home() {
         return (a.year ?? 0) - (b.year ?? 0);
     });
     const { sections } = getSiteSettings();
-    const descriptionHtml = content.description ? (marked.parse(content.description) as string) : "";
+
+    // The first paragraph of the description is set as a lead statement; the
+    // rest stays body copy. Both are markdown so links can be written in the
+    // admin — hence the shared link styling.
+    const [lead = "", ...restParagraphs] = (content.description ?? "").trim().split(/\n{2,}/);
+    const leadHtml = lead ? (marked.parse(lead) as string) : "";
+    const restHtml = restParagraphs.length
+        ? (marked.parse(restParagraphs.join("\n\n")) as string)
+        : "";
 
     return (
         <div className="relative">
@@ -39,12 +51,20 @@ export default function Home() {
             {/* The lab name and tagline live on the cover, so this section opens
                 straight into the description. */}
             <section className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:px-8 lg:pt-24 lg:pb-16">
-                {descriptionHtml ? (
-                    <AnimateIn delay={0.4}>
-                        {/* Markdown so links (e.g. CUSP, MAE) can be written inline in the admin. */}
+                {leadHtml ? (
+                    <AnimateIn delay={0.1}>
                         <div
-                            className="max-w-4xl text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec] [&_p+p]:mt-4"
-                            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                            className={`max-w-4xl text-2xl font-semibold leading-snug tracking-tight text-black dark:text-white sm:text-3xl lg:text-[2rem] ${LINK_STYLES}`}
+                            dangerouslySetInnerHTML={{ __html: leadHtml }}
+                        />
+                    </AnimateIn>
+                ) : null}
+
+                {restHtml ? (
+                    <AnimateIn delay={0.25}>
+                        <div
+                            className={`mt-6 max-w-4xl text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_p+p]:mt-4 ${LINK_STYLES}`}
+                            dangerouslySetInnerHTML={{ __html: restHtml }}
                         />
                     </AnimateIn>
                 ) : null}
