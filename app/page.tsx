@@ -8,11 +8,10 @@ import {
     type HomeContent,
     type Place,
 } from "@/lib/content";
-import HeroBanner from "@/components/HeroBanner";
+import HeroCover from "@/components/HeroCover";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import MeaningfulMapClient from "@/components/MeaningfulMapClient";
-import { Icon } from "@/components/Icons";
 
 export const metadata = {
     title: "The Urban Planet Lab",
@@ -30,45 +29,21 @@ export default function Home() {
 
     return (
         <div className="relative">
-            <HeroBanner
+            <HeroCover
                 src={publicFileExists(content.hero_image) ? content.hero_image : null}
                 alt={content.hero_image_alt || content.main_heading}
+                title={content.main_heading}
+                tagline={content.tagline}
             />
 
-            <section className="mx-auto max-w-6xl px-4 pt-10 pb-12 sm:px-6 sm:pt-12 sm:pb-14 lg:px-8 lg:pt-16 lg:pb-16">
-                <div className="max-w-3xl">
-                    {content.tagline ? (
-                        <AnimateIn delay={0.1}>
-                            <p className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-black/60 dark:text-white/60">
-                                {content.tagline}
-                            </p>
-                        </AnimateIn>
-                    ) : null}
-
-                    {/* <AnimateIn delay={0.15}>
-                        <div className="mt-3 inline-flex items-center rounded-lg border border-black/10 bg-white/90 px-3 py-1.5 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
-                            <Image
-                                src="/uploads/nyu-cusp-logo.png"
-                                alt="NYU Center for Urban Science and Progress"
-                                width={194}
-                                height={32}
-                                className="h-6 w-auto sm:h-7"
-                            />
-                        </div>
-                    </AnimateIn> */}
-
-                    <AnimateIn delay={0.2} y={32}>
-                        <h1 className="mt-5 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[0.95] text-black dark:text-white">
-                            {content.main_heading}
-                        </h1>
-                    </AnimateIn>
-                </div>
-
+            {/* The lab name and tagline live on the cover, so this section opens
+                straight into the description. */}
+            <section className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:px-8 lg:pt-24 lg:pb-16">
                 {descriptionHtml ? (
                     <AnimateIn delay={0.4}>
                         {/* Markdown so links (e.g. CUSP, MAE) can be written inline in the admin. */}
                         <div
-                            className="mt-6 text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec] [&_p+p]:mt-4"
+                            className="max-w-4xl text-lg leading-relaxed text-black/80 dark:text-white/75 sm:text-xl [&_a]:text-inherit [&_a]:underline [&_a]:decoration-black/35 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-[#57068C] [&_a:hover]:decoration-[#57068C] dark:[&_a]:decoration-white/45 dark:[&_a:hover]:text-[#c39bec] dark:[&_a:hover]:decoration-[#c39bec] [&_p+p]:mt-4"
                             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                         />
                     </AnimateIn>
