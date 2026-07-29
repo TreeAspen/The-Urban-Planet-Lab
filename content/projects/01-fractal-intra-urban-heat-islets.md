@@ -10,7 +10,7 @@ description: Within a single city, some neighborhoods run several degrees hotter
   global cities — and builds a common language for comparing how very different
   cities heat up.
 direction: 01-fractal-cities
-partners: NASA Earth & Space Science Fellowship · Purdue University
+partners: Purdue University
 image: ""
 image_alt: ""
 publications:
