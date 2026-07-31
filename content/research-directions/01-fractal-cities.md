@@ -9,8 +9,7 @@ tagline: Finding the hidden order in how cities heat up.
 order: 1
 index: 1
 status: Foundational
-title: Fractal intra-urban heat islets
-image: ""
+title: Intra-urban heat islets
 description: Within a single city, some neighborhoods run several degrees hotter
   than others just a few blocks away. Using Land Surface Temperature, we showed
   that the intra-urban clusters of surface heat or 'heat islets' are
@@ -18,4 +17,5 @@ description: Within a single city, some neighborhoods run several degrees hotter
   geometry and consistent scaling laws. The framework gives a common language
   for comparing very different cities and reveals how sprawling urban form can
   lower average temperatures while amplifying local extremes.
+image: ""
 ---
