@@ -1,5 +1,6 @@
 {
   "background": "urbanheat",
+  "research_images": false,
   "sections": {
     "research": true,
     "projects": true,

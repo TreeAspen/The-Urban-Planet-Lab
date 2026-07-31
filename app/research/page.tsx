@@ -97,10 +97,12 @@ function DirectionPanel({
     direction,
     accent,
     publications,
+    showImage,
 }: {
     direction: ResearchDirection;
     accent: AccentTheme;
     publications: Publication[];
+    showImage: boolean;
 }) {
     return (
         <article
@@ -113,16 +115,18 @@ function DirectionPanel({
         >
             <div className={`pointer-events-none absolute right-5 top-5 h-24 w-24 rounded-full blur-3xl ${accent.halo}`} />
 
-            <div className="relative mb-6 sm:mb-8">
-                <MediaTile
-                    src={direction.image}
-                    alt={direction.image_alt || direction.title}
-                    index={direction.index}
-                    accent={accent.tile}
-                    className="aspect-[16/7]"
-                    sizes="(min-width: 1024px) 660px, 100vw"
-                />
-            </div>
+            {showImage ? (
+                <div className="relative mb-6 sm:mb-8">
+                    <MediaTile
+                        src={direction.image}
+                        alt={direction.image_alt || direction.title}
+                        index={direction.index}
+                        accent={accent.tile}
+                        className="aspect-[16/7]"
+                        sizes="(min-width: 1024px) 660px, 100vw"
+                    />
+                </div>
+            ) : null}
 
             <div className="relative grid gap-6 lg:grid-cols-[92px_minmax(0,1fr)] lg:gap-8">
                 <div className="flex items-start justify-between lg:block">
@@ -147,7 +151,8 @@ function DirectionPanel({
 }
 
 export default function ResearchPage() {
-    if (getSiteSettings().sections.research === false) notFound();
+    const settings = getSiteSettings();
+    if (settings.sections.research === false) notFound();
 
     const content = getPageContent<ResearchContent>("research");
     const directions = getDirections();
@@ -213,6 +218,7 @@ export default function ResearchPage() {
                                                 direction,
                                                 allPublications
                                             )}
+                                            showImage={settings.research_images}
                                         />
                                     </StaggerItem>
                                 ))}

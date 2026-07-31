@@ -44,6 +44,12 @@ collections:
               - { label: "Grid — minimal blueprint lines", value: "grid" }
               - { label: "Glow — single clean centre glow", value: "glow" }
               - { label: "Plain — smooth gradient, no texture", value: "plain" }
+          - label: "Research page — show a figure for each direction"
+            name: "research_images"
+            widget: "boolean"
+            default: false
+            required: false
+            hint: "OFF (default) keeps the Research page text-only — figures live on the Projects page. Turn it ON to show each direction's image, or a placeholder tile where no image has been uploaded yet."
           - label: "Visible Sections (turn a switch OFF to hide that section)"
             name: "sections"
             widget: "object"

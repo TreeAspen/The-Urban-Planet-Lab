@@ -41,11 +41,14 @@ export type SectionKey =
 
 export type SiteSettings = {
     background: BackgroundVariant;
+    /** Off by default: the Research page reads as text, figures live on Projects. */
+    research_images: boolean;
     sections: Record<SectionKey, boolean>;
 };
 
 const DEFAULT_SETTINGS: SiteSettings = {
     background: "urbanheat",
+    research_images: false,
     sections: {
         research: true,
         projects: true,
@@ -68,6 +71,7 @@ export function getSiteSettings(): SiteSettings {
         const raw = JSON.parse(fs.readFileSync(filePath, "utf8")) as Partial<SiteSettings>;
         return {
             background: raw.background ?? DEFAULT_SETTINGS.background,
+            research_images: raw.research_images ?? DEFAULT_SETTINGS.research_images,
             sections: { ...DEFAULT_SETTINGS.sections, ...(raw.sections ?? {}) },
         };
     } catch {
