@@ -201,12 +201,12 @@ collections:
         widget: "string"
         required: false
         hint: "Accessibility description of the image"
-      - label: "Selected Papers (max 3)"
+      - label: "Papers attached directly to this direction"
         name: "publications"
         widget: "list"
         required: false
         max: 3
-        hint: "Pick up to 3 papers. They appear under this direction on the Research page, and this is also what groups papers by direction on the Publications page. Fewer than 3 is fine."
+        hint: "Optional. The Research page links to this direction's PROJECTS, not to papers — attach papers to a project instead. Use this only for papers that belong to the direction but to no project; they still get grouped under it on the Publications page."
         field:
           label: "Publication"
           name: "publication"
@@ -260,7 +260,7 @@ collections:
         search_fields: ["title"]
         value_field: "{{slug}}"
         display_fields: ["{{title}}"]
-        hint: "Which research direction this project belongs to — shown as a link at the bottom of the project"
+        hint: "Which research direction this project belongs to. This is also what makes the project appear on that direction's card on the Research page, so set it."
       - label: "Partners"
         name: "partners"
         widget: "string"

@@ -7,7 +7,7 @@ import {
     type ProjectsContent,
     type Publication,
 } from "@/lib/content";
-import { getDirections, getPublications, MAX_DIRECTION_PUBLICATIONS } from "@/lib/research";
+import { getDirections, getPublications, MAX_LISTED_PUBLICATIONS } from "@/lib/research";
 import { accentFor, getProjects, type ProjectAccent } from "@/lib/projects";
 import { AnimateIn } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
@@ -182,7 +182,7 @@ export default function ProjectsPage() {
                                     publications={(project.publications ?? [])
                                         .map((slug) => pubsBySlug.get(slug))
                                         .filter((pub): pub is Publication => Boolean(pub))
-                                        .slice(0, MAX_DIRECTION_PUBLICATIONS)}
+                                        .slice(0, MAX_LISTED_PUBLICATIONS)}
                                 />
                             </AnimateIn>
                         ))}

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPageContent, getSiteSettings, type Publication, type ResearchContent, type ResearchDirection } from "@/lib/content";
-import { getDirections, getPublications, resolveDirectionPublications } from "@/lib/research";
+import { getPageContent, getSiteSettings, type Project, type ResearchContent, type ResearchDirection } from "@/lib/content";
+import { getDirections } from "@/lib/research";
+import { getProjects, projectsByDirection } from "@/lib/projects";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import { Icon } from "@/components/Icons";
@@ -61,30 +62,38 @@ const accentThemes: AccentTheme[] = [
     },
 ];
 
-/** Up to three papers per direction, linked to their entry on Publications. */
-function DirectionPublications({ publications }: { publications: Publication[] }) {
-    if (publications.length === 0) return null;
+/**
+ * A direction links to its projects; the papers hang off the projects, so the
+ * chain reads direction → project → publication.
+ */
+function DirectionProjects({ projects }: { projects: Project[] }) {
+    if (projects.length === 0) return null;
 
     return (
         <div className="mt-6 border-t border-black/8 pt-5 dark:border-white/10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-black/45 dark:text-white/40">
-                Selected papers
+                {projects.length > 1 ? "Projects" : "Project"}
             </p>
             <ul className="mt-3 space-y-2">
-                {publications.map((pub) => (
-                    <li key={pub.slug}>
+                {projects.map((project) => (
+                    <li key={project.slug}>
                         <Link
-                            href={`/publications#${pub.slug}`}
+                            href={`/projects/${project.slug}`}
                             className="group flex items-start gap-2.5 text-sm leading-relaxed text-black/70 transition-colors hover:text-black dark:text-white/65 dark:hover:text-white"
                         >
-                            <Icon name="paper" className="mt-0.5 h-4 w-4 shrink-0 opacity-60" />
+                            <Icon name="project" className="mt-0.5 h-4 w-4 shrink-0 opacity-55" />
                             <span>
-                                <span className="underline-offset-4 group-hover:underline">{pub.title}</span>
-                                <span className="text-black/45 dark:text-white/40"> · {pub.venue}</span>
-                                {pub.year ? (
-                                    <span className="text-black/45 dark:text-white/40"> ({pub.year})</span>
+                                <span className="font-medium underline-offset-4 group-hover:underline">
+                                    {project.title}
+                                </span>
+                                {project.tagline ? (
+                                    <span className="text-black/45 dark:text-white/40"> — {project.tagline}</span>
                                 ) : null}
                             </span>
+                            <Icon
+                                name="arrow"
+                                className="mt-0.5 h-4 w-4 shrink-0 opacity-0 transition-opacity duration-200 group-hover:opacity-55"
+                            />
                         </Link>
                     </li>
                 ))}
@@ -96,12 +105,12 @@ function DirectionPublications({ publications }: { publications: Publication[] }
 function DirectionPanel({
     direction,
     accent,
-    publications,
+    projects,
     showImage,
 }: {
     direction: ResearchDirection;
     accent: AccentTheme;
-    publications: Publication[];
+    projects: Project[];
     showImage: boolean;
 }) {
     return (
@@ -143,7 +152,7 @@ function DirectionPanel({
                     <p className="mt-5 max-w-3xl text-base leading-8 text-black/76 dark:text-white/74">
                         {direction.description}
                     </p>
-                    <DirectionPublications publications={publications} />
+                    <DirectionProjects projects={projects} />
                 </div>
             </div>
         </article>
@@ -156,7 +165,7 @@ export default function ResearchPage() {
 
     const content = getPageContent<ResearchContent>("research");
     const directions = getDirections();
-    const allPublications = getPublications();
+    const byDirection = projectsByDirection(getProjects());
 
     return (
         <div className="relative">
@@ -214,10 +223,7 @@ export default function ResearchPage() {
                                         <DirectionPanel
                                             direction={direction}
                                             accent={accentThemes[index % accentThemes.length]}
-                                            publications={resolveDirectionPublications(
-                                                direction,
-                                                allPublications
-                                            )}
+                                            projects={byDirection[direction.slug] ?? []}
                                             showImage={settings.research_images}
                                         />
                                     </StaggerItem>

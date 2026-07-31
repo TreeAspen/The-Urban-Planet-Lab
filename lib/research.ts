@@ -1,7 +1,7 @@
-import { getCollection, type Publication, type ResearchDirection } from "@/lib/content";
+import { getCollection, type Project, type Publication, type ResearchDirection } from "@/lib/content";
 
-/** At most this many papers are listed under a research direction. */
-export const MAX_DIRECTION_PUBLICATIONS = 3;
+/** At most this many papers are listed alongside a project in a list view. */
+export const MAX_LISTED_PUBLICATIONS = 3;
 
 export type DirectionRef = { slug: string; title: string; index: number };
 
@@ -16,38 +16,33 @@ export function getPublications(): Publication[] {
 }
 
 /**
- * Papers listed in a direction's `publications:` frontmatter, in that order.
- * Slugs with no matching file are skipped, and the list is capped at three —
- * a direction with fewer simply shows fewer.
- */
-export function resolveDirectionPublications(
-    direction: ResearchDirection,
-    publications: Publication[],
-    max = MAX_DIRECTION_PUBLICATIONS
-): Publication[] {
-    const bySlug = new Map(publications.map((pub) => [pub.slug, pub]));
-    return (direction.publications ?? [])
-        .map((slug) => bySlug.get(slug))
-        .filter((pub): pub is Publication => Boolean(pub))
-        .slice(0, max);
-}
-
-/**
- * Reverse index: publication slug → the research directions that claim it.
- * This is what the Publications page groups by, replacing free-form tags.
+ * Reverse index: publication slug → the research directions it belongs to.
+ *
+ * Papers reach a direction two ways — listed on the direction itself, or listed
+ * on one of its projects. The Research page links to projects rather than
+ * papers, so the project route is the one that matters day to day; the direct
+ * list stays supported for papers that predate a project.
  */
 export function directionsByPublication(
-    directions: ResearchDirection[]
+    directions: ResearchDirection[],
+    projects: Project[]
 ): Record<string, DirectionRef[]> {
     const map: Record<string, DirectionRef[]> = {};
+
+    const add = (pubSlug: string, direction: ResearchDirection) => {
+        const refs = (map[pubSlug] ??= []);
+        if (refs.some((ref) => ref.slug === direction.slug)) return;
+        refs.push({ slug: direction.slug, title: direction.title.trim(), index: direction.index });
+    };
+
     for (const direction of directions) {
-        for (const pubSlug of direction.publications ?? []) {
-            (map[pubSlug] ??= []).push({
-                slug: direction.slug,
-                title: direction.title.trim(),
-                index: direction.index,
-            });
+        for (const pubSlug of direction.publications ?? []) add(pubSlug, direction);
+
+        for (const project of projects) {
+            if (project.direction !== direction.slug) continue;
+            for (const pubSlug of project.publications ?? []) add(pubSlug, direction);
         }
     }
+
     return map;
 }

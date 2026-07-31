@@ -19,3 +19,13 @@ export function getProjects(): Project[] {
 export function accentFor(index: number): ProjectAccent {
     return PROJECT_ACCENTS[index % PROJECT_ACCENTS.length];
 }
+
+/** Research direction slug → its projects, in display order. */
+export function projectsByDirection(projects: Project[]): Record<string, Project[]> {
+    const map: Record<string, Project[]> = {};
+    for (const project of projects) {
+        if (!project.direction) continue;
+        (map[project.direction] ??= []).push(project);
+    }
+    return map;
+}

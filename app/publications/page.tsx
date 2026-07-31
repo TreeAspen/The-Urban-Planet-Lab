@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getSiteSettings } from "@/lib/content";
 import { directionsByPublication, getDirections, getPublications } from "@/lib/research";
+import { getProjects } from "@/lib/projects";
 import { AnimateIn } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import PublicationList, { type PublicationEntry } from "@/components/PublicationList";
@@ -15,7 +16,8 @@ export default function PublicationsPage() {
     if (getSiteSettings().sections.publications === false) notFound();
 
     const directions = getDirections();
-    const byPublication = directionsByPublication(directions);
+    // Papers reach a direction either directly or through one of its projects.
+    const byPublication = directionsByPublication(directions, getProjects());
 
     // Papers are classified by research direction rather than free-form tags:
     // each direction's `publications:` list is what puts a paper in a bucket.
