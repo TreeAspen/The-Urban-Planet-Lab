@@ -37,7 +37,8 @@ export type SectionKey =
     | "news"
     | "blog"
     | "teaching"
-    | "home_places";
+    | "home_places"
+    | "news_lab_photo";
 
 export type SiteSettings = {
     background: BackgroundVariant;
@@ -58,6 +59,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
         blog: true,
         teaching: true,
         home_places: true,
+        news_lab_photo: true,
     },
 };
 

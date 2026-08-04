@@ -64,6 +64,7 @@ collections:
               - { label: "Blog — show in site", name: "blog", widget: "boolean", default: true }
               - { label: "Courses — show in site", name: "teaching", widget: "boolean", default: true }
               - { label: "Home page — Meaningful Places map", name: "home_places", widget: "boolean", default: true }
+              - { label: "News page — lab group photo", name: "news_lab_photo", widget: "boolean", default: true }
 
       - name: "home"
         label: "🏠 Home Page"

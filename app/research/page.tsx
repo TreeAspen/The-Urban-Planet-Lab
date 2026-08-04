@@ -165,7 +165,10 @@ export default function ResearchPage() {
 
     const content = getPageContent<ResearchContent>("research");
     const directions = getDirections();
-    const byDirection = projectsByDirection(getProjects());
+    // With Projects hidden the direction cards must not link to it — those
+    // pages 404 while the section is off.
+    const byDirection =
+        settings.sections.projects === false ? {} : projectsByDirection(getProjects());
 
     return (
         <div className="relative">
@@ -223,7 +226,11 @@ export default function ResearchPage() {
                                         <DirectionPanel
                                             direction={direction}
                                             accent={accentThemes[index % accentThemes.length]}
-                                            projects={byDirection[direction.slug] ?? []}
+                                            projects={
+                                                (byDirection as Record<string, Project[]>)[
+                                                    direction.slug
+                                                ] ?? []
+                                            }
                                             showImage={settings.research_images}
                                         />
                                     </StaggerItem>

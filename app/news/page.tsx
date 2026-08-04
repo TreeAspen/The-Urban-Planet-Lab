@@ -115,7 +115,8 @@ function LabPhoto({ content }: { content: NewsPageContent }) {
 }
 
 export default function NewsPage() {
-    if (getSiteSettings().sections.news === false) notFound();
+    const { sections } = getSiteSettings();
+    if (sections.news === false) notFound();
 
     const pageContent = getPageContent<NewsPageContent>("news");
     const allNews = getCollection<NewsItem>("news").sort((a, b) => {
@@ -156,9 +157,11 @@ export default function NewsPage() {
             </section>
 
             {/* The lab photo closes the page, below the news highlights. */}
-            <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
-                <LabPhoto content={pageContent} />
-            </section>
+            {sections.news_lab_photo !== false ? (
+                <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
+                    <LabPhoto content={pageContent} />
+                </section>
+            ) : null}
 
             <ContinueExploring from="news" />
         </div>

@@ -3,12 +3,13 @@
   "research_images": false,
   "sections": {
     "research": true,
-    "projects": true,
+    "projects": false,
     "publications": true,
     "people": true,
     "news": true,
     "blog": false,
     "teaching": true,
-    "home_places": true
+    "home_places": false,
+    "news_lab_photo": false
   }
 }
