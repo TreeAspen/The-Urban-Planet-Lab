@@ -13,6 +13,13 @@ const fontSans = IBM_Plex_Sans({
 });
 
 const SITE_URL = "https://the-urban-planet-lab.vercel.app";
+/** Share card: the skyline photo with the lab name over it, 1200x630. */
+const OG_IMAGE = {
+    url: "/og-image.jpg",
+    width: 1200,
+    height: 630,
+    alt: "The Urban Planet Lab — Tandon School of Engineering, New York University",
+};
 const SITE_DESCRIPTION =
     "An interdisciplinary research group studying urban systems, climate change, and environmental justice through spatial analysis, remote sensing, and community-engaged methods.";
 
@@ -38,11 +45,13 @@ export const metadata = {
         siteName: "The Urban Planet Lab",
         type: "website",
         locale: "en_US",
+        images: [OG_IMAGE],
     },
     twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: "The Urban Planet Lab",
         description: SITE_DESCRIPTION,
+        images: [OG_IMAGE.url],
     },
     robots: {
         index: true,
