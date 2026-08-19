@@ -2,7 +2,7 @@
 name: Jerry Zhao
 category: master
 role: MS Student
-photo: ""
+photo: /uploads/jerry.jpeg
 bio: >-
   I am currently pursuing a master’s degree in Urban Data Science at the Center
   for Urban Science and Progress, NYU Tandon. I received my bachelor’s degree in
@@ -11,6 +11,7 @@ bio: >-
 email: ""
 website: ""
 scholar: ""
+linkedin: https://www.linkedin.com/in/jerryjiaweizhao/
 twitter: ""
 sort_order: 2
 ---
