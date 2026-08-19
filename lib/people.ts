@@ -1,18 +1,27 @@
 import type { Person } from "@/lib/content";
 import type { IconName } from "@/components/Icons";
 
-export const CATEGORY_CONFIG: {
-    key: Person["category"];
+/**
+ * Headings on the People page. A heading can cover several categories —
+ * MS, undergrad and high-school members all sit under Research Assistants,
+ * where each person's role line ("MS", "Undergrad", …) tells them apart.
+ */
+export const PEOPLE_GROUPS: {
+    id: string;
     label: string;
     layout: "faculty" | "grid" | "rows";
+    categories: Person["category"][];
 }[] = [
-    { key: "faculty", label: "Faculty", layout: "faculty" },
-    { key: "phd", label: "PhD Students", layout: "grid" },
-    { key: "master", label: "Master Students", layout: "grid" },
-    { key: "undergrad", label: "Undergraduate Students", layout: "grid" },
-    { key: "highschool", label: "High School Students", layout: "grid" },
-    { key: "external", label: "Lab Collaborators", layout: "grid" },
-    { key: "alumni", label: "Alumni", layout: "rows" },
+    { id: "faculty", label: "Faculty", layout: "faculty", categories: ["faculty"] },
+    { id: "phd", label: "PhD Students", layout: "grid", categories: ["phd"] },
+    {
+        id: "research-assistants",
+        label: "Research Assistants",
+        layout: "grid",
+        categories: ["master", "undergrad", "highschool"],
+    },
+    { id: "external", label: "Lab Collaborators", layout: "grid", categories: ["external"] },
+    { id: "alumni", label: "Alumni", layout: "rows", categories: ["alumni"] },
 ];
 
 export type PersonLink = { href: string; label: string; icon: IconName; external?: boolean };

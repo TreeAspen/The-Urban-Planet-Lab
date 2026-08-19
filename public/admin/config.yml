@@ -311,19 +311,19 @@ collections:
       - label: "Category"
         name: "category"
         widget: "select"
-        hint: "Which group this person belongs to"
+        hint: "Which heading this person appears under on the People page. MS, undergrad and high-school members all share the 'Research Assistants' heading — use the Role field below to say which."
         options:
           - { label: "Faculty", value: "faculty" }
           - { label: "PhD Student", value: "phd" }
-          - { label: "Master Student", value: "master" }
-          - { label: "Undergraduate Student", value: "undergrad" }
-          - { label: "High School Student", value: "highschool" }
+          - { label: "Research Assistant — MS", value: "master" }
+          - { label: "Research Assistant — Undergrad", value: "undergrad" }
+          - { label: "Research Assistant — High School", value: "highschool" }
           - { label: "Lab Collaborator", value: "external" }
           - { label: "Alumni", value: "alumni" }
       - label: "Role / Title"
         name: "role"
         widget: "string"
-        hint: "e.g. 'Associate Professor', 'PhD Candidate', 'MS Student', 'PhD 2023 → Postdoc at MIT'"
+        hint: "The subtitle shown under the name — e.g. 'MS', 'Undergrad', 'Associate Professor', 'PhD Candidate', 'PhD 2023 → Postdoc at MIT'"
       - label: "Photo"
         name: "photo"
         widget: "image"

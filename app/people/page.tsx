@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCollection, getSiteSettings, type Person } from "@/lib/content";
-import { CATEGORY_CONFIG, buildPersonLinks } from "@/lib/people";
+import { PEOPLE_GROUPS, buildPersonLinks } from "@/lib/people";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/AnimateIn";
 import { ContinueExploring } from "@/components/ContinueExploring";
 import { Icon } from "@/components/Icons";
@@ -184,9 +184,9 @@ export default function PeoplePage() {
         (a, b) => (a.sort_order ?? 99) - (b.sort_order ?? 99)
     );
 
-    const groups = CATEGORY_CONFIG.map((config) => ({
-        ...config,
-        people: allPeople.filter((p) => p.category === config.key),
+    const groups = PEOPLE_GROUPS.map((group) => ({
+        ...group,
+        people: allPeople.filter((p) => group.categories.includes(p.category)),
     })).filter((group) => group.people.length > 0);
 
     return (
@@ -204,7 +204,7 @@ export default function PeoplePage() {
 
             {groups.map((group, i) => (
                 <section
-                    key={group.key}
+                    key={group.id}
                     className={[
                         "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8",
                         i === groups.length - 1 ? "pb-16" : "pb-10",
