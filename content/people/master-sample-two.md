@@ -1,6 +1,6 @@
 ---
 name: Jerry Zhao
-category: master
+category: alumni
 role: MS Student
 photo: /uploads/jerry.jpeg
 bio: >-
