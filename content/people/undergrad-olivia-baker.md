@@ -11,5 +11,5 @@ bio: Olivia is a senior at NYU studying chemistry. Originally from NYC, Olivia
   and world, and trying new recipes.
 email: ob2226@nyu.edu
 linkedin: https://www.linkedin.com/in/olivia-baker-0b3793260/
-sort_order: 99
+sort_order: 3
 ---
