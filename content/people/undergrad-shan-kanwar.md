@@ -9,5 +9,5 @@ bio: Shan is an undergraduate Mechanical Engineering student at NYU Tandon. He
   environment. He is particularly interested in how the everyday design and
   operation of cities can create overlooked greenhouse gas impacts, and how
   those impacts compare with more commonly studied sources of emissions.
-sort_order: 99
+sort_order: 4
 ---
