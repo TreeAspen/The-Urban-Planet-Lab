@@ -1,7 +1,7 @@
 ---
 name: Olivia Baker
 category: undergrad
-role: "Research Assistant "
+role: Undergraduate Student
 photo: /uploads/olivia.jpeg
 bio: Olivia is a senior at NYU studying chemistry. Originally from NYC, Olivia
   very interested in making the city more sustainable and habitable for all
