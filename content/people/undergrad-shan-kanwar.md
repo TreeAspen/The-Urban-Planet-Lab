@@ -1,7 +1,7 @@
 ---
 name: Shan Kanwar
 category: undergrad
-role: Research Assistant
+role: Undergraduate Student
 photo: /uploads/shan_kanwar.jpeg
 bio: Shan is an undergraduate Mechanical Engineering student at NYU Tandon. He
   is interested in contributing to research that uses geospatial analysis,
