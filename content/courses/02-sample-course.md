@@ -1,7 +1,7 @@
 ---
 code: CUSP-GX 9113 / ME-GY 7863
 name: "Urban Climate Intelligence "
-semester: Every Spring
+semester: Every Fall
 description: This course introduces the science of urban climates, focusing on
   how cities modify atmospheric processes and how these changes impact energy,
   water, air quality, and human well-being. The course develops a process-based
