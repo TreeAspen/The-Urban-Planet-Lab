@@ -1,14 +1,14 @@
 ---
-title: "Paradoxical impact of sprawling intra-urban heat islets: reducing mean surface temperatures while enhancing local extremes"
-authors: "Shreevastava, A., Bhalachandran, S., McGrath, G., Huber, M. & Rao, P."
-venue: "Scientific Reports"
-year: 2019
-details: ""
+title: "Commentary: Mapping and mitigating urban extreme heat using NASA's high-resolution thermal infrared data"
+authors: "Hulley, G., Dehaene, Q., Agatep, A., Shreevastava, A. & Runkel, M."
+venue: "Journal of Urban Affairs"
+year: 2026
+details: "1–9"
 pub_type: "journal"
-doi_url: "https://doi.org/10.1038/s41598-019-56091-w"
+doi_url: "https://doi.org/10.1080/07352166.2025.2607382"
 pdf_url: ""
 abstract: ""
 tags:
   - urban heat
-  - surface temperature
+  - thermal remote sensing
 ---
